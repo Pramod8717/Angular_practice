@@ -1,0 +1,638 @@
+<div class="main-content margin-top">
+    <div class="container dashboardpt">
+        <!-- *ngFor="let invData of invoicedata" -->
+        <div class="inv-page-container">
+            <div class="inv-page-wrapper container">
+                <div class="inv-page-header">
+                    <img class="left-arrow" style="cursor: pointer;" src="./assets/img/arrow_icon_grey_prev.png" [routerLink]="['/trackInvoiceList']" />
+                    <p class="invoice-number">Track Invoice Details</p>
+                </div>
+                <div class="approvalWrapper">
+                    <div class="approval__header">
+                        <p class="approval__title">Status Tracking</p>
+                        <div class="approvalIcon" (click)="openapproval('1')">
+                            <span class="fa fa-minus" alt="download image" id="closeArrow1"></span>
+                            <span class="fa fa-plus" alt="refresh image" id="openArrow1" style="display: none;"></span>
+                        </div>
+                    </div>
+                    <div class="approval__box" id="approvalBox1">
+                        <div class="trackInvStatus__wrapper">
+                            <div class="trackInvStatus__single" *ngIf="pending == true">
+                                <div class="trackInvStatus__content">
+                                    <div class="InvStatus">
+                                        <span class="statusBox stColor__pending"></span>
+                                        <span class="statusBox__title">Submitted</span>
+                                    </div>
+                                    <div class="InvStatus__date">
+                                        <span>{{pendingtime}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trackInvStatus__single" *ngIf="return == true">
+                                <div class="trackInvStatus__content">
+                                    <div class="InvStatus">
+                                        <span class="statusBox st-returned"></span>
+                                        <span class="statusBox__title">Returned</span>
+                                    </div>
+                                    <div class="InvStatus__date">
+                                        <span>{{returntime}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trackInvStatus__single" *ngIf="resubmit == true">
+                                <div class="trackInvStatus__content">
+                                    <div class="InvStatus">
+                                        <span class="statusBox stColor__pending"></span>
+                                        <span class="statusBox__title">Resubmitted</span>
+                                    </div>
+                                    <div class="InvStatus__date">
+                                        <span>{{resubmittime}}</span>
+                                    </div>
+                                    <div class="InvStatus__date">
+                                        <span>(<span style="color: #666666;font-weight: 600;">Returned Invoice No:</span> {{previoustoresubmitinvoicenumber}})</span>
+                                    </div>
+        
+                                </div>
+                            </div>
+                            <div class="trackInvStatus__single" *ngIf="mpending == true">
+                                <div class="trackInvStatus__content">
+                                    <div class="InvStatus">
+                                        <span class="statusBox st-hold"></span>
+                                        <span class="statusBox__title"><span *ngIf="actionBy == 'ST'">Storekeeper</span>
+                                        <span *ngIf="actionBy != 'ST'">End User</span> Approved</span>
+                                    </div>
+                                    <div class="InvStatus__date">
+                                        <span>{{mpendingtime}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trackInvStatus__single" *ngIf="accepted == true">
+                                <div class="trackInvStatus__content">
+                                    <div class="InvStatus">
+                                        <span class="statusBox st-accepted"></span>
+                                        <span class="statusBox__title">Approved</span>
+                                    </div>
+                                    <div class="InvStatus__date">
+                                        <span>{{acceptedtime}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trackInvStatus__single" *ngIf="rejected == true">
+                                <div class="trackInvStatus__content">
+                                    <div class="InvStatus">
+                                        <span class="statusBox st-rejected"></span>
+                                        <span class="statusBox__title">Rejected</span>
+                                    </div>
+                                    <div class="InvStatus__date">
+                                        <span>{{rejectedtime}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trackInvStatus__single" *ngIf="processed == true">
+                                <div class="trackInvStatus__content">
+                                    <div class="InvStatus">
+                                        <span class="statusBox stColor__processed"></span>
+                                        <span class="statusBox__title">Processed</span>
+                                    </div>
+                                    <div class="InvStatus__date">
+                                        <span>{{processedtime}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trackInvStatus__single" *ngIf="partialpaid == true">
+                                <div class="trackInvStatus__content">
+                                    <div class="InvStatus">
+                                        <span class="status-color st-complete partialyLarge1" style="width: 17px; height: 20px;"></span>
+                                        <span class="status-color st-incomplete st-grey partialySmall1" style="width: 8px; height: 20px; background: #024aec;"></span>
+                                        <span class="statusBox__title">Partially Paid</span>
+                                    </div>
+                                    <div class="InvStatus__date">
+                                        <span>{{partialpaidtime}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trackInvStatus__single" *ngIf="paid == true">
+                                <div class="trackInvStatus__content">
+                                    <div class="InvStatus">
+                                        <span class="statusBox stColor__paid"></span>
+                                        <span class="statusBox__title">Paid</span>
+                                    </div>
+                                    <div class="InvStatus__date">
+                                        <span>{{paidtime}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="trackInvStatus__single" *ngIf="reversed == true">
+                                <div class="trackInvStatus__content">
+                                    <div class="InvStatus">
+                                        <span class="statusBox st-returned"></span>
+                                        <span class="statusBox__title">Reversed</span>
+                                    </div>
+                                    <div class="InvStatus__date">
+                                        <span>{{reversedtime}}</span>
+                                    </div>
+                                </div>
+                            </div>
+        
+        
+                        </div>
+                    </div>
+                </div>
+                <div class="approvalWrapper">
+                    <div class="approval__header">
+                        <p class="approval__title">Details</p>
+                        <div class="approvalIcon" (click)="openapproval('2')">
+                            <span class="fa fa-minus" alt="download image" id="closeArrow2"></span>
+                            <span class="fa fa-plus" alt="refresh image" id="openArrow2" style="display: none;"></span>
+                        </div>
+                    </div>
+                    <div class="approval__box" id="approvalBox2">
+                        <div class="invoice-form">
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Invoice No : <span (click)="downloadfile(savedfilename,actualfilename,'listdownload')" style="cursor: pointer; text-decoration: underline;color: #0645AD;"><img
+                                    src="./assets/img/pdf_icon03.png" alt="pdf image" style="max-width: 25px;margin-right: 7px;"
+                                        class="activeImg arrowIcon" /></span><span>{{invoicenumber}}</span>
+                                </p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Invoice Date : <span>{{invoicedate | date:'dd-MMM-yyyy'}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">PO No : <span><a class="linkTable" style="cursor: pointer;"
+                                            (click)="downloadPo(ponumberfortrack,'singlepodownload')">{{ponumberfortrack}}</a></span>
+                                </p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="status == 'O'">
+                                <p class="input-title">Status : <span>On Hold </span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="status == 'PRO'">
+                                <p class="input-title">Status : <span>Processed </span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="status == 'P'">
+                                <p class="input-title">Status : <span>Pending </span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="status == 'A'">
+                                <p class="input-title">Status : <span>Approved </span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="status == 'M'">
+                                <p class="input-title">Status : <span>Pending</span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="status == 'PP'">
+                                <p class="input-title">Status : <span>Partially Paid </span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="status == 'PD'">
+                                <p class="input-title">Status : <span>Paid </span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="status == 'R'">
+                                <p class="input-title">Status : <span>Rejected </span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="status == 'G'">
+                                <p class="input-title">Status : <span>GRN </span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="status == 'V'">
+                                <p class="input-title">Status : <span>Returned</span></p>
+                            </div>
+                            <!-- <div class="inv-form-inputs">
+                            <p class="input-title">Invoice Amount : <i class="fa fa-rupee-sign"></i><span>
+                                    {{invData.INVOICEAMOUNT| number:'0.0-0'}}</span></p>
+                        </div> -->
+        
+                            <!-- -----------Commented on 20-10-2021 ---------------------------- -->
+                            <!-- <div class="inv-form-inputs" *ngIf="invData.IGSTAMOUNT != ''">
+                            <p class="input-title">IGST : <span>{{invData.IGSTAMOUNT}} %</span></p>
+                        </div>
+        
+                        <div class="inv-form-inputs" *ngIf="invData.IGSTAMOUNT == ''">
+                            <p class="input-title">CGST : <span>{{invData.CGSTAMOUNT}} %</span></p>
+                        </div>
+                        <div class="inv-form-inputs" *ngIf="invData.IGSTAMOUNT == ''">
+                            <p class="input-title">SGST : <span>{{invData.SGSTAMOUNT}} %</span></p>
+                        </div> -->
+                            <!-- -----------Commented on 20-10-2021 end ---------------------------- -->
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Invoice Amount (Excl Taxes) : <i class="fal fa-rupee-sign"></i> <span>{{amtexcltax}}</span></p>
+                            </div>
+        
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Tax Amount : <i class="fal fa-rupee-sign"></i> <span>{{taxAmount}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Invoice Amount (Incl Taxes) : <i class="fal fa-rupee-sign"></i> <span>{{totalamount}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Paid Amount : <i class="fa fa-rupee-sign"></i><span>{{paidamount }}</span></p>
+                            </div>
+                            <!-- <div class="inv-form-inputs">
+                                <p class="input-title">User : <span>{{user}}</span></p>
+                            </div> -->
+        
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Description : <span>{{description}}</span></p>
+        
+                            </div>
+        
+                            <div class="inv-form-inputs" *ngIf="creditadvice != null">
+                                <p class="input-title">Credit Note : <span *ngIf="creditnote1 == null && creditadvice == null">NA</span><span><div class="commentIcon " style="cursor: pointer; " (click)="createCreditNote(invoicenumber,ponumberfortrack,creditadvice)" *ngIf="creditadvice != null && creditnote1 == null">
+                                        <img src="./assets/img/credit_note_icon.png " style="max-width: 30px; cursor: pointer;" />
+                                    </div>
+                                    <div class="commentIcon " style="cursor: pointer; " (click)="getCreditNoteDetails(invoicenumber,ponumberfortrack,creditadvice,creditnote1)" *ngIf="creditadvice != null && creditnote1 != null">
+                                        <img src="./assets/img/credit_note_icon_with_tick.png " style="max-width: 30px; cursor: pointer;" />
+                                    </div>
+                                </span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="userremark != null">
+                                <p class="input-title">BCCL User Remarks : <span>{{userremark}}</span></p>
+        
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="userremark == null">
+                                <p class="input-title">BCCL User Remarks : <span>NA</span></p>
+        
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Remarks : <span>{{vendorremark}}</span></p>
+        
+                            </div>
+                            <!-- <div class="inv-form-inputs" *ngIf="vendorremark == null">
+                                <p class="input-title">Remarks : <span>NA</span></p>
+        
+                            </div> -->
+        
+                            <div class="inv-form-inputs" *ngIf="billofladingdate != null">
+                                <p class="input-title">Bill Of Lading Date : <i class="fal fa-rupee-sign"></i> <span>{{billofladingdate | date:'dd-MMM-yyyy'}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="billofladingdate == null">
+                                <p class="input-title">Bill Of Lading Date : <i class="fal fa-rupee-sign"></i> <span>NA</span></p>
+                            </div>
+                            <!-- Commented on 30-01-2022 as per summet sir comments start -->
+                            <!-- <div class="inv-form-inputs">
+                                <a>
+                                    <p class="input-title">Attachment : <span
+                                            (click)="downloadfile(savedfilename,actualfilename,'listdownload')"
+                                            style="cursor: pointer; text-decoration: underline;color: #0645AD;">{{actualfilename}}</span>
+                                    </p>
+                                </a>
+                            </div> -->
+                            <!-- Commented on 30-01-2022 as per summet sir comments end -->
+                            <div class="inv-form-inputs">
+                                <a>
+                                    <!-- (click)="downloadfile('multiplefiledownload')"  -->
+                                    <p class="input-title">Vendor Supporting Docs :
+                                        <span *ngIf="multipleactualfilename != null">
+                                        <span style="cursor: pointer; text-decoration: underline;color: #0645AD;">
+                                          
+                                                <ul class="supportingDocList">
+                                                    <li *ngFor="let multipleindividualactualfilename of multipleactualfilename?.split(','); let i=index"
+                                                        (click)="downloadfile(individualsavedname[i],multipleindividualactualfilename,'listdownload')" class="supportingDocList__icon">
+                                                        <!-- {{multipleindividualactualfilename}} -->
+                                                       <a  style="cursor: pointer;" tooltip="{{multipleindividualactualfilename}}" placement="bottom" showDelay="300">
+                                                        <img src="./assets/img/downloadfile.png">
+                                                       </a>
+                                                    </li>
+                                                </ul>
+                                           
+                                        </span>
+                                        </span>
+                                        <span *ngIf="multipleactualfilename == null">
+                                            No Docs Attached
+                                        </span>
+                                    </p>
+                                </a>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <a>
+                                    <!-- (click)="downloadfile('multiplefiledownload')"  -->
+                                    <p class="input-title">BCCL Supporting Docs :
+                                        <span *ngIf="multipleactualendfilename != null">
+                                        <span style="cursor: pointer; text-decoration: underline;color: #0645AD;">
+                                                            <ul class="supportingDocList">
+                                                                <li *ngFor="let multipleindividualactualfilename of multipleactualendfilename?.split(','); let i=index"
+                                                                    (click)="downloadfile(individualsavedendname[i],multipleindividualactualfilename,'listdownload')"
+                                                                    class="supportingDocList__icon">
+                                                                    <a style="cursor: pointer;"
+                                                                        tooltip="{{multipleindividualactualfilename}}"
+                                                                        placement="bottom" showDelay="300">
+                                                                        <img src="./assets/img/downloadfile.png">
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </span>
+                                        </span>
+                                        <span *ngIf="multipleactualendfilename == null">
+                                                        No Docs Attached
+                                                    </span>
+                                    </p>
+                                </a>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="irnNumber != null && irnNumber !='' && irnNumber!=undefined && irnNumber != 'null'">
+                                <p class="input-title">IRN No : <span style="word-break: break-all;">{{irnNumber}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="irnDate != null && irnNumber !='' && irnNumber!=undefined && irnNumber != 'null'">
+                                <p class="input-title ">IRN Date : <span>{{irnDate | date:'dd-MMM-yyyy'}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div>
+                    <div class="approvalWrapper">
+                        <div class="approval__header">
+                            <p class="approval__title">Items List</p>
+                            <div class="approvalIcon" (click)="openapproval('3')">
+                                <span class="fa fa-minus" alt="download image" id="closeArrow3"></span>
+                                <span class="fa fa-plus" alt="refresh image" id="openArrow3" style="display: none;"></span>
+                            </div>
+                        </div>
+                        <div class="approval__box" id="approvalBox3">
+                            <div class="table-responsive "style="padding: 20px 15px;">
+                                <!-- <div class="inv-form-inputs">
+                                    <p class="input-title">PO No : <span><a class="linkTable" style="cursor: pointer;"
+                                        (click)="downloadPo(ponumberfortrack,'singlepodownload')">{{ponumberfortrack}}</a></span>
+                                    </p>
+                                </div> -->
+                                <table class="table customTableStripped noAccordionTable table-customborder fixedTable ">
+                                    <thead class="text-primary ">
+                                        <tr>
+                                            <th scope="col " class="text-left ">Item</th>
+                                            <th scope="col " class="text-left ">Item Description</th>
+                                            <th scope="col " class="text-left ">Reference No.</th>
+                                            <th scope="col " class="text-left ">Invoiced Qty / Accepted Qty</th>
+                                            <th scope="col " class="text-right ">Rate</th>
+                                            <th scope="col " class="text-left ">PER/UOM</th>
+                                            <!-- <th scope="col " class="text-center ">RATE IN INR</th> -->
+                                            <th scope="col " class="text-right ">Amount</th>
+        
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+        
+                                        <tr class="customtbl-accordion-head " *ngFor="let invData of invoicedata ">
+                                            <td class="preventClick ">
+                                                <div class="text-left ">
+                                                    {{invData.LINEITEMNUMBER}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-left upperDate fixedDateCol ">
+                                                    {{invData.LINEITEMTEXT}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-left upperDate fixedDateCol ">
+                                                    {{invData.ORDERNUMBER}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-left ">
+                                                    {{invData.QUANTITY | number:'1.3-3'}} / <span *ngIf="invData.GRNNUMBER !=n ull ">{{invData.ACCEPTEDQTY | number:'1.3-3'}}</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <!-- style="margin-right: 15px; " -->
+                                                <div class="text-right ">
+                                                    {{invData.RATEPERQTY | currency:'INR' }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <!-- style="margin-right: 25px; " -->
+                                                <div class="text-left ">
+                                                    1/{{invData.UOM}}
+                                                </div>
+                                            </td>
+                                            <!-- <td>
+                                        <div class="text-right " style="margin-right: 15px; ">
+                                            {{invData.TOTALAMOUNT}}
+                                        </div>
+                                    </td> -->
+        
+                                            <td>
+                                                <!-- style="margin-right: 15px; " -->
+                                                <div class="text-right ">
+                                                    {{invData.TOTALCALCULATEAMOUNT | currency:'INR'}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <!-- <div class="text-center ">
+        
+                                            <div class="commentDiv ">
+                                                <div class="commentIcon " style="cursor: pointer; " (click)="ShowpopupMessage(event); getQuerry(invData.INVOICENUMBER, invData.CONTACTPERSON) ">
+                                                    <i class="fa fa-comment " aria-hidden="true "></i>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                            </td>
+                                        </tr>
+                                        <!-- tr end  -->
+        
+                                    </tbody>
+                                </table>
+        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="mt-4 trackInvoicebtnWrapper ">
+                     <a _ngcontent-kyk-c193=" " class="btn btn-primary " (click)="trackInvoice() ">
+                    <img _ngcontent-dnd-c329=" " src="./assets/img/arrow_icon_red.png " alt="arrow icon " class="arrowIcon ">Track Invoice </a>
+                    <button type="submit " class="btn button-primary " (click)="trackInvoice() ">
+                        <img _ngcontent-dnd-c329=" " src="./assets/img/arrow_icon_red.png " alt="arrow icon "
+                            class="arrowIcon ">track invoice
+                    </button>
+                </div> -->
+                <br><br>
+
+                <div *ngIf="!trackInv ">
+
+                    <div class="row ml-5 ">
+
+                        <div class="col-md-3 ">
+                            <div class="inv-wrapper ">
+                                <span class="status-color st-managerpending "></span>
+                                <p class="status-title ">Submitted</p>
+                            </div>
+
+                        </div>
+                        <div class="col-md-9 ">
+                            <div class="btn-right ">
+                                <p>{{pendingtime}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <span *ngIf="mpending==t rue ">
+                        <div class="row ml-5 ">
+
+                            <div class="col-md-3 ">
+                               
+                                <div class="inv-wrapper ">
+                                    <span class="status-color st-processing "></span>
+                    <p class="status-title ">Requisitioner Approved</p>
+                </div>
+            </div>
+            <div class="col-md-9 ">
+                <div class="btn-right ">
+                    <p>{{mpendingtime}}</p>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+        </span>
+
+
+        <span *ngIf="processed==t rue ">
+                        <div class="row ml-5 ">
+
+                            <div class="col-md-3 ">
+                               
+                                <div class="inv-wrapper ">
+                                    <span class="status-color st-transported "></span>
+        <p class="status-title ">Processed</p>
+    </div>
+</div>
+<div class="col-md-9 ">
+    <div class="btn-right ">
+        <p>{{processedtime}}</p>
+    </div>
+</div>
+</div>
+
+<hr />
+</span>
+<span *ngIf="accepted==t rue ">
+                        <div class="row ml-5 ">
+
+                            <div class="col-md-3 ">
+                                                               <div class="inv-wrapper ">
+                                    <span class="status-color st-accepted "></span>
+<p class="status-title ">Approved</p>
+</div>
+</div>
+<div class="col-md-9 ">
+    <div class="btn-right ">
+        <p>{{acceptedtime}}</p>
+
+    </div>
+</div>
+</div>
+<hr />
+</span>
+
+<span *ngIf="partialpaid==t rue ">
+                        <div class="row ml-5 ">
+
+                            <div class="col-md-3 ">
+                                                               <div class="inv-wrapper ">
+                               
+                                    <span class="status-color st-complete partialyLarge1 "
+                                    style="width: 17px; height: 20px; "></span>
+<span class="status-color st-incomplete st-grey partialySmall1 " style="width: 8px; height: 20px; background: #024aec; "></span>
+<p class="status-title ">Partially Paid</p>
+</div>
+</div>
+<div class="col-md-9 ">
+    <div class="btn-right ">
+        <p>{{partialpaidtime}}</p>
+    </div>
+</div>
+</div>
+
+<hr />
+</span>
+
+
+
+<span *ngIf="paid==t rue ">
+                        <div class="row ml-5 ">
+
+                            <div class="col-md-3 ">
+                                <div class="inv-wrapper ">
+                                    <span class="status-color st-complete "></span>
+<p class="status-title ">Paid</p>
+</div>
+</div>
+<div class="col-md-9 ">
+    <div class="btn-right ">
+        <p>{{paidtime}}</p>
+    </div>
+</div>
+</div>
+
+<hr />
+</span>
+
+
+
+<div class="row ml-5 " *ngIf="rejected==t rue ">
+
+    <div class="col-md-3 ">
+
+        <div class="inv-wrapper ">
+            <span class="status-color st-rejected "></span>
+            <p class="status-title ">Rejected</p>
+        </div>
+    </div>
+    <div class="col-md-9 ">
+        <div class="btn-right ">
+            <p>{{rejectedtime}}</p>
+
+        </div>
+    </div>
+</div>
+</div>
+<!-- <hr>
+
+            <div class="row ml-5 ">
+
+                <div class="col-md-3 ">
+                    <button type="button " class="btn btn-primary c-4 ">Email</button>
+                </div>
+                <div class="col-md-9 ">
+                    <div class="btn-right ">
+                        <p>06 FEB 2021, 10:00 AM</p>
+                        <p class="f-18 "><b>Email sent to client for meeting payment reminder.</b></p>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row ml-5 ">
+
+                <div class="col-md-3 ">
+                    <button type="button " class="btn btn-warning c-2 ">CLIENT REVERT</button>
+                </div>
+                <div class="col-md-9 ">
+                    <div class="btn-right ">
+                        <p>07 FEB 2021, 10:00 AM</p>
+                        <p class="f-18 "><b>Pending payment received through cheque.cheque no:3234</b></p>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row ml-5 ">
+
+                <div class="col-md-3 ">
+                    <button type="button " class="btn btn-success c-5 ">PAID</button>
+                </div>
+                <div class="col-md-9 ">
+                    <div class="btn-right ">
+                        <p>08 FEB 2021, 10:00 AM</p>
+                        <p class="f-18 "><b>Payment received through cheque.cheque no:3234</b></p>
+                    </div>
+
+                </div>
+            </div>
+
+
+ -->
+
+
+</div>
+</div>
+</div>
+</div>
+<app-dialog-model></app-dialog-model>

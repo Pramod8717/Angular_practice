@@ -1,0 +1,92 @@
+.formWrapper__content {
+    padding: 20px 50px;
+}
+@media (max-width: 768px) {
+    .formWrapper__content {
+        padding: 15px 15px 15px;
+    }
+}
+
+.matMargin {
+    margin-top: 5px;
+}
+.grey-box{
+    background-color: #e3dfe0;
+    /* border-radius: 5px;
+    padding: 15px 20px; */
+}
+
+.grey-box h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    padding-left: 7px;
+}
+
+.grey-box .table thead tr th {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.grey-box .table thead th {
+    vertical-align: bottom;
+    border-bottom: 1px solid #000;
+}
+
+.grey-box .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #000;
+}
+
+.grey-box input[type="number"] {
+    width: 80px;
+}
+
+.grey-box .table .total th {
+    
+    border-top: 1px solid;
+}
+.inv-form-inputs .add-file-input .file-input {
+    margin: 0;
+    color: #000;
+}
+ /* .grey-box .table tr:nth-child(1) td {
+    border-top: 2px solid #000;
+}  */
+/* .grey-box .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #c2c4c6;
+} */
+.mataccordian .mat-expansion-indicator::after {
+    /* border-style: solid; */
+    /* border-width: 0 2px 2px 0; */
+    content: "\f067";
+    font-family: 'FontAwesome';
+    display: inline-block;
+    padding: 3px;
+    /* transform: rotate(45deg); */
+    vertical-align: middle;
+}
+
+.mat-expansion-panel-header-description,
+.mat-expansion-indicator::after {
+    /* color: red !important; */
+    flex-grow: 0;
+}
+  .uploadedFiles {
+    display: flex;
+    margin-bottom: 10px;
+}
+.fixedPOnumber img {
+    max-width: 30px;
+    margin-left: 3px;
+    margin-right: 5px;
+}
+.exceededMsg {
+    /* font-weight: 200; */
+    color: red;
+    /* padding-top: 30px; */
+    font-size: small;
+}

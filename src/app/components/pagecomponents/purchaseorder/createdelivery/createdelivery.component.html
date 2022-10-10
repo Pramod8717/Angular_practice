@@ -1,0 +1,405 @@
+<div class="main-content margin-top">
+    <div class="container dashboardpt">
+        <div class="inv-page-container">
+            <div class="inv-page-wrapper container">
+                <div class="inv-page-header">
+                    <img class="left-arrow" style="cursor: pointer;" src="./assets/img/arrow_icon_grey_prev.png" [routerLink]="['/purchaseOrdersList']" />
+                    <p class="invoice-number">Create Delivery</p>
+                </div>
+                <form [formGroup]="createDelivery">
+                    <div class="invoice-form">
+                        <div class="inv-form-inputs mb-mt ">
+                            <div class="invInputWicon">
+                                <mat-label>PO No.</mat-label>
+                                <mat-form-field appearance="none" class="disabled">
+                                    <mat-label>PO No. 2300045237</mat-label>
+                                    <input matInput placeholder="Enter PO Number" formControlName="PONumber" value="" readonly />
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="PO Number" placement="left" showDelay="300"></span> -->
+                            </div>
+
+                            <!-- <mat-error *ngIf="
+                  hasError('PONumber', 'required') &&
+                  createDelivery.controls['PONumber'].touched
+                ">
+                            *is required</mat-error> -->
+                        </div>
+                        <div class="inv-form-inputs mb-mt ">
+                            <div class="invInputWicon">
+                                <mat-label>Item Number</mat-label>
+                                <mat-form-field appearance="none" class="disabled">
+                                    <mat-label>00100</mat-label>
+                                    <input matInput placeholder="Enter PO Number" formControlName="lineItem" value="" readonly />
+                                </mat-form-field>
+
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Matrial" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <!-- <mat-error *ngIf="
+                  hasError('laptops', 'required') &&
+                  createDelivery.controls['laptops'].touched
+                ">
+                            *is required</mat-error> -->
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt ">
+                            <div class="invInputWicon">
+                                <mat-label>Item Text</mat-label>
+                                <mat-form-field appearance="none" class="disabled">
+                                    <mat-label>Laptops</mat-label>
+                                    <input matInput placeholder="Laptops" formControlName="linItemText" value="" readonly />
+                                </mat-form-field>
+
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Matrial" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <!-- <mat-error *ngIf="
+                  hasError('laptops', 'required') &&
+                  createDelivery.controls['laptops'].touched
+                ">
+                            *is required</mat-error> -->
+                        </div>
+                        <div class="inv-form-inputs mb-mt ">
+                            <div class="invInputWicon">
+                                <mat-label>Total Quantity</mat-label>
+                                <mat-form-field appearance="none" class="disabled">
+                                    <!-- <mat-label>3000 Laptops</mat-label> -->
+                                    <input matInput placeholder="Enter PO Number" formControlName="Totquantity" value="" readonly />
+                                </mat-form-field>
+
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Matrial" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <!-- <mat-error *ngIf="
+                  hasError('laptops', 'required') &&
+                  createDelivery.controls['laptops'].touched
+                ">
+                            *is required</mat-error> -->
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt ">
+                            <div class="invInputWicon">
+                                <mat-label>Balance Quantity</mat-label>
+                                <mat-form-field appearance="none" class="disabled">
+                                    <!-- <mat-label>3000 Laptops</mat-label> -->
+                                    <input matInput placeholder="Enter PO Number" formControlName="BalanceQty" value="" readonly />
+                                </mat-form-field>
+
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Matrial" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <!-- <mat-error *ngIf="
+                  hasError('laptops', 'required') &&
+                  createDelivery.controls['laptops'].touched
+                ">
+                            *is required</mat-error> -->
+                        </div>
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label> Delivery Order No <sup class="imp">*</sup></mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label> Delivery Order No</mat-label>
+                                    <input matInput placeholder="ORDEL986784" formControlName="ordernum" value="" />
+                                </mat-form-field>
+
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Delivery Number" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <!-- <mat-error *ngIf="
+                  hasError('ordernum', 'required') &&
+                  createDelivery.controls['ordernum'].touched
+                ">
+                            *is required</mat-error> -->
+                        </div>
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Quantity <sup class="imp">*</sup></mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter Quantity</mat-label>
+                                    <input matInput type="text" placeholder="Enter Quantity" formControlName="orderquantity" (keypress)="numberOnly($event);" (ngModelChange)="balanceQuantity()" value="" numbersOnly/>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Quantity" placement="left" showDelay="300"></span> -->
+                            </div>
+
+                            <mat-error *ngIf="balQuantitys<0">
+                                {{errormessage}}</mat-error>
+                        </div>
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Dispatch Date <sup class="imp">*</sup></mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Dispatch Date</mat-label>
+                                    <input matInput [matDatepicker]="delDate" formControlName="delDate" />
+                                    <mat-datepicker-toggle matSuffix [for]="delDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #delDate></mat-datepicker>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Delivery Date" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <!-- <mat-error *ngIf="
+                  hasError('delDate', 'required') &&
+                  createDelivery.controls['delDate'].touched
+                ">
+                            * Date is required</mat-error> -->
+                        </div>
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Email ID of Contact Person <sup class="imp">*</sup></mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Email ID of Contact Person</mat-label>
+                                    <input matInput placeholder="Email ID of Contact Person" formControlName="emailId" value="" (keyup)="ValidateEmail($event)" />
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Email ID of Contact Person" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <mat-error *ngIf="disable">
+                                {{errormsg}}</mat-error>
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Dispatch Address <sup class="imp">*</sup></mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter Dispatch Address</mat-label>
+                                    <textarea matInput placeholder="Enter Dispatch Address" formControlName="dispatchAddress" value=""></textarea>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Dispatch Address" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <!-- <mat-error *ngIf="
+                  hasError('dispatchAddress', 'required') &&da
+                  createDelivery.controls['dispatchAddress'].touched
+                ">
+                            *is required</mat-error> -->
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Remark <sup class="imp">*</sup></mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter Remark</mat-label>
+                                    <textarea matInput placeholder="Enter Remark" formControlName="Remark" value=""></textarea>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Remark" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <!-- <mat-error *ngIf="
+                  hasError('Remark', 'required') &&
+                  createDelivery.controls['Remark'].touched
+                ">
+                            *is required</mat-error> -->
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt w-100">
+                            <div class="radioWrapper radioInline" (change)="changeEvent($event)">
+                                <p>
+                                    <input type="radio" id="withPO" value="withPO" name="wpo" checked="" />
+                                    <label for="withPO">Submit with invoice</label>
+                                </p>
+                                <p>
+                                    <input type="radio" id="WithoutPO" value="WithoutPO" name="wpo" />
+                                    <label for="WithoutPO"> Submit without invoice</label>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="invoice-form pt-0" *ngIf="!WithoutPO">
+                        <div class="inv-form-inputs mb-mt w-100">
+                            <div class="radioWrapper radioInline" (change)="checkInvoice($event)">
+                                <p>
+                                    <input type="radio" id="Invoice" value="Invoice" name="Invoice" checked="" />
+                                    <label for="Invoice">Invoice</label>
+                                </p>
+                                <p>
+                                    <input type="radio" id="Einvoice" value="Einvoice" name="Invoice" />
+                                    <label for="Einvoice">E-invoice</label>
+                                </p>
+                            </div>
+                        </div>
+                        <!-- <span *ngIf = "irndetail"> -->
+                        <div class="inv-form-inputs mb-mt" *ngIf="irndetail">
+                            <div class="invInputWicon">
+                                <mat-label>IRN No</mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter IRN No</mat-label>
+                                    <input matInput placeholder="IRN No" type="text" (keypress)="keyPressAlphanumeric($event)" maxlength="64" formControlName="irnNo" value="">
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="IRN No"
+                                                    placement="left" showDelay="300"></span> -->
+                            </div>
+                            <mat-error *ngIf="hasError('irnNo', 'required') && createDelivery.controls['irnNo'].touched">*IRN No is required
+                            </mat-error>
+                        </div>
+                        <div class="inv-form-inputs mb-mt" *ngIf="irndetail">
+                            <div class="invInputWicon">
+                                <mat-label>IRN Date</mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Select IRN Date</mat-label>
+                                    <input matInput [matDatepicker]="irnDate" formControlName="irnDate">
+                                    <mat-datepicker-toggle matSuffix [for]="irnDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #irnDate></mat-datepicker>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="IRN Date"
+                                                    placement="left" showDelay="300"></span> -->
+                            </div>
+                            <mat-error *ngIf="hasError('irnDate', 'required') && createDelivery.controls['irnDate'].touched">
+                                *IRN Date is required</mat-error>
+                        </div>
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Invoice Number<sup class="imp">*</sup></mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter Invoice Number</mat-label>
+                                    <input matInput placeholder="Enter Invoice Number" (keypress)="keyPressAlphanumeric($event)" formControlName="InvNumber" value="" maxlength="16"/>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Invoice Number" placement="left" showDelay="300"></span> -->
+                            </div>
+                        </div>
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Invoice Date<sup class="imp">*</sup></mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Select Invoice Date</mat-label>
+                                    <input matInput [matDatepicker]="InvDate" formControlName="InvDate" />
+                                    <mat-datepicker-toggle matSuffix [for]="InvDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #InvDate></mat-datepicker>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Invoice Date" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <!-- <mat-error *ngIf="
+              hasError('InvDate', 'required') &&
+              createDelivery.controls['InvDate'].touched
+            ">
+                            * Date is required</mat-error> -->
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Invoice Amount <sup class="imp">*</sup></mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter Invoice Amount</mat-label>
+                                    <input matInput placeholder="Enter Invoice Amount" formControlName="InvAmount" value="" (keyup)="totalingfunction($event,'')" OnlyNumber="true" readonly />
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Invoice Amount" placement="left" showDelay="300"></span> -->
+                            </div>
+                        </div>
+
+
+
+                        <!-- cgst code !!!!!!!!!-->
+                        <!-- 
+                    <div class="inv-form-inputs mb-mt w-100">
+                        <div class="radioWrapper radioInline" (change)="checkIGST($event)">
+                            <p>
+                                <input type="radio" id="IGST" value="IGST" name="IGST" checked="" />
+                                <label for="IGST">IGST</label>
+                            </p>
+                            <p>
+                                <input type="radio" id="CGST/SGST" value="CGST/SGST" name="IGST" />
+                                <label for="CGST/SGST"> CGST/SGST</label>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="inv-form-inputs mb-mt" *ngIf="IGST">
+                        <div class="invInputWicon">
+                            <mat-label>IGST<sup class="imp">*</sup></mat-label>
+                            <mat-form-field appearance="none">
+                                <mat-select aria-label="Default select example" formControlName="InvIGST" (selectionChange)="totalingfunction($event,'igst')">
+                                    <mat-label>Enter IGST</mat-label>
+                                    <mat-option *ngFor="let igst of igstlist" [value]="igst?.id">{{igst?.value}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                           
+                        </div>
+                    </div>
+                    <div class="inv-form-inputs mb-mt" *ngIf="!IGST">
+                        <div class="invInputWicon">
+
+                            <mat-label>CGST <sup class="imp">*</sup></mat-label>
+                            <mat-form-field appearance="none">
+                                <mat-select aria-label="Default select example" formControlName="InvCGST" (selectionChange)="totalingfunction($event,'cgst')">
+                                    <mat-label>Enter CGST</mat-label>
+                                    <mat-option *ngFor="let cgst of cgstandsgstlist" [value]="cgst?.id">{{cgst?.value}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                          
+                        </div>
+                    </div>
+
+                    <div class="inv-form-inputs mb-mt" *ngIf="!IGST">
+                        <div class="invInputWicon">
+                            <mat-label>SGST <sup class="imp">*</sup></mat-label>
+                            <mat-form-field appearance="none">
+                                <mat-select aria-label="Default select example" formControlName="InvSGST" (selectionChange)="totalingfunction($event,'sgst')">
+                                    <mat-label>Enter SGST</mat-label>
+                                    <mat-option *ngFor="let sgst of cgstandsgstlist" [value]="sgst?.id">{{sgst?.value}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                           
+                        </div>
+                    </div> -->
+
+                        <!-- cgst code ends!!!!!!!!! -->
+
+
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Total Amount<sup class="imp">*</sup></mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Total Amount</mat-label>
+                                    <input matInput placeholder="Enter Total Amount" formControlName="TotAmount" value="" readonly/>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Total Amount" placement="left" showDelay="300"></span> -->
+                            </div>
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Description <sup class="imp">*</sup></mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Description</mat-label>
+                                    <textarea matInput placeholder="Enter Dispatch Address" formControlName="description" value="" maxlength="3500"></textarea>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Dispatch Address" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <!-- <mat-error *ngIf="
+              hasError('description', 'required') &&
+              createDelivery.controls['description'].touched
+            ">
+                            *is required</mat-error> -->
+                        </div>
+
+
+                        <div class="inv-form-inputs">
+                            <div class="add-file-input">
+                                <label for="input-file" class="file-input">
+              <img src="./assets/img/cloud-computing.png" />
+            </label>
+                                <input type="file" id="input-file" class="d-none" accept="application/pdf" (change)="onFileSelectEvent($event,'createdelivery')" />
+                                <p class="input-title">{{viewAttachmentName}}</p>
+                                <div *ngIf="viewAttachmentName!=null && viewAttachmentName!=''">
+                                    <i class="fa fa-close fileCrossIcon" aria-hidden="true" (click)="close()"></i>
+                                </div>
+                            </div>
+
+                            <p class="input-subtitle">
+                                Upload PDF file (file size upto 4 MB)
+                            </p>
+                            <p class="input-subtitle" style="color: red;" *ngIf="invoice">
+                                Please send the physical invoice
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- <button class="submit-btn" (click)="clickSend()">
+                    <img src="./assets/img/arrow_icon_red.png" />
+                    <span>Submit Invoice</span>
+                </button> -->
+                    <div class="w-100 text-center">
+                        <!-- [disabled]="disable? true : null" -->
+                        <!-- <button type="submit" class="btn button-primary" (click)="submitInvoice()" [disabled]="createDelivery.invalid || (disable? true : null && filepresent == false) || disable? true : null "> -->
+                        <button type="submit" class="btn button-primary" (click)="submitInvoice()" [disabled]="createDelivery.invalid  || disable? true : null || filepresent == false">
+   
+                        <img _ngcontent-dnd-c329="" src="./assets/img/arrow_icon_red.png" alt="arrow icon" class="activeImg arrowIcon">
+                        <img ngcontent-dnd-c329="" src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon" class="disabledImg arrowIcon"> Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<app-dialog-model></app-dialog-model>

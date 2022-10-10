@@ -1,0 +1,8 @@
+[{
+    "PAN" : "ABCDE1234L",
+    "Email": "test@gmail.com"
+  },
+  {
+    "PAN" : "XYZAB4567A",
+    "Email" : "dummy@gmail.com"
+  }]

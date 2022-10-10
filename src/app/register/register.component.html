@@ -1,0 +1,54 @@
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    
+<div class="container">
+    <div class="bgIMG">
+        
+    <h1>Registration Form</h1>
+    <form [formGroup]="form">
+<div class="form">
+    
+    <input type="text"  placeholder="First Name" name="fname" formControlName="fname">&nbsp;
+    <input type="text"  placeholder="Last Name" name="lname"  formControlName="lname"><br><br>
+</div>
+    
+<div class="form1">
+    <input type="text" placeholder="Email" name="email"  formControlName="email">&nbsp;
+    <input type="text" placeholder="Mobile No" name="mobile"  formControlName="mobile"><br><br>
+</div>
+
+<div>
+    <input  class="adr" type="text" placeholder="Address" name="address"  formControlName="address" >
+</div>
+
+<div class="box ">
+    <b>City :</b>
+    <input type="checkbox" name="check1" formControlName="check1">Panvel
+    <input type="checkbox" name="check2" formControlName="check2">kamothe
+    <input type="checkbox" name="check3" formControlName="check3">Murud
+    <input type="checkbox" name="check4" formControlName="check4"(change)="onChangeToggle($event)">Other<br><br>
+    
+    <div *ngIf="isShown" class="row container-fluid"  id="divshow" >
+    <input class="dis" type="text" placeholder="City">
+    </div>
+</div>
+
+<div class="radio">
+
+        <b>Gender :</b>
+        <input type="radio"><b>Male</b>
+        <input type="radio"><b>Female</b>
+        <input type="radio"><b>Other</b> <br><br>
+
+    <button (click)="onClick()" class="btn success"><b>Submit</b></button>
+</div>
+    </form>
+</div>
+
+</div>
+    
+</body>
+</html> -->
+

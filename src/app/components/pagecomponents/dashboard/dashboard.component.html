@@ -1,0 +1,743 @@
+<div class="main-content margin-top">
+    <div class="container dashboardpt">
+        <!--Quick Links Start-->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card card-stats mt-0">
+                    <div class="card-header card-header-danger card-header-icon">
+                        <h3 class="card-title">Quick Links</h3>
+                    </div>
+                    <div class="card-body Quick-main">
+
+                        <div class="row justify-content-center">
+                            <div class="col-lg-3 col-md-3 col-sm-3 vendorQuickLink"
+                                [routerLink]="['/purchaseOrdersList']">
+                                <!-- icon-img -->
+                                <div class="icon-img">
+                                    <div class="imgWithNotification">
+                                        <img src="./assets/img/po_icon_grey_circle.png" />
+                                        <div class="imgWithNotification__div" *ngIf="poItemCount != 0">
+                                            {{poItemCount}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="content-text">
+                                    <h2>My POs</h2>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 vendorQuickLink" (click)="submitInvoicePopup()">
+                                <div class="icon-img">
+                                    <img src="./assets/img/create_invoices_icon_grey_circle.png" />
+                                </div>
+                                <div class="content-text">
+                                    <h2>Submit Invoices</h2>
+
+
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-3 col-md-3 col-sm-3" [routerLink]="['/invoice-list']">
+                            <div class="icon-img">
+                                <img src="./assets/img/my_invoices_grey_circle.png"/>
+                            </div>
+                            <div class="content-text">
+                                <h2>My Invoices</h2>
+                                <p>SearchInvoices</p>
+                            </div>
+                         </div> -->
+                            <div class="col-lg-3 col-md-3 col-sm-3 vendorQuickLink"
+                                [routerLink]="['/trackInvoiceList']">
+                                <div class="icon-img">
+                                    <img src="./assets/img/track_payment_icon_grey.png" />
+                                </div>
+                                <div class="content-text">
+                                    <h2>Track Invoices</h2>
+                                    <!-- <p>No recent Payments available</p> -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Quick Links End-->
+
+        <!--Dashboard Page Search Start-->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card DashboardPageSearch__card" style="margin-top: 0">
+                    <div class="card-body">
+                        <div class="DashboardPageSearch__Wrapper">
+                            <div class="DashboardPageSearch__inputWrap">
+                                <input _ngcontent-rlb-c126="" type="text" value="" (input)="getalldata(searchKey)"
+                                    [(ngModel)]="searchKey" (keydown.enter)="searchData(searchKey)"
+                                    placeholder="Search by PO Number and Invoice Number" class="form-control" />
+                            </div>
+                            <div class="DashboardPageSearch__buttonWrap">
+                                <button type="submit" class="btn button-primary" (click)="searchData(searchKey)">
+                                    <img src="./assets/img/arrow_icon_red.png" alt="arrow icon" class="arrowIcon" />
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Dashboard Page Search Start End-->
+
+        <!--Notification List Start-->
+        <!-- <div class="row">
+            <div class="col-lg-12">
+                <div class="card  card-notification">
+                    <div class="card-header card-header-default">
+                        <h4 class="card-title">Notification List</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="notificationList">
+                            <div class="notificationList__single">
+                                <div class="notificationList__head">
+                                    Purchase Order Notification
+                                    <span class="notification__date">02.07.2021</span>
+                                </div>
+                                <div class="notificationList__desc">
+                                    5 New Purchase Order list Updated
+                                </div>
+                            </div>
+                            <div class="notificationList__single">
+                                <div class="notificationList__head">
+                                    Invoice Notification
+                                    <span class="notification__date">02.07.2021</span>
+                                </div>
+                                <div class="notificationList__desc">
+                                    5 New Purchase Order list Updated
+                                </div>
+                            </div>
+                            <div class="notificationList__single">
+                                <div class="notificationList__head">
+                                    Payment Received
+                                    <span class="notification__date">02.07.2021</span>
+                                </div>
+                                <div class="notificationList__desc">
+                                    5 New Purchase Order list Updated
+                                </div>
+                            </div>
+                            <div class="notificationList__single">
+                                <div class="notificationList__head">
+                                    Track Invoice
+                                    <span class="notification__date">02.07.2021</span>
+                                </div>
+                                <div class="notificationList__desc">
+                                    5 New Purchase Order list Updated
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!--Notification List End-->
+
+
+        <!--New Purches unpaid Start-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-purchaseOrder">
+                    <div class="card-header card-header-default">
+                        <div class="poRowFlex">
+                            <div class="poRowFlex__col">
+                                <h4 class="card-title">Purchase Order(s)</h4>
+                            </div>
+                            <div class="poRowFlex__col">
+                                <div class="invStatusMainWrapper">
+
+                                    <div class="invStatusRightWrap ml-auto">
+                                        <div class="inv-status-wrapper">
+                                            <!-- Commented on 08/10/2021 as instructed ------------------ -->
+                                            <!-- <div class="inv-wrapper" (click)="sortData('ALL')">
+                                                <span class=""></span>
+                                                <p class="status-title status-link">All PO</p>
+                                            </div> -->
+                                            <!-- Commented on 08/10/2021 as instructed ------------------ -->
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-new"></span>
+                                                <p class="status-title status-link">New PO(s)</p>
+                                            </div>
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-aknowledge"></span>
+                                                <p class="status-title status-link">Accepted</p>
+                                            </div>
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-inProgress"></span>
+                                                <p class="status-title status-link">Work In Progress</p>
+                                            </div>
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-transported"></span>
+                                                <p class="status-title status-link">Shipped</p>
+                                            </div>
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-complete"></span>
+                                                <p class="status-title status-link">Complete</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <h4 class="card-title">Purchase Order<a href="javascript:void(0)" [routerLink]="['/dashboard']"><i class="material-icons float-right">mode_edit</i></a></h4> -->
+                    </div>
+                    <!-- <div class="invStatusMainWrapper" style="margin-bottom: 0px; padding-top: 5px;padding-right: 15px;">
+
+                        <div class="invStatusRightWrap ml-auto">
+                            <div class="inv-status-wrapper">
+                                <div class="inv-wrapper" (click)="sortData('ALL')">
+                                    <span class=""></span>
+                                    <p class="status-title status-link">All PO</p>
+                                </div>
+                                <div class="inv-wrapper" (click)="sortData('A')">
+                                    <span class="status-color st-aknowledge"></span>
+                                    <p class="status-title status-link">Accepted</p>
+                                </div>
+                                <div class="inv-wrapper" (click)="sortData('P')">
+                                    <span class="status-color st-inProgress"></span>
+                                    <p class="status-title status-link">Work In Progress</p>
+                                </div>
+                                <div class="inv-wrapper" (click)="sortData('S')">
+                                    <span class="status-color st-transported"></span>
+                                    <p class="status-title status-link">Shipped</p>
+                                </div>
+                                <div class="inv-wrapper" (click)="sortData('C')">
+                                    <span class="status-color st-complete"></span>
+                                    <p class="status-title status-link">Complete</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="card-body">
+                        <!-- <p>The following Purchase Orders have been recevied</p> -->
+                        <div class="table-responsive pl-forIcon">
+                            <table class="table fixedTable">
+                                <thead class=" text-primary">
+                                    <th>
+                                        <!-- <div style="margin-left: 16px;"> -->
+                                        <div class="text-left" style="margin-left: 12px;">
+                                            PO No.
+                                        </div>
+                                    </th>
+                                    <th class="text-left">
+                                        PO Date
+                                    </th>
+                                    <th class="text-right columnWidth">
+                                        PO Amt.
+                                    </th>
+                                    <th class="text-left">
+                                        <div style="margin-left: 100px;">
+                                            Messages
+                                        </div>
+                                    </th>
+                                    <th class="text-left">
+                                        <div style="margin-left: 100px;">
+                                            Info
+                                        </div>
+                                    </th>
+
+                                </thead>
+                                <tbody *ngFor="let poData of poDataList | slice:0:5; let i=index">
+                                    <tr class=""
+                                        [ngClass]="{'item-aknowledge': poData.STATUS == 'A', 'item-transported': poData.STATUS == 'S', 'item-inProgress': poData.STATUS == 'P', 'item-complete': poData.STATUS == 'C', 'item-new': poData.STATUS == 'N'}">
+                                        <td class="preventClick " style="margin-left: 12px;">
+                                            <!--customtbl-accordion-head1-->
+                                            <div class="fixedPOnumber text-left"
+                                                style="max-width: 170px; min-width: 145px; margin-left: 2px;"
+                                                *ngIf="poData.STATUS =='N'">
+                                                <img src="./assets/img/pdf_icon03.png"
+                                                    style="max-width: 30px; margin-left: 3px; cursor: pointer;"
+                                                    alt="pdf image"
+                                                    (click)="downloadPo(poData.PO_NUMBER,'singlepodownload')" />
+                                                <div style="display:inline-block;margin-left:3px">{{poData.PO_NUMBER}}
+                                                    <sup class="starRed">*</sup>
+                                                </div>
+                                            </div>
+                                            <div class="fixedPOnumber text-left"
+                                                style="max-width: 170px; min-width: 145px;" *ngIf="poData.STATUS !='N'">
+                                                <img src="./assets/img/pdf_icon03.png"
+                                                    style="max-width: 30px; margin-left: 3px; cursor: pointer;"
+                                                    alt="pdf image"
+                                                    (click)="downloadPo(poData.PO_NUMBER,'singlepodownload')" />
+                                                <div style="display:inline-block;margin-left:3px"> {{poData.PO_NUMBER}}
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="text-left upperDate fixedDate">
+                                                {{poData.DATE | date:'dd-MMM-yyyy'}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div scope="col" class="text-right">
+                                                {{poData.AMOUNT | currency:'INR'}}
+                                            </div>
+                                        </td>
+                                        <td class="text-left">
+
+
+                                            <div class="commentDiv text-left" style="margin-left: 100px;">
+                                                <!-- <div class="commentInputWrap editableFalse">
+                                                    <input type="text" class="form-control ellipsisInput" value="{{poData.QUERY}}" placeholder="pending...." readonly />
+                                                </div> -->
+                                                <div class="commentIcon"
+                                                    (click)="ShowpopupMessage(event);
+                                                 getQuerry(poData.PO_NUMBER, poData.CONTACTPERSONEMAILID);getStatusUpdate(poData.PO_NUMBER,'')"
+                                                    *ngIf="poData.STATUS != null">
+                                                    <!-- <i class="fa fa-comment" aria-hidden="true"></i> -->
+                                                    <img src="./assets/img/unreadMessages.png"
+                                                        style="max-width: 30px; cursor: pointer; display: none;"
+                                                        id="msg1ID{{i}}" />
+                                                    <img src="./assets/img/Message.png"
+                                                        style="max-width: 30px; cursor: pointer; display: none;"
+                                                        id="msgID{{i}}" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="fixedPOnumber text-left">
+                                            <div class="commentDiv text-left" style="margin-left: 90px;">
+                                                <a style="cursor: pointer;" tooltip="Plant : {{poData.PLANTNAME}}"
+                                                    placement="bottom" showDelay="300">
+                                                    <img src="./assets/img/info.png" style="padding-left: 10px;"></a>
+                                            </div>
+                                        </td>
+                                        <!-- <td> -->
+                                        <!-- *ngIf="poData.STATUS !='N'" commented on 26-10-21 -->
+                                        <!-- <div scope="col" class="text-center">
+                                                <a type="button" id="" (click)="getPoDetails(poData.PO_NUMBER , poData.DATE, poData.AMOUNT, poData.QUERY, poData.STATUS)">
+
+                                                    <div class="settingIconWrapper">
+                                                        <div class="settingIcon">
+                                                            <img class="setting-icon" src="./assets/img/view_icon.png" />
+                                                        </div>
+
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </td> -->
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                            <div *ngIf="poDataList.length==0"
+                                style="color: #777; font-size: 16px; font-weight: 600; text-align: center;">
+                                <p>No Data Found</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="w-100 text-center">
+                            <button type="submit" class="btn button-primary" [routerLink]="['/purchaseOrdersList']">
+                                <img _ngcontent-dnd-c329="" src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                    class="arrowIcon"> View All Orders
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-6">
+              <div class="card card-chart">
+                  <div class="card-header card-header-default">
+                    <h4 class="card-title">Unpaid Invoices <a href="javascript:void(0)"  [routerLink]="['/dashboard']"><i class="material-icons float-right">mode_edit</i></a></h4>
+                  </div>
+                  <div class="card-body"> -->
+            <!-- <div class="ct-chart" id="websiteViewsChart"></div> -->
+            <!-- <div style="display: block;">
+                        <canvas baseChart height="180px"
+                          [datasets]="barChartData"
+                          [labels]="barChartLabels"
+                          [options]="barChartOptions"
+                          [plugins]="barChartPlugins"
+                          [legend]="barChartLegend"
+                          [chartType]="barChartType"
+                          [colors]="chartColors">
+                          
+                        </canvas>
+                      </div>
+                  </div>
+                  <div class="card-footer">
+                      <div class="stats showalltr">
+                         <a href="javascript:void(0)" [routerLink]="['/invoice-list']"><i class="material-icons">arrow_right_alt</i> Show All Invoices</a> 
+                      </div>
+                  </div>
+              </div>
+          </div>
+         
+      </div>   -->
+            <!--New Purches unpaid End-->
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-latestInvoice">
+                    <div class="card-header card-header-default">
+                        <div class="poRowFlex">
+                            <div class="poRowFlex__col">
+                                <h4 class="card-title"> Invoice(s)
+                                    <a href="javascript:void(0)" [routerLink]="['/dashboard']">
+                                        <!--<i class="material-icons float-right">mode_edit</i>-->
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="poRowFlex__col">
+                                <div class="invStatusMainWrapper">
+                                    <div class="invStatusRightWrap ml-auto">
+                                        <div class="inv-status-wrapper">
+                                            <!-- <div class="inv-wrapper">
+                                                <span class=""></span>
+                                                <p class="status-title status-link">All Invoices</p>
+                                            </div> -->
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-managerpending"></span>
+                                                <p class="status-title status-link">Pending</p>
+                                            </div>
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-shortQuantity"></span>
+                                                <p class="status-title status-link">Short Quantity</p>
+                                            </div>
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-rejected"></span>
+                                                <p class="status-title status-link">Returned</p>
+                                            </div>
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-hold"></span>
+                                                <p class="status-title status-link">On Hold</p>
+                                            </div>
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-accepted"></span>
+                                                <p class="status-title status-link">Approved</p>
+                                            </div>
+                                            <!-- <div class="inv-wrapper">
+                                                <span class="status-color st-rejected"></span>
+                                                <p class="status-title status-link">Rejected</p>
+                                            </div> -->
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-transported"></span>
+                                                <p class="status-title status-link">Processed</p>
+                                            </div>
+
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-complete partialyLarge"
+                                                    style="width: 17px; height: 20px;"></span>
+                                                <span class="status-color st-incomplete st-grey partialySmall"
+                                                    style="width: 8px; height: 20px; background: #024aec;"></span>
+                                                <p class="status-title status-link">Partially Paid</p>
+                                            </div>
+                                            <div class="inv-wrapper">
+                                                <span class="status-color st-complete"></span>
+                                                <p class="status-title status-link">Paid</p>
+                                            </div>
+
+                                            <!-- <div class="inv-wrapper">
+                                                <span class="status-color st-hold"></span>
+                                                <p class="status-title status-link">On Hold</p>
+                                            </div> -->
+
+                                            <!-- <div class="inv-wrapper">
+                                                <span class="status-color st-grn"></span>
+                                                <p class="status-title status-link">GRN</p>
+                                            </div> -->
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <h4 class="card-title">Invoices<a href="javascript:void(0)" [routerLink]="['/dashboard']"><i class="material-icons float-right">mode_edit</i></a></h4> -->
+                    </div>
+                    <div class="card-body">
+                        <!-- <p>The following Purchase Orders have been recevied</p> -->
+                        <div class="table-responsive  pl-forIcon">
+                            <table class="table fixedTable">
+                                <thead class=" text-primary">
+                                    <th scope="col" class="text-left">
+                                        <div style="margin-left: 12px;">
+                                            Invoice No.
+                                        </div>
+
+                                    </th>
+                                    <th scope="col" class="text-left">
+                                        Invoice Date
+                                    </th>
+                                    <th scope="col" class="text-left">
+                                        <div style="margin-left: 50px;">
+                                            PO No.
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="text-right">
+                                        Invoice Amt.
+                                    </th>
+
+                                    <th scope="col" class="text-right">
+                                        <div style="margin-left: 50px;">
+                                            Paid Amt.
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="text-left">
+                                        <div style="margin-left: 50px;">
+                                            Messages
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="text-left">
+                                        <div style="margin-left: 50px;">
+                                            Info
+                                        </div>
+                                    </th>
+                                </thead>
+                                <tbody *ngFor="let invData of invoiceDataList | slice:0:5; let i=index">
+                                    <tr class=""
+                                        [ngClass]="{'item-aknowledge': invData.STATUS == 'N', 
+                                    'item-accepted': invData.STATUS=='A', 
+                                    'item-rejected': invData.STATUS=='R',
+                                    'item-managerpending': invData.STATUS=='P','item-hold': invData.STATUS=='O','item-transported': invData.STATUS == 'PRO','item-returned':invData.STATUS=='V',
+                                    'item-pending': invData.STATUS=='M','partiallyRow': invData.STATUS == 'PP','item-grn':invData.STATUS=='G','item-complete': invData.STATUS == 'PD',
+                                    'item-shortQuantity':((invData.STATUS !='A' && invData.STATUS !='P' 
+                                    && invData.STATUS !='WP' && invData.STATUS !='O' && invData.STATUS !='M' && invData.STATUS !='PRO' && invData.STATUS !='G' && invData.STATUS !='PP') && invData.CREDITADVICENO != null)}">
+                                        <td class="preventClick">
+                                            <!-- <div class="fixedPOnumber" class="text-center">
+                                                <a  style="cursor: pointer;" (click)="getInvDetails(invData.INVOICENUMBER)"> {{invData.INVOICENUMBER}} </a>
+                                            </div> -->
+                                            <div class="">
+                                                <div class="fixedPOnumber" style="max-width: 190px;min-width: 185px;">
+                                                    <img src="./assets/img/pdf_icon03.png"
+                                                        style="max-width: 30px; margin-left: 3px; cursor: pointer;"
+                                                        alt="pdf image"
+                                                        (click)="download(invData.SAVEDFILENAME,'listdownload',invData.ACTUALFILENAME)" />
+                                                    <a style="cursor: pointer;" class="linkTable"
+                                                        (click)="getInvDetails(invData.INVOICENUMBER,invData.PO_NUMBER)">
+                                                        {{invData.INVOICENUMBER}} </a>
+
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-left fixedDateCol">
+                                                {{invData.INVOICEDATE | date:'dd-MMM-yyyy' }}
+                                            </div>
+                                        </td>
+                                        <td class="text-left">
+                                            <div style="margin-left: 50px;">
+                                                <a class="linkTable"
+                                                    (click)="downloadPo(invData.PO_NUMBER,'singlepodownload')">{{invData.PO_NUMBER}}</a>
+                                                <!-- 25,000 -->
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-right">
+
+                                                {{invData.TOTALAMOUNT | currency:'INR' }}
+                                            </div>
+                                        </td>
+
+                                        <td class="text-right" style="margin-left: 50px; ">
+                                            <div>
+                                                <!-- {{invData.TOTALAMOUNT}} -->
+                                                <!-- {{invData.PAIDAMOUNT}} -->
+                                                <!-- 2000 -->
+                                                {{invData.PAYMENTAMOUNT | currency:'INR'}}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="text-left">
+                                                <div class="commentDiv" style="margin-left: 50px;">
+                                                    <div class="commentIcon"
+                                                        (click)="ShowpopupMessage(event);
+                                                    getInvMessages(invData.PO_NUMBER, invData.INVOICENUMBER,invData.CONTACTPERSON);getStatusUpdate(invData.PO_NUMBER, invData.INVOICENUMBER)"
+                                                        *ngIf="invData.STATUS != null">
+                                                        <img src="./assets/img/unreadMessages.png"
+                                                            style="max-width: 30px; cursor: pointer; display: none;"
+                                                            id="msg12ID{{i}}" />
+                                                        <img src="./assets/img/Message.png"
+                                                            style="max-width: 30px; cursor: pointer;"
+                                                            id="msgID11{{i}}" />
+                                                        <!-- <i class="fa fa-comment" aria-hidden="true"></i> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="fixedPOnumber text-left">
+                                            <div class="commentDiv" style="margin-left: 40px;">
+                                                <a style="cursor: pointer;" tooltip="Plant : {{invData.PLANTNAME}}"
+                                                    placement="bottom" showDelay="300">
+                                                    <img src="./assets/img/info.png" style="padding-left: 10px;"></a>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf=" invoiceDataList.length==0 "
+                                style="color: #777; font-size: 16px; font-weight: 600; text-align: center; ">
+                                <p>No Data Found</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer ">
+                        <div class="w-100 text-center ">
+                            <button type="submit " class="btn button-primary " [routerLink]="[ '/trackInvoiceList'] ">
+                                <img _ngcontent-dnd-c329=" " src="./assets/img/arrow_icon_red.png " alt="arrow icon "
+                                    class="arrowIcon "> View All Invoices
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- temporary hide 15 march 21 -->
+    <!-- <div class="timescape-essentials ">
+        <ul class="timescape-essentialsUl ">
+            <li class="rhsicon rhs-sidenav " data-toggle="tooltip " data-placement="left " title=" " data-original-title="Need help ? ">
+                <div class="arrowImg activeDefault rhs-sidenavIcon ">
+                    <img src="./assets/img/arrow.png " alt=" " />
+                </div>
+                <span class="li-seperator "></span>
+            </li>
+            <li class="rhsicon rhs-grid " data-toggle="tooltip " data-placement="left " title=" " data-original-title="Quick Links ">
+                <div class="rhs-grid-icon rhs-round rhsHover ">
+                    <img src="./assets/img/po_icon_grey.png " alt="rhs_icon " />
+                </div>
+                <span class="li-seperator "></span>
+            </li>
+            <li class="rhsicon rhs-asktivia " data-toggle="tooltip " data-placement="left " title=" " data-original-title=" ">
+                <div class="rhs-round rhsHover ">
+                    <img src="./assets/img/track_po.png " alt=" " />
+                </div>
+            </li>
+        </ul>
+    </div> -->
+
+    <!-- End temporary hide 15-03-21  -->
+
+
+    <!-- bootstrap Modal -->
+    <div class="modal fade customBootstrapModal" id="popupComment" data-backdrop="static" data-keyboard="false"
+        tabindex="-1" aria-labelledby="popupCommentLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        (click)="message.value=' ';ClosepopupMessage($event)">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="confirmation-title text-center">Messages</div>
+                </div>
+                <div class="modal-body  pt-0">
+                    <div class="confirmationpopup">
+                        <div class="invoice-form p-0 messageBoxbBottom">
+                            <div class="inv-form-inputs mb-mt mt-0">
+                                <div class="confirmation-formLabel">Enter Your Message</div>
+                                <textarea class="form-control" name="" id="" cols="30" rows="2" #message
+                                    (keyup)="Check(message)" placeholder="Type here..." required
+                                    pattern="[a-zA-Z0-9\s]+"></textarea>
+                            </div>
+                        </div>
+                        <!-- <div class="btn btn-primary confirmationNo">
+                            <button [disabled]="validate" > <img src="./assets/img/arrow_icon_red.png" alt="arrow icon" class="arrowIcon" />Submit</button>
+                        </div> -->
+
+                        <!-- data-dismiss="modal" -->
+                        <div class="text-center w-100"> <button [disabled]="validate|| message.value ==''"
+                                class="btn button-primary confirmationNo"
+                                (click)="sendConfirmation('N',message.value,'SubmitQuery', topic);message.value='';ClosepopupMessage($event)">
+                                <img src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                    class="activeImg arrowIcon" />
+                                <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                    class="disabledImg arrowIcon">
+                                Submit</button></div>
+
+                    </div>
+
+                    <!-- <a [routerLink]="['/poOrderView']"> -->
+                    <p class="ponum pb-3">PO No : {{topic}}</p>
+                    <!-- </a> -->
+                    <div class="messageChatWrapper">
+                        <!-- Commented on 20 oct 2021 Angaj -->
+                        <!-- <div *ngFor="let message of messageList.slice().reverse();let i=index"> -->
+                        <div *ngFor="let message of messageList;let i=index">
+                            <div *ngIf="messageList.length==0"
+                                style="color: #777; font-size: 16px; font-weight: 600; text-align: center;">
+                                <p class="text-center w-100">No Data Found</p>
+                            </div>
+                            <div class="chatboxWrapper">
+                                <div class="chat__single">
+                                    <div class="chat__head">
+                                        <span class="messengerName">{{message.SENDER}} </span>
+                                        <span class="chat__date">
+                                            <span class="upperDate">({{message.CREATEDON |
+                                                date:'dd-MMM-yyyy'}})</span></span>&nbsp;
+                                        <span class="chat-time">{{message.CREATEDON | date:'mediumTime'}}</span>
+                                    </div>
+                                    <div class="chat__desc">{{message.MESSAGETEXT}}</div>
+                                </div>
+                                <!-- <div class="chat__single bgVendor" *ngIf="i%2==1">
+                                        <div class="chat__head">
+                                            <span class="messengerName">Buyer Name- {{message.SENDER}}</span>
+                                            <span class="chat__date">
+                                        <span class="chat-time">10:30AM</span>
+                                            <span class="upperDate">{{message.CREATEDON | date:'dd-MMM-yyyy'}}</span></span>
+                                        </div>
+                                        <div class="chat__desc">{{message.MESSAGETEXT}}</div>
+                                    </div> -->
+                                <!-- <div class="chat__single">
+                                <div class="chat__head">
+                                    <span class="messengerName">Buyer Name - General Manager</span>
+                                    <span class="chat__date"><span class="chat-time">10:30AM</span>
+                                    <span>15/03/2021</span></span>
+                                </div>
+                                <div class="chat__desc">
+                                    When will you complete the development
+                                </div>
+                            </div>
+                            <div class="chat__single bgVendor">
+                                <div class="chat__head">
+                                    <span class="messengerName">Vendor Name</span>
+                                    <span class="chat__date"><span class="chat-time">10:30AM</span>
+                                    <span>15/03/2021</span></span>
+                                </div>
+                                <div class="chat__desc">started working on UI design</div>
+                            </div>
+                            <div class="chat__single">
+                                <div class="chat__head">
+                                    <span class="messengerName">Buyer Name - General Manager</span>
+                                    <span class="chat__date"><span class="chat-time">10:30AM</span>
+                                    <span>15/03/2021</span></span>
+                                </div>
+                                <div class="chat__desc">
+                                    When will you complete the development
+                                </div>
+                            </div>
+                            <div class="chat__single bgVendor">
+                                <div class="chat__head">
+                                    <span class="messengerName">Vendor Name</span>
+                                    <span class="chat__date"><span class="chat-time">10:30AM</span>
+                                    <span>15/03/2021</span></span>
+                                </div>
+                                <div class="chat__desc">started working on UX design</div>
+                            </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div> -->
+            </div>
+        </div>
+    </div>
+    <app-dialog-model></app-dialog-model>

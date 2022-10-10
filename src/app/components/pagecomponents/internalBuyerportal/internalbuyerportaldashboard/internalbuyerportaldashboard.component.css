@@ -1,0 +1,197 @@
+/* ============================================== */
+
+
+/* dashboard search css  */
+
+
+/* ============================================== */
+
+@media (max-width: 767px) {
+    .dashboardpt {
+        padding-top: 30px;
+    }
+}
+
+.DashboardPageSearch__Wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.DashboardPageSearch__inputWrap {
+    flex: 1;
+}
+
+.DashboardPageSearch__buttonWrap {
+    margin-left: 15px;
+    /* flex: 0 0 130px; */
+}
+
+.DashboardPageSearch__Wrapper input {
+    border: 2px solid #dce1e4;
+    padding: 10px 20px;
+}
+
+.DashboardPageSearch__card .card-body {
+    padding: 20px 20px;
+}
+
+@media (max-width: 767px) {
+    .DashboardPageSearch__Wrapper {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .DashboardPageSearch__inputWrap {
+        flex-basis: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .Quick-main .justify-content-center {
+        justify-content: flex-start !important;
+    }
+    .vendorQuickLink {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+.vendorQuickLink {
+    cursor: pointer;
+}
+
+
+/* ============================================== */
+
+
+/* notification dashboard css  */
+
+
+/* ============================================== */
+
+.notificationList__single {
+    margin-bottom: 30px;
+    padding: 7px;
+    background: #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.notificationList__head {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.notificationList__desc {
+    font-size: 14px;
+}
+
+.notification__date {
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.card-stats .card-header.card-header-danger {
+    background: #cc0000;
+}
+
+.card-stats .card-header .card-title {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.card-stats .card-header,
+.card-notification .card-header,
+.card-purchaseOrder .card-header,
+.card-latestInvoice .card-header {
+    padding: 20px 40px !important;
+}
+
+.card-stats .card-title,
+.card-notification .card-title,
+.card-purchaseOrder .card-title,
+.card-latestInvoice .card-title {
+    font-size: 24px;
+    margin-bottom: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+
+/* ============================================== */
+
+
+/* media css start here  */
+
+
+/* ============================================== */
+
+@media (max-width: 992px) {
+    .card-stats .card-title,
+    .card-notification .card-title,
+    .card-purchaseOrder .card-title,
+    .card-latestInvoice .card-title {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-stats .card-header,
+    .card-notification .card-header,
+    .card-purchaseOrder .card-header,
+    .card-latestInvoice .card-header {
+        padding: 15px 15px !important;
+    }
+}
+
+@media (max-width: 475px) {
+    .notification__date {
+        margin-left: 0;
+        display: block;
+    }
+}
+
+
+/* #MatSelect .mat-form-field-wrapper
+  {
+    padding-bottom: 0px !important
+  } */
+
+.card-chart {
+    min-height: 434px !important;
+    border-radius: 20px !important
+}
+
+.card-chart .card-header {
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
+    padding: 14px 30px 10px !important;
+}
+
+.card-chart .card-header .inv-form-inputs {
+    margin: 0;
+}
+
+.card-chart .card-header .inv-form-inputs .mat-form-field {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.card-chart .card-header ::ng-deep .mat-form-field-infix {
+    padding: 0;
+}
+
+.defaultSelectD select {
+    -moz-appearance: auto;
+    -webkit-appearance: auto;
+    background: transparent;
+    background-image: none !important;
+    border: none;
+    outline: 0;
+    border: 0;
+    font-size: 24px;
+    font-weight: 600;
+    padding: 0;
+}

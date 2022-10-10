@@ -1,0 +1,436 @@
+<div class="modal" id="myModal" tabindex="-1" role="dialog" *ngIf="(condition =='success' || condition =='error') && page !=''" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content popup confirmationPopup">
+            <!-- <a class="close " data-dismiss="modal" aria-label="Close" href="#/purchaseOrdersList">&times;</a> -->
+            <div class="modal-header">
+                <h5 class="modal-title confirmation-title" *ngIf="condition =='success'">Confirmation</h5>
+                <h5 class="modal-title confirmation-title" *ngIf="condition =='error'">Error</h5>
+
+                <!-- <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+            </div>
+            <div class="modal-body">
+                <p class="confirmation-para">
+                    {{message}}
+                </p>
+            </div>
+            <div class="modal-footer button__wrapper" style="justify-content: center;">
+                <!-- <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+
+                <!--<a class="btn btn-primary confirmationNo" (click)="showSubmitBox($event)">No</a> -->
+                <a class="btn btn-primary confirmationNo" *ngIf="condition =='success'" id="btnOk" data-dismiss="modal" (click)="dismissModal()">OK</a>
+                <a class="btn btn-primary confirmationNo" *ngIf="condition =='error'" id="btnOk" data-dismiss="modal" (click)="dismissModal()">TRY AGAIN</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="modal pmodals information" id="myModal1" *ngIf="condition == 'confirm' && page != ''" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>Confirmation</h4>
+                <p>{{message}}</p>
+                <button type="button" class="btn btn-primary" id="btnConfirmOk" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" id="btnConfirmBack" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<!-- Confirmation PopUP -->
+<div id="myModal1" class="overlay" *ngIf="condition == 'confirm' && page != ''">
+    <div class="popup confirmationPopup">
+        <!-- <a class="close" (click)="closePopup()">&times;</a><br /> -->
+        <div class="container">
+            <div class="confirmationpopup mb-2">
+                <div class="confirmation-title">Confirmation</div>
+                <p class="confirmation-para">
+                    {{message}}
+                </p>
+                <div class="button__wrapper">
+                    <a class="btn btn-primary button-primary" id="btnConfirmOk">Yes</a>
+                    <a class="btn btn-primary button-primary confirmationNo" (click)="closePopup()" id="btnConfirmBack">No</a>
+                </div>
+            </div>
+
+            <!-- For rejected only -->
+            <div class="confirmation_submit" id="confirmationNoAction" style="display:none;">
+                <div class="invoice-form p-0">
+                    <div class="inv-form-inputs mb-mt mt-2" style="width: 100%;">
+                        <div class="confirmation-formLabel">
+                            Remarks
+                        </div>
+                        <mat-form-field appearance="none">
+                            <textarea matInput placeholder="Type here..." style="width: 100%;" id="remarks" #messages value="" (keyup)="Check(messages)"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <div id="submitButton" class="text-center w-100"> <button [disabled]="validate || messages.value ==''" class="btn btn-primary button-primary confirmationNo" (click)="sendRemark(messages.value); messages.value=' ';closePopup($event)">
+                            <img src="./assets/img/arrow_icon_red.png" alt="arrow icon" class="activeImg arrowIcon" />
+                            <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                class="disabledImg arrowIcon">
+                            Submit</button></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Submit Invoice Popup-->
+<div id="invoicePopup" class="overlay">
+    <div class="popup customPopup__small">
+        <div class="container">
+            <div class="confirmationpopup mb-2">
+                <div class="confirmation-title text-center ">Submit Invoice ?
+                    <button type="button" class="close" (click)="closeSubmitInvoicePopUp()">&times;</button>
+                </div>
+                <!-- <p class="confirmation-para text-center">
+                    would like to submit your invoice
+                </p> -->
+                <div class="radioWrapper submitRadioButton" (change)="submitInvoice($event)" style=" margin-top: 35px;">
+                    <p>
+                        <input type="radio" id="withPo" value="withPo" name="itrfield" />
+                        <label for="withPo">With PO <span *ngIf="invoiceStatus == 'withPo'">*</span></label>
+                        <input type="radio" id="withoutPo" value="withoutPo" name="itrfield" />
+                        <label for="withoutPo" style="margin-left:14px">Without PO</label>
+                        <!-- <input type="radio" id="bulkinvoice" value="bulkinvoice" name="itrfield" />
+                        <label for="bulkinvoice">Bulk Invoice Upload</label> -->
+                    </p>
+                </div>
+                <div class="sbmt_Invoice">
+                    <button type="submit" class="btn button-primary" (click)="submit()" [disabled]="invoiceStatus == ''">
+                        <img src="./assets/img/arrow_icon_red.png" alt="arrow icon" class="activeImg arrowIcon">
+                        <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                            class="disabledImg arrowIcon">
+                        Submit </button>
+                </div>
+                <p style="font-size: 13px;" *ngIf="invoiceStatus == 'withPo'"> * You will be redirected to the Purchase Orders page</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="grnAdviceModal" tabindex="-1" role="dialog" *ngIf="(condition =='success' || condition =='error') && page !=''" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document" style="max-width: 600px;">
+        <div class="modal-content popup confirmationPopup">
+            <!-- <a class="close " data-dismiss="modal" aria-label="Close" href="#/purchaseOrdersList">&times;</a> -->
+            <div class="modal-header">
+                <h5 class="modal-title confirmation-title" *ngIf="condition =='success'">Confirmation</h5>
+                <h5 class="modal-title confirmation-title" *ngIf="condition =='error'">Error</h5>
+
+                <!-- <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+            </div>
+            <div class="modal-body">
+                <p class="confirmation-para">
+                    GRN No.{{grnNumber}} created for Invoice No. {{invoiceNumber}} <br><br> Request for Credit Note sent to the Vendor</p>
+            </div>
+            <div class="modal-footer button__wrapper" style="justify-content: center;">
+                <!-- <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+
+                <!--<a class="btn btn-primary confirmationNo" (click)="showSubmitBox($event)">No</a> -->
+                <a class="btn btn-primary confirmationNo" *ngIf="condition =='success'" id="btnOk" data-dismiss="modal" (click)="dismissModal()">OK</a>
+                <a class="btn btn-primary confirmationNo" *ngIf="condition =='error'" id="btnOk" data-dismiss="modal" (click)="dismissModal()">TRY AGAIN</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- bootstrap Modal -->
+
+
+<!-- <div class="modal fade customBootstrapModal" id="popupComment" data-backdrop="static"
+
+ data-keyboard="false" tabindex="-1" aria-labelledby="popupCommentLabel" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+     <div class="modal-content">
+         <div class="modal-header">
+
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                 (click)="message.value=' ';closePopup($event)">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+             <div class="confirmation-title text-center">Bulk upload Invoice with PO</div>
+
+
+         </div>
+         <br>
+         <div class="modal-body  pt-0">
+             <div class="confirmationpopup">
+                 <div class="invoice-form p-0 messageBoxbBottom">
+                     <div class="inv-form-inputs mb-mt mt-0">
+
+                         <div class="confirmation-formLabel ">
+                             <div class="headingFileUpload">
+                                 Please select .pdf file to upload
+                             </div>
+                             <div class="inv-form-inputs mb-mt FileUploadIconWrap">
+                                 <div class="add-file-input ">
+                                     <label for="input-file2" class="file-input"
+                                         *ngIf="viewAttachmentName==null || viewAttachmentName==''">
+                                         <img src="./assets/img/cloud-computing.png"
+                                             style="cursor: pointer; " />
+                                     </label>
+                                     <input type="file" id="input-file2" class="d-none"
+                                         accept=".pdf" formcontrolname="attachments"
+                                         (change)="onFileSelectEventforinvoiceupload($event,'invoice')">
+                                     <p class="input-title">{{viewAttachmentName}}</p>
+                                     <div
+                                         *ngIf="viewAttachmentName!=null && viewAttachmentName!=''">
+                                         <i class="fa fa-close" aria-hidden="true"
+                                             (click)="close()"></i>
+                                     </div>
+
+
+                                 </div>
+                             </div>
+                         </div>
+
+
+
+
+                     </div>
+
+                 </div>
+             </div>
+         </div>
+
+     </div>
+ </div>
+</div> -->
+
+
+<!-- bootstrap Modal -->
+
+<!-- <div *ngIf="invoiceStatus == 'bulkinvoice'"> -->
+<!-- <div class="modal fade customBootstrapModal" id="bulkupload" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="popupCommentLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="message.value=' ';closePopup($event)">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                <div class="confirmation-title text-center">Bulk upload Invoice with PO</div>
+
+
+            </div>
+            <br>
+
+
+        </div>
+
+    </div>
+</div> -->
+<!-- <div class="modal fade customBootstrapModal" id="popupComment" data-backdrop="static"
+data-keyboard="false" tabindex="-1" aria-labelledby="popupCommentLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+        <div class="modal-header">
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="message.value=' ';closePopup($event)">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="confirmation-title text-center">Bulk upload Invoice with PO</div>
+
+
+        </div>
+        <br>
+        <div class="modal-body  pt-0">
+            <div class="confirmationpopup">
+                <div class="invoice-form p-0 messageBoxbBottom">
+                    <div class="inv-form-inputs mb-mt mt-0">
+
+                        <div class="confirmation-formLabel ">
+                            <div class="headingFileUpload">
+                                Please select multiple .pdf files to upload
+                            </div>
+                            <div class="inv-form-inputs mb-mt FileUploadIconWrap">
+                                <div class="add-file-input ">
+                                    <label for="input-file2" class="file-input"
+                                        *ngIf="viewAttachmentName==null || viewAttachmentName==''">
+                                        <img src="./assets/img/cloud-computing.png"
+                                            style="cursor: pointer; " />
+                                    </label>
+                                    <input type="file" id="input-file2" class="d-none"
+                                        accept=".pdf" formcontrolname="attachments"
+                                        (change)="onFileSelectEventforinvoiceupload($event,'invoice')">
+                                    <p class="input-title">{{viewAttachmentName}}</p>
+                                    <div
+                                        *ngIf="viewAttachmentName!=null && viewAttachmentName!=''">
+                                        <i class="fa fa-close" aria-hidden="true"
+                                            (click)="close()"></i>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="w-100 text-center">
+                            <button type="submit" class="btn button-primary" (click)="uploadfile($event)" [disabled]="!isUploadpdf ||!isUpload">
+                <img _ngcontent-dnd-c329="" src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                class="activeImg arrowIcon">
+                <img ngcontent-dnd-c329="" src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                class="disabledImg arrowIcon"> Upload invoice files</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div> -->
+
+<!-- <div *ngIf="invoiceStatus == 'bulkinvoice'"> -->
+<div class="modal fade customBootstrapModal" id="bulkupload" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="popupCommentLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="border-radius:20px;">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closePopup();">
+                <span aria-hidden="true">&times;</span>
+            </button>
+                <div class="confirmation-title text-center">Bulk upload Invoice with PO</div>
+
+
+            </div>
+            <br>
+            <div class="modal-body  pt-0">
+                <div class="confirmationpopup">
+                    <div class="invoice-form p-0 messageBoxbBottom">
+                        <div class="inv-form-inputs mb-mt mt-0">
+                            <div class="confirmation-formLabel noBorder">
+
+                                <div class="headingFileUpload">
+                                    Please select all invoice .pdf files to upload
+                                </div>
+                                <div class="inv-form-inputs mb-mt FileUploadIconWrap">
+                                    <div class="add-file-input pdfFileListing">
+                                        <label for="input-file34" class="file-input" *ngIf="csvupload == false">
+                                            <img src="./assets/img/cloud-computing.png" style="cursor: pointer; " />
+                                        </label>
+
+                                        <input type="file" id="input-file34" class="d-none" accept=".pdf" multiple="multiple" (change)="onFileChangedBulk($event,'invoice')" #myInput (click)="myInput.value=''">
+                                        <ul class="listFiles">
+                                            <li *ngFor="let selected of ArrayOfSelectedbulkpdfFilename;let i=index">
+                                                {{selected}}
+                                                <span *ngIf="csvupload == false"> <i class="fa fa-close fileCrossIcon" aria-hidden="true" (click)="removeitem(i,'invoice');myInput.value=''">
+
+                                                    </i> </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-100 text-center">
+                                <button type="submit" class="btn button-primary" (click)="uploadfile($event,'invoice')" [disabled]="ArrayOfSelectedbulkpdfFile.length == 0 || csvupload">
+                                    <img src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                    class="activeImg arrowIcon">
+                                <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                    class="disabledImg arrowIcon">Upload invoice files</button>
+                            </div>
+                            <div *ngIf="supportenabled" class="border-style">
+                                <div class="confirmation-formLabel noBorder">
+
+                                    <div class="headingFileUpload">
+                                        Please select all supporting files(if any) to upload
+                                    </div>
+                                    <div class="inv-form-inputs mb-mt FileUploadIconWrap">
+                                        <div class="add-file-input pdfFileListing">
+                                            <label for="input-file43" class="file-input" *ngIf="suppdone == false">
+                                            <img src="./assets/img/cloud-computing.png" style="cursor: pointer; " />
+                                        </label>
+
+                                            <input type="file" id="input-file43" class="d-none" multiple="multiple" (change)="onFileChangedBulk($event,'support')" #myInput2>
+                                            <ul class="listFiles">
+                                                <li *ngFor="let selected of ArrayOfSelectedsupportbulkpdfFilename;let i=index">
+                                                    {{selected}}
+                                                    <span *ngIf="ArrayOfSelectedsupportbulkpdfFilename.length != 0 && suppdone == false"><i class="fa fa-close fileCrossIcon" aria-hidden="true" (click)="removeitem(i,'support');myInput2.value=''">
+
+                                                    </i>
+                                                </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w-100 text-center">
+                                    <button type="submit" class="btn button-primary" (click)="uploadfile($event,'support')" [disabled]="ArrayOfSelectedsupportbulkpdfFile.length == 0 || suppdone  ">
+                                    <img src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                    class="activeImg arrowIcon">
+                                <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                    class="disabledImg arrowIcon">Upload supporting files</button>
+                                    <button type="submit" class="btn button-primary" (click)="removesuppanddisablebutton($event)" [disabled]="suppdone == true">
+                                        <img src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                        class="activeImg arrowIcon">
+                                    <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                        class="disabledImg arrowIcon">Skip supporting files to upload</button>
+                                </div>
+                            </div>
+                            <div *ngIf='csvupload && suppdone' class="border-style">
+
+                                <div class="confirmation-formLabel">
+                                    <div class="headingFileUpload">
+                                        Please select .csv file to upload
+                                    </div>
+                                    <div class="inv-form-inputs mb-mt FileUploadIconWrap">
+                                        <div class="add-file-input">
+                                            <label for="input-file2" class="file-input" *ngIf="CSVFileName==null || CSVFileName==''">
+                                        <img src="./assets/img/cloud-computing.png" style="cursor: pointer; " />
+                                    </label>
+                                            <input type="file" id="input-file2" class="d-none" accept=".csv" (change)="onFileSelectEvent($event,'invoice')" #myInput3>
+                                            <p class="input-title">{{CSVFileName}}</p>
+                                            <div *ngIf="CSVFileName!=null && CSVFileName!='' && submitted == false">
+                                                <i class="fa fa-close fileCrossIcon" aria-hidden="true" (click)="close();myInput3.value=''"></i>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="w-100 text-center">
+                                    <button type="submit" class="btn button-primary" (click)="uploadcsvfile($event)" [disabled]="CSVFileName == null || CSVFileName == ''|| submitted">
+                                    <img src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                    class="activeImg arrowIcon">
+                                <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                    class="disabledImg arrowIcon">Upload CSV file</button>
+                                </div>
+
+                                <div>
+                                    <ul *ngFor="let name of errorlist" class="border-style">
+                                        <li><b>Invoice No =></b> {{ name.invoicenumber}} <div><b>Message =></b> {{name.message}}</div></li>
+                                    </ul>
+                                    <ul *ngIf="flag == 'success'" class="border-style"><b>Invoices uploaded ==> {{insertcount}}</b></ul>
+                                    <ul *ngIf="flag == 'success'" ><b>Invoices failed to upload ==> {{errorcount}}</b></ul>
+                                    <ul></ul>
+
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- </div> -->
+
+
+<!-- </div> -->

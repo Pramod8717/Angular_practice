@@ -1,0 +1,283 @@
+<div class="main-content margin-top">
+    <div class="container internalpt">
+        <div class="inv-page-container">
+            <div class="inv-page-wrapper container">
+                <div class="inv-page-header" [routerLink]="['/internaltrackInvoiceList']">
+                    <img class="left-arrow" src="./assets/img/arrow_icon_grey_prev.png" />
+                    <p class="invoice-number">INV234561</p>
+                </div>
+                <!-- <div class="formWrapper">
+                  <div class="container">
+                    <div class="formWrapper__box">
+                      <div class="formWrapper__heading"> <div class="formWrapperHead_img"><img  src="images/arrow_icon_grey_prev.png" class="left-arrow"></div> INV9876541</div>
+                      </div>
+                    </div>
+                  </div> -->
+                <div class="formWrapper__content pb-0 ">
+                    <div class="sectionBorder">
+                        <div class="invoice-form ">
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Vendor Name : <span>IBM - India</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Buyer Name : <span>John Deo</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Email ID : <span>sachinmehta@timesgroup.com</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Invoice No : <span>INV9876541</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Invoice Date : <span>10.12.2020</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Status : <span>GRN</span> <span class="listImage">
+                              <img src="../../../../../assets/img/greentick.png" alt="greentick">
+                            </span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Invoice Amount : <span>Rs. 5,00,000</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">IGST : <span>Rs. 10,000</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">CGST : <span>Rs. 10,000</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">SGST : <span>10.000</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Total Amout : <span>5,00,000</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Description: <span>Dummy Text for printing and typing Industry</span></p>
+                            </div>
+                            <!-- <div  class="inv-form-inputs w-100">
+                            <div  class="add-file-input">
+                              <label  for="input-file" class="file-input">
+                              </label>
+                              <input  type="file" id="input-file" class="d-none">
+                              <p  class="input-title">Attached testinvoice.pdf <span class="listImage pl-2">
+                                <img src="../../../../../assets/img/download.png" alt="download">
+                              </span></p> 
+                             
+                            </div>
+                              <p  class="input-subtitle">Upload your E-invoice doc,pdf below 4mb</p>
+                          </div>  -->
+                            <div class="inv-form-inputs">
+                                <div class="add-file-input">
+                                    <label for="input-file" class="file-input">
+                                  </label>
+                                    <input type="file" id="input-file" class="d-none">
+                                    <p class="input-title">Attached testinvoice.pdf <span class="listImage pl-2">
+                                    <img src="../../../../../assets/img/download.png" alt="download">
+                                  </span></p>
+
+                                </div>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">User: <span>Sachin Mehta</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sectionBorder">
+                        <div class="formWrapper__heading no-bg pl-0">Account Details</div>
+                        <div class="invoice-form">
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Account No : <span>00002987691</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Account Holder : <span>Aditi More</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Bank Name : <span>Axis Bank</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Bank Branch : <span>Malad East</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Account Type : <span>Saving</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">IFSC Code : <span>UTIB0000004</span></p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <div class="invoice-form" id="more-Manager">
+                            <div class="inv-form-inputs">
+
+                                <div class="form-group">
+                                    <div class="customFormGroup">
+                                        <label style="font-size: 20px; font-weight: 600; color: black;">User Approval</label>
+                                        <select class="form-control form-select" aria-label="Default select example">
+                                  <option selected disabled>--Select--</option>
+                                  <option value="1">Submitted</option>
+                                  <option value="1">Accepted</option>
+                                </select>
+                                        <div class="wizard-form-error"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="inv-form-inputs">
+                                <div class="form-group">
+                                    <div class="customFormGroup" disabled>
+                                        <label style="font-size: 20px; font-weight: 600; color: black;">Manager Approval</label>
+                                        <select class="form-control form-select" aria-label="Default select example">
+                                  <option selected disabled>--Select--</option>
+                                  <option value="1">Accepted</option>
+                                  <!-- <option value="1">Reject</option> -->
+                                  <option value="1">On Hold</option>
+                                </select>
+                                        <div class="wizard-form-error"></div>
+                                    </div>
+                                </div>
+                                <!-- <div id="more-Manager"></div> -->
+                                <!-- <div class="buttonWrapper ">
+                                <button id="addManager" (click)="AddManagertolist()" class="btn button-primary">Add Manager</button> 
+                                <button id="removeManager" (click)="removeManagertolist()" class="btn button-primary">Remove Manager</button>
+                              </div> -->
+                            </div>
+                        </div>
+                        <!-- <div  class="invoice-form" id="more-Manager">
+                            <div  class="inv-form-inputs"></div>
+                            <div  class="inv-form-inputs">
+                                <div class="buttonWrapper ">
+                                    <button id="addManager" (click)="AddManagertolist()" class="btn button-primary">Add Manager</button> 
+                                    <button id="removeManager" (click)="removeManagertolist()" class="btn button-primary">Remove Manager</button>
+                                  </div>
+                            </div>
+                        </div> -->
+
+                        <!-- button wrapper  -->
+                        <div class="buttonWrapper pb-30">
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <button type="submit" class="btn button-primary">
+                                <img
+                                  src="../../../../../assets/img/arrow_icon_red.png"
+                                  alt="arrow icon"
+                                  class="arrowIcon"
+                                />
+                                Update Invoice
+                              </button>
+                                    <button id="addManager" (click)="AddManagertolist()" class="btn button-primary">Add Manager</button>
+
+                                    <button id="removeManager" (click)="removeManagertolist()" class="btn button-primary">Remove Manager</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 text-right trackInvoicebtnWrapper">
+                                    <a _ngcontent-kyk-c193="" class="btn btn-primary">Track Invoice </a>
+                                    <!--(click)="trackInvoice()"-->
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+
+
+
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+
+                    <div class="row ml-5">
+
+                        <div class="col-md-3">
+                            <div class="inv-wrapper">
+                                <span class="status-color st-aknowledge"></span>
+                                <p class="status-title">Submitted</p>
+                            </div>
+                            <!-- <button type="button" class="btn btn-info c-1">SENT</button> -->
+                        </div>
+                        <div class="col-md-9">
+                            <div class="btn-right">
+                                <p>02 FEB 2021, 10:00 AM</p>
+                                <p class="f-18"><b>Invoice is Submitted</b></p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="row ml-5">
+
+                        <div class="col-md-3">
+                            <!-- <button type="button" class="btn btn-warning c-2">PARTIAL</button> -->
+                            <div class="inv-wrapper">
+                                <span class="status-color st-processing"></span>
+                                <p class="status-title">Accepted</p>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="btn-right">
+                                <p>03 FEB 2021, 10:00 AM</p>
+                                <p class="f-18"><b>Invoice is Accepted</b></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+                </div>
+                <!-- <hr>
+  
+              <div class="row ml-5">
+  
+                  <div class="col-md-3">
+                      <button type="button" class="btn btn-primary c-4">Email</button>
+                  </div>
+                  <div class="col-md-9">
+                      <div class="btn-right">
+                          <p>06 FEB 2021, 10:00 AM</p>
+                          <p class="f-18"><b>Email sent to client for meeting payment reminder.</b></p>
+                      </div>
+                  </div>
+              </div>
+  
+              <hr>
+  
+              <div class="row ml-5">
+  
+                  <div class="col-md-3">
+                      <button type="button" class="btn btn-warning c-2">CLIENT REVERT</button>
+                  </div>
+                  <div class="col-md-9">
+                      <div class="btn-right">
+                          <p>07 FEB 2021, 10:00 AM</p>
+                          <p class="f-18"><b>Pending payment received through cheque.cheque no:3234</b></p>
+                      </div>
+                  </div>
+              </div>
+  
+              <hr>
+  
+              <div class="row ml-5">
+  
+                  <div class="col-md-3">
+                      <button type="button" class="btn btn-success c-5">PAID</button>
+                  </div>
+                  <div class="col-md-9">
+                      <div class="btn-right">
+                          <p>08 FEB 2021, 10:00 AM</p>
+                          <p class="f-18"><b>Payment received through cheque.cheque no:3234</b></p>
+                      </div>
+  
+                  </div>
+              </div>-->
+
+
+            </div>
+        </div>
+    </div>
+</div>

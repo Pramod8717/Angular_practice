@@ -1,0 +1,1105 @@
+<!-- formWrapper Track PO  -->
+<div class="main-content margin-top">
+    <div class="container internalpt">
+        <div class="inv-page-container ">
+            <div class="inv-page-wrapper container">
+                <div class="inv-page-header">
+                    <p class="invoice-number">Purchase Orders</p>
+                </div>
+                <div class="formWrapper__box mt-0">
+                    <!-- <div class="formWrapper__heading">My Purchase Orders</div> -->
+                    <div class="advanceSearchWrapper">
+                        <div class="advanceSearch__header">
+                            <p class="advanceSearch__title">Advance Search</p>
+                            <div class="advanceSearcIcon" (click)="openAdavnceSearch()">
+                                <img src="./assets/img/close-arrow.png" alt="download image" id="closeArrow"
+                                    style="display: none;">
+                                <img src="./assets/img/open-arrow.png" alt="refresh image" id="openArrow">
+                            </div>
+                        </div>
+                        <div class="advanceSearc__box" style="display: none;" id="advanceSearcBox">
+                            <form [formGroup]="POOrderList">
+                                <div class="invoice-form">
+                                    <div class="inv-form-inputs mb-mt">
+                                        <mat-label>PO Number</mat-label>
+                                        <div class="invInputWicon">
+                                            <mat-form-field appearance="none">
+                                                <mat-label>Enter PO Number</mat-label>
+                                                <input matInput placeholder="Enter PO Number" formControlName="PONumber"
+                                                    value="" />
+                                            </mat-form-field>
+                                            <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="PO Number" placement="left" showDelay="300"></span> -->
+                                        </div>
+                                        <!-- <mat-error *ngIf="hasError('PONumber', 'required') && POOrderList.controls['PONumber'].touched">
+                                *PO Number is required</mat-error> -->
+                                    </div>
+                                    <div class="inv-form-inputs mb-mt">
+                                        <mat-label>Duration</mat-label>
+                                        <div class="invInputWicon">
+                                            <mat-form-field appearance="none">
+                                                <mat-label>Select Duration</mat-label>
+                                                <mat-select formControlName="duration"
+                                                    (selectionChange)="Changemaxminoffromandto($event)">
+                                                    <mat-option *ngFor="let status of Duration" [value]="status?.id">
+                                                        {{status?.value}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Duration" placement="left" showDelay="300"></span> -->
+                                        </div>
+                                        <!-- <mat-error *ngIf="hasError('Status', 'required') && POOrderList.controls['Status'].touched">
+                                *PO Duration is required</mat-error> -->
+                                    </div>
+                                    <div class="inv-form-inputs mb-mt">
+                                        <mat-label>From Date</mat-label>
+                                        <div class="invInputWicon">
+                                            <mat-form-field appearance="none">
+                                                <mat-label>From </mat-label>
+                                                <input matInput [max]="maxdate" [min]="mindate"
+                                                    [matDatepicker]="fromDate" formControlName="fromDate"
+                                                    (dateChange)="onDateChange()" />
+                                                <mat-datepicker-toggle matSuffix [for]="fromDate">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #fromDate></mat-datepicker>
+                                            </mat-form-field>
+                                            <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="From Date" placement="left" showDelay="300"></span> -->
+                                        </div>
+                                        <!-- <mat-error *ngIf="hasError('fromDate', 'required') && POOrderList.controls['fromDate'].touched">
+                                *from Date is required</mat-error> -->
+                                    </div>
+                                    <div class="inv-form-inputs mb-mt">
+                                        <mat-label>To Date</mat-label>
+                                        <div class="invInputWicon">
+                                            <mat-form-field appearance="none">
+                                                <mat-label>To</mat-label>
+                                                <input matInput [max]="maxdate" [min]="mintodate"
+                                                    [matDatepicker]="toDate" formControlName="toDate"
+                                                    (dateChange)="onDateChange()" />
+                                                <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                                                <mat-datepicker #toDate></mat-datepicker>
+                                            </mat-form-field>
+                                            <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="To Date" placement="left" showDelay="300"></span> -->
+                                        </div>
+                                        <!-- <mat-error *ngIf="hasError('fromDate', 'required') && POOrderList.controls['fromDate'].touched">
+                                *to Date is required</mat-error> -->
+                                        <mat-error *ngIf="todateerror">
+                                            To date is required</mat-error>
+                                    </div>
+                                    <div class="inv-form-inputs mb-mt">
+                                        <mat-label>By Plant</mat-label>
+                                        <mat-form-field appearance="none">
+                                            <mat-label>By Plant</mat-label>
+                                            <input type="text" matInput formControlName="Plant"
+                                                (input)="getPlantData($event)" [matAutocomplete]="auto1">
+                                            <mat-autocomplete #auto1="matAutocomplete">
+                                                <mat-option *ngFor="let plantdata of tempPlantList"
+                                                    [value]="plantdata.PLANTNAME">
+                                                    {{plantdata.PLANTNAME}} ({{ plantdata.PLANTCODE}})
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="inv-form-inputs mb-mt">
+                                        <mat-label>By Vendor</mat-label>
+                                        <mat-form-field appearance="none">
+                                            <mat-label>By Vendor</mat-label>
+                                            <!-- <mat-select formControlName="Plant">
+                                                <mat-option *ngFor="let plantdata of PlantList" [value]="plantdata">
+                                                    {{ plantdata }}
+                                                </mat-option>
+                                            </mat-select> -->
+                                            <input type="text" matInput formControlName="Vendor"
+                                                (input)="getVendorData($event)" [matAutocomplete]="auto2">
+                                            <mat-autocomplete #auto2="matAutocomplete">
+                                                <mat-option *ngFor="let vendordata of vendorList"
+                                                    [value]="vendordata.VENDORID">
+                                                    {{vendordata.BUSINESSPARTNERTEXT}} ({{ vendordata.VENDORID}})
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+
+                                <!-- button wrapper  -->
+                                <!-- <button class="submit-btn" (click)="searchData()">
+              <img src="./assets/img/arrow_icon_red.png" />
+              <span> Search PO's</span>
+            </button> -->
+                                <div class="w-100 text-center">
+
+                                    <!-- (click)="searchorders()"  -->
+                                    <button type="submit" class="btn button-primary" (click)="searchData()"
+                                        [disabled]="disable">
+                                        <img _ngcontent-dnd-c329="" src="./assets/img/arrow_icon_red.png"
+                                            alt="arrow icon" class="activeImg arrowIcon">
+                                        <img ngcontent-dnd-c329="" src="./assets/img/arrow_icon_light_grey.png"
+                                            alt="arrow icon" class="disabledImg arrowIcon"> search
+                                    </button>
+                                </div>
+                                <!-- <div class="buttonWrapper mt-20 pb-30">
+                        <div class="row">
+                            <div class="col-lg-12 text-center" (click)="searchData()">
+                                <button type="submit" class="btn button-primary"> 
+                                    <img src="./assets/img/arrow_icon_red.png" alt="arrow icon" class="arrowIcon" />
+                                    Search PO's
+                                </button>
+    
+                            </div>
+                        </div>
+                    </div> -->
+                            </form>
+                        </div>
+                    </div>
+                    <div class="vendor-list__wrapper">
+                        <!-- formWrapper__content -->
+                        <div class="formWrapper__content">
+
+                            <!-- invStatusMainWrapper -->
+                            <div class="invStatusMainWrapper">
+
+                                <div class="invStatusRightWrap invStatusRightalign">
+                                    <div class="inv-status-wrapper">
+                                        <div class="inv-wrapper" id="allPO" (click)="sortData('ALL')">
+                                            <span class="" style="position:relative;">
+                                                <!-- <span class="badgeNum" style="top: -26px !important;">{{poCountAsPerStatus?.ALL != null ? poCountAsPerStatus?.ALL : 0}}</span> -->
+                                            </span>
+                                            <p class="status-title status-link">All</p>
+                                        </div>
+                                        <div class="inv-wrapper" (click)="sortData('N')">
+                                            <span class="status-color st-new">
+                                                
+                                            </span>
+                                            <p class="status-title status-link">New PO(s)
+                                                <span class="badgeNum">{{poCountAsPerStatus?.N != null ? poCountAsPerStatus?.N : 0}}</span>
+                                            </p>
+                                        </div>
+                                        <div class="inv-wrapper" (click)="sortData('A')">
+                                            <span class="status-color st-aknowledge">
+                                                
+                                            </span>
+                                            <p class="status-title status-link">Accepted
+                                                <span class="badgeNum">{{poCountAsPerStatus?.A != null ? poCountAsPerStatus?.A : 0}}</span>
+                                            </p>
+                                        </div>
+                                        <div class="inv-wrapper" (click)="sortData('P')">
+                                            <span class="status-color st-inProgress">
+                                                
+                                            </span>
+                                            <p class="status-title status-link">Work In Progress
+                                                <span class="badgeNum">{{poCountAsPerStatus?.P != null ? poCountAsPerStatus?.P : 0}}</span>
+                                            </p>
+                                        </div>
+                                        <div class="inv-wrapper" (click)="sortData('S')">
+                                            <span class="status-color st-transported">
+                                                
+                                            </span>
+                                            <p class="status-title status-link">Shipped
+                                                <span class="badgeNum">{{poCountAsPerStatus?.S != null ? poCountAsPerStatus?.S : 0}}</span>
+                                            </p>
+                                        </div>
+                                        <div class="inv-wrapper" (click)="sortData('C')">
+                                            <span class="status-color st-complete">
+                                                
+                                            </span>
+                                            <p class="status-title status-link">Complete
+                                                <span class="badgeNum">{{poCountAsPerStatus?.C != null ? poCountAsPerStatus?.C : 0}}</span>
+                                            </p>
+                                        </div>
+                                        <div class="inv-wrapper" (click)="sortData('SP')">
+                                            <span class="status-color st-service">
+                                                
+                                            </span>
+                                            <p class="status-title status-link">Service PO
+                                                <span class="badgeNum">{{(poCountAsPerStatus?.SP != null && poCountAsPerStatus?.SP != 0) ? poCountAsPerStatus?.SP : 0}}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- inv-table-header -->
+
+
+                            <div class="inv-table-header">
+                                <p class="tbl-header-title">Purchase Order List</p>
+                                <div class="tbl-options">
+                                    <div class="nextpreviconWrapper">
+                                        <div class="nextprevicoSingle" style="cursor: pointer;"
+                                            (click)="getPurOrderList('HOME');getmessageStatus()"
+                                            *ngIf="disableprevious ==false">
+                                            <img src="./assets/img/first_page_icon_option04.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Home" />
+                                            <!-- <p>Home</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" *ngIf="disableprevious ==true">
+                                            <img src="./assets/img/first_page_icon_disable02.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Home" />
+                                            <!-- <p>Home</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" style="cursor: pointer;"
+                                            (click)="getPurOrderList('PREV');getmessageStatus()"
+                                            *ngIf="disableprevious ==false">
+                                            <img src="./assets/img/first_page_icon_option03.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Previous" />
+                                            <!-- <p>Previous</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" *ngIf="disableprevious ==true">
+                                            <img src="./assets/img/first_page_icon_disable01.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Previous" />
+                                            <!-- <p>Previous</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" style="cursor: pointer;"
+                                            (click)="getPurOrderList('NEXT');getmessageStatus()"
+                                            *ngIf="disablenext ==false">
+                                            <!-- <p style=" margin-right: 5px;">Next</p> -->
+                                            <img src="./assets/img/end_page_icon_option_03.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Next" />
+                                        </div>
+                                        <div class="nextprevicoSingle" *ngIf="disablenext ==true">
+                                            <!-- <p style=" margin-right: 5px;">Next</p> -->
+                                            <img src="./assets/img/end_page_icon_disable_01.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Next" />
+                                        </div>
+                                        <div class="nextprevicoSingle" style="cursor: pointer;"
+                                            (click)="getPurOrderList('END');getmessageStatus()"
+                                            *ngIf="disablenext ==false">
+                                            <img src="./assets/img/end_page_icon_option_04.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="End" />
+                                            <!-- <p>End</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" *ngIf="disablenext ==true">
+                                            <img src="./assets/img/end_page_icon_disable_02.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="End" />
+                                            <!-- <p>End</p> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="tble-each-option" style="cursor: pointer;" (click)="downloadlist()">
+                                        <img src="./assets/img/download.png" alt="download image" />
+                                        <p>Download List</p>
+                                    </div>
+                                    <!-- <div class="tble-each-option" style="cursor: pointer;" (click)="getPurChaseOrderList()">
+                                        <img src="./assets/img/refresh.png" alt="refresh image" />
+                                        <p>Refresh</p>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <!-- table  -->
+                            <div class="table-responsive pl-forIcon">
+                                <table class="table customTableStripped fixedTable">
+                                    <thead class="text-primary">
+                                        <tr>
+                                            <th scope="col" class="text-left">
+                                                <div style="margin-left: 12px;">
+                                                    PO No.
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="text-left">PO Date</th>
+                                            <th scope="col" class="text-right columnWidth"> PO Amt.</th>
+                                            <th scope="col" class="text-left">
+                                                <div style="margin-left: 100px;">
+                                                    Messages
+                                                </div>
+                                            </th>
+                                            <!-- <th scope="col" class="text-left">Invoices</th> -->
+                                            <th scope="col" class="text-left">
+                                                <div style="margin-left: 90px;">
+                                                    Info
+                                                </div>
+                                            </th>
+                                            <!-- <th scope="col" class="text-center">View</th> -->
+                                            <!-- <th scope="col" class="text-center">Action</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let poData of poDataList  | 
+                            slice: (mPageNo-1) * pageSize : (mPageNo-1) * pageSize + pageSize; let i=index">
+
+                                        <!-- tr start  -->
+                                        <tr class="tablecol-Five" [attr.data-accordion]="'poacc'+i"
+                                            [ngClass]="{'item-aknowledge': poData.STATUS == 'A', 'item-transported': poData.STATUS == 'S', 'item-inProgress': poData.STATUS == 'P', 'item-complete': poData.STATUS == 'C', 'item-new hidePlusSign': poData.STATUS == 'N'}"
+                                            (click)="getPOitems(poData.PO_NUMBER, poData.CONTACTPERSONEMAILID, poData.REQUSITIONER);openAccordionTab($event)">
+                                            <td class="preventClick">
+                                                <div class="fixedPOnumber text-left" *ngIf="poData.STATUS =='N'">
+                                                    <!-- <a class="" (click)="goToLink(poData.PO_NUMBER)"> <img src="./assets/img/pdf_icon01.png" alt="pdf image" /> {{poData.PO_NUMBER}} <sup class="starRed" *ngIf="poData.STATUS =='N'">*</sup></a> -->
+                                                    <img src="./assets/img/pdf_icon03.png" alt="pdf image"
+                                                        (click)="downloadPo(poData.PO_NUMBER,'singlepodownload')"
+                                                        style="cursor: pointer;" />
+                                                    <div style="display:inline-block;margin-left:3px">
+                                                        {{poData.PO_NUMBER}} <sup class="starRed">*</sup>
+                                                    </div>
+                                                </div>
+                                                <div class="fixedPOnumber text-left" *ngIf="poData.STATUS !='N'">
+                                                    <!-- <a class="" (click)="goToLink(poData.PO_NUMBER)"> <img src="./assets/img/pdf_icon01.png" alt="pdf image" /> {{poData.PO_NUMBER}} <sup class="starRed" *ngIf="poData.STATUS =='N'">*</sup></a> -->
+                                                    <img src="./assets/img/pdf_icon03.png" alt="pdf image"
+                                                        (click)="downloadPo(poData.PO_NUMBER,'singlepodownload')"
+                                                        style="cursor: pointer;" />
+                                                    <div style="display:inline-block;margin-left:3px">
+                                                        {{poData.PO_NUMBER}}</div>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <div class="text-left upperDate ">
+                                                    {{poData.DATE | date:'dd-MMM-yyyy' }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-right">
+                                                    {{poData.AMOUNT}}
+                                                </div>
+                                            </td>
+                                            <td>
+
+                                                <div class="">
+
+                                                    <div class="commentDiv text-left" style="margin-left: 100px;">
+                                                        <!-- <div class="commentInputWrap editableFalse">
+                                                        <input type="text" class="form-control ellipsisInput" value="{{poData.QUERY}}" placeholder="pending...." readonly />
+                                                    </div> -->
+                                                        <div class="commentIcon"
+                                                            (click)="ShowpopupMessage($event);
+                                                     getQuerry(poData.PO_NUMBER, poData.CONTACTPERSONEMAILID) ; getStatusUpdate(poData.BUSINESSPARTNEROID,poData.PO_NUMBER ,'',i)"
+                                                            *ngIf="poData.STATUS != null">
+                                                            <!-- getStatusUpdate(poData.PO_NUMBER ,'') -->
+                                                            <!-- <i class="fa fa-comment" aria-hidden="true"></i> -->
+                                                            <img src="./assets/img/unreadMessages.png"
+                                                                style="max-width: 30px; cursor: pointer; display: none;"
+                                                                id="green{{i}}" />
+                                                            <img src="./assets/img/Message.png"
+                                                                style="max-width: 30px; cursor: pointer; display: none;"
+                                                                id="white{{i}}" />
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </td>
+                                            <!-- <td *ngIf="invoicenumber == undefined">
+                                                <span *ngIf="poData.STATUS !='N'">
+                                                    <img class="setting-icon" style="max-width: 30px;cursor: pointer;"
+                                                        src="./assets/img/multiple_file_icon_grey.png"
+                                                        (click)="gettotrackinvoicepage('poitem',poData.PO_NUMBER,'','')"
+                                                        tooltip="Invoices" />
+                                                </span>
+                                            </td> -->
+                                            <td class="fixedPOnumber text-left">
+                                                <div class="commentDiv " style="margin-left: 80px;">
+                                                            <ng-template #statusTemplate1>Plant : {{poData.PLANTNAME}} <br> Vendor : {{poData.VENDORNAME}}</ng-template>
+                                                            <a style="cursor: pointer;"
+                                                            [ngbTooltip]="statusTemplate1" container="body">
+                                                            <img src="./assets/img/info.png" style = "padding-left: 10px;max-width: 30px;"></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- tr end  -->
+
+                                        <!-- accordion content-->
+                                        <tr class="tbl-accordion-content" id="poacc{{i}}">
+                                            <td colspan="8">
+                                                <div class="table-responsive ">
+                                                    <table class="table customTableStripped bgTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"
+                                                                    style="width: 200px; font-weight: bold;">
+                                                                    Item</th>
+                                                                <th scope="col"
+                                                                    style="width: 140px; font-weight: bold;">
+                                                                    Material Code </th>
+                                                                <th scope="col" class="text-right columnWidth"
+                                                                    style="width: 190; font-weight: bold;">Order Qty
+                                                                </th>
+                                                                <th scope="col" class="text-right columnWidth"
+                                                                    style="width: 190; font-weight: bold;">Balance Qty
+                                                                </th>
+                                                                <th scope="col" class="text-center"
+                                                                    style="width: 450px; font-weight: bold;">PER</th>
+                                                                <th scope="col" class="text-center"
+                                                                    style="width: 140px; font-weight: bold;">UOM</th>
+                                                                <th scope="col" class="text-right"
+                                                                    style="width: 200px; padding-left: 0px;font-weight: bold;">
+                                                                    Rate</th>
+                                                                <!-- <th scope="col" class="text-center" style="width: 200px; padding-left: 0px;
+                                                         padding-right: 25px;font-weight: bold;
+                                                     " *ngIf="poData.STATUS !='N'">Action </th> -->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody *ngFor="let poitem of uniquelineitems; let j=index">
+
+                                                            <!-- tr start  -->
+                                                            <tr class="customtbl-accordion-head-inner"
+                                                                id="lineitem{{i}}{{j}}"
+                                                                [attr.data-accordion]="'poaccInner'+j">
+                                                                <td class="preventClick">
+                                                                    <div class="fixedPOnumber">
+                                                                        {{poitem.LINEITEMNUMBER}}
+
+                                                                    </div>
+
+                                                                </td>
+                                                                <td>
+                                                                    <div class="text-left">
+                                                                        {{poitem.LINEITEMTEXT}}
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="text-right">
+                                                                        {{poitem.QUANTITY | number}}
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="text-right">
+                                                                        {{poitem.BALANCE_QTY}}
+                                                                    </div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div class="text-center">
+                                                                        1
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="text-center">
+                                                                        {{poitem.UNITOFMEASURE}}
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="text-right">
+                                                                        <!-- {{poData.AMOUNT| number:'0.0-0'}} -->
+                                                                        {{poitem.RATEPERQTY | number:'1.2-2'}}
+                                                                    </div>
+                                                                </td>
+
+                                                                <td class="text-center">
+                                                                    <!-- <div class="dropPmWrapper">
+                                                                        <div class="dropdown">
+                                                                            <a href="javascript:void;" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                                                <div class="settingIconWrapper" *ngIf="poData.STATUS !='N'">
+                                                                                    <div class="settingIcon">
+                                                                                        <img class="setting-icon" src="./assets/img/setting.png" />
+                                                                                    </div>
+                                                                                    <span class="fa fa-chevron-down downArrow"></span>
+                                                                                </div>
+                                                                            </a>
+                                                                            <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                                                <a class="dropdown-item" (click)="navigate2('lineitem', poitem.LINEITEMNUMBER ,poitem.LINEITEMTEXT, poitem.QUANTITY, poData.VENDORID,poData.CONTACTPERSONEMAILID,poitem.BALANCE_QTY)">
+                                                                                    <img src="./assets/img/track_po.png" />
+                                                                                    <div class="settingIconWrapper__text">
+                                                                                        Create Delivery
+                                                                                    </div>
+                                                                                </a>
+                                                                                <a class="dropdown-item">
+                                                                                    <img src="./assets/img/po_icon_grey.png" />
+                                                                                    <div class="settingIconWrapper__text" (click)="navigate('lineitem',poData.PO_NUMBER, poData.VENDORID, poData.CONTACTPERSONEMAILID,poitem,poitem.QUANTITY,poData.DATE)">
+                                                                                        Submit Invoice
+                                                                                    </div>
+                                                                                </a>
+
+                                                                            </div>
+                                                                            <span class="plusminusArrow fa fa-plus" (click)="openAccordioninnerTab($event,i,j);openAccordionNestedTab($event,poitem.LINEITEMNUMBER,poData.PO_NUMBER);getorderitems(poitem.LINEITEMNUMBER,poData.PO_NUMBER)"></span>
+                                                                        </div>
+                                                                    </div> -->
+                                                                    <span class="plusminusArrow fa fa-plus"
+                                                                        (click)="openAccordioninnerTab($event,i,j);openAccordionNestedTab($event,poitem.LINEITEMNUMBER,poData.PO_NUMBER);getorderitems(poitem.LINEITEMNUMBER,poData.PO_NUMBER)"></span>
+                                                                </td>
+                                                                <!-- <td>
+                                                                    <img class="setting-icon" style="max-width: 30px;cursor: pointer;" src="./assets/img/multiple_file_icon_grey.png" 
+                                                                    (click)="gettotrackinvoicepage('lineitem',poData.PO_NUMBER,poitem.LINEITEMNUMBER,'')" tooltip="Invoices" />
+                                                                </td> -->
+                                                                <!-- <span class="plusminusArrow fa fa-plus" style="margin-right: 25px;" (click)="openAccordioninnerTab($event,i,j);openAccordionNestedTab($event,poitem.LINEITEMNUMBER,poData.PO_NUMBER)"></span> -->
+                                                            </tr>
+                                                            <!-- tr end  -->
+
+                                                            <!-- accordion content-->
+                                                            <tr class="tbl-accordion-content-inner"
+                                                                id="poaccInner{{j}}">
+                                                                <td colspan="8">
+                                                                    <div class="aNestedTblAccordion accordion-wrapper">
+
+                                                                        <!-- atbl-container -->
+                                                                        <div class="atbl-container">
+                                                                            <!-- <thead>
+                                                                            <tr>
+                                                                                <th>Order Delivery</th>
+                                                                                <th>Dispatch Date</th>
+                                                                                <th>Quantity</th>
+                                                                                <th>Remark</th>
+                                                                                <th>Action</th>
+                                                                            </tr>
+                                                                        </thead> -->
+
+                                                                            <!-- <tbody>
+                                                                            <tr>
+                                                                                <td>00010</td>
+                                                                                <td>170000000210 / IT SOFTWARE RENEWAL SERVICES</td>
+                                                                                <td>12</td>
+                                                                                <td>1</td>
+                                                                                <td>NO</td>
+                                                                            </tr>
+                                                                        </tbody> -->
+                                                                            <!-- <div class="atbl-btn" (click)="openAccordionNestedTab($event,poitem.LINEITEMNUMBER)">
+                                                                            <div class="dropPmWrapper">
+                                                                                <div class="dropdown">
+                                                                                    <a href="javascript:void;" class="" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                                                        <div class="settingIconWrapper">
+                                                                                            <div class="settingIcon">
+                                                                                                <img class="setting-icon" src="./assets/img/setting.png" />
+                                                                                            </div>
+                                                                                            <span class="fa fa-chevron-down downArrow"></span>
+                                                                                        </div>
+                                                                                    </a>
+                                                                                    <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                                                         <a class="dropdown-item" (click)="navigate2(poitem.LINEITEMNUMBER ,poitem.LINEITEMTEXT)">
+                                                                                            <img src="./assets/img/track_po.png" />
+                                                                                            <div class="settingIconWrapper__text">Create Delivery
+                                                                                            </div>
+                                                                                        </a>
+                                                                                        <a class="dropdown-item" (click)="navigate('lineitem',poData.VENDORID,poData.CONTACTPERSONEMAILID)">
+                                                                                            <img src="./assets/img/po_icon_grey.png" />
+                                                                                            <div class="settingIconWrapper__text">Submit Invoice
+                                                                                            </div>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <span class="plusminusArrow"></span>
+                                                                            </div>
+                                                                        </div> -->
+                                                                            <div>
+                                                                                <table>
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th><strong> Order Delivery
+                                                                                                </strong></th>
+                                                                                            <th><strong>Dispatch Date
+                                                                                                </strong></th>
+                                                                                            <th><strong>Quantity
+                                                                                                </strong>
+                                                                                            </th>
+                                                                                            <th><strong>Remark </strong>
+                                                                                            </th>
+                                                                                            <div
+                                                                                                class="text-center; margin-left:50px">
+                                                                                                <th><strong>Action
+                                                                                                    </strong>
+                                                                                                </th>
+                                                                                            </div>
+                                                                                        </tr>
+                                                                                    </thead>
+
+                                                                                    <tbody
+                                                                                        *ngFor="let orderitem of orderlistoflineitemmp">
+                                                                                        <!-- <div > -->
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <!-- <a (click)="orderDetails(orderitem.ORDERNUMBER, orderitem.DELIVERYDATE, orderitem.QUANTITY,orderitem.BUSINESSPARTNERTEXT, orderitem.LINEITEMNUMBER, orderitem.LINEITEMTEXT, orderitem.CONTACTPERSONEMAILID, orderitem.PO_NUMBER, orderitem.DELIVERYADDRESS1)"
+                                                                                                    style="color: blue;cursor:pointer">
+                                                                                                </a> -->
+                                                                                                {{orderitem.DC}}
+                                                                                            </td>
+                                                                                            <!-- <td> <a (click)="orderDetails(orderitem)"> {{orderitem.ORDERNUMBER}} </a></td> -->
+                                                                                            <td class="upperDate">
+                                                                                                {{orderitem.DISPATCHDATE | date:'dd-MMM-yyyy'}}
+                                                                                            </td>
+                                                                                            <td>{{orderitem.QUANTITY}}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                            </td>
+                                                                                            <!-- <td>{{orderitem.REMARK}}</td> -->
+                                                                                            <!-- <td style="min-width: 200px;" *ngIf="orderitem.STATUS == 'A'">
+                                                                                                    <a _ngcontent-cxk-c236="" (click)="navigate('orderitem',poData.PO_NUMBER,poData.VENDORID,poData.CONTACTPERSONEMAILID, orderitem, poitem.QUANTITY,poData.DATE)" class="button-submitInvoice">
+                                                                                                        <img src="./assets/img/arrow_icon_grey.png " alt="arrow icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                                </td>
+                                                                                                <td *ngIf="orderitem.STATUS != 'A'">
+                                                                                                    <img class="setting-icon" style="max-width: 30px;cursor: pointer;" src="./assets/img/single file_grey.png" (click)="gettotrackinvoicepage('orderitem',poData.PO_NUMBER,orderitem.LINEITEMNUMBER,orderitem.ORDERNUMBER)" tooltip="Invoices" />
+                                                                                                </td> -->
+                                                                                        </tr>
+                                                                                        <!-- <tr *ngIf = "orderlist == null">
+                                                                                                No Order Delivery Done Yet
+                                                                                            </tr> -->
+                                                                                        <!-- </div> -->
+
+                                                                                    </tbody>
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] "> ORDEL986781 </a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                        </td>
+                                                                                    </tr>
+                    
+                                                                                </tbody> -->
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] ">ORDEL986781 </a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                        </td>
+                                                                                    </tr>
+                    
+                                                                                </tbody> -->
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] ">ORDEL986781 </a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                        </td>
+                                                                                    </tr>
+                    
+                                                                                </tbody> -->
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] ">ORDEL986781</a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <div class="fixedTdSubmitWidth ">
+                                                                                                <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody> -->
+                                                                                </table>
+                                                                                <div *ngIf="poDataList.length==0"
+                                                                                    style="color: #777; font-size: 16px; font-weight: 600; text-align: center; ">
+                                                                                    <p>No Data Found</p>
+                                                                                </div>
+                                                                                <!-- <div class="accContent-invoice ">
+                                                                            <div class="acc-submitInv ">
+                                                                                <img src="./assets/img/submit_invoice.png " />
+                                                                                <p><a [routerLink]="[ '/submitInvoiceFromList'] ">Submit Invoice</a></p>
+                                                                            </div>
+                                                                        </div> -->
+
+                                                                            </div>
+                                                                            <div
+                                                                                style="border-top: 2px solid rgb(189, 182, 182);">
+                                                                                <table>
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th><strong> Order Delivery
+                                                                                                </strong></th>
+                                                                                            <th><strong>Dispatch Date
+                                                                                                </strong></th>
+                                                                                            <th><strong>Quantity
+                                                                                                </strong>
+                                                                                            </th>
+                                                                                            <th><strong>Invoice Number
+                                                                                                </strong>
+                                                                                            </th>
+                                                                                            <th><strong>Invoice Date
+                                                                                                </strong>
+                                                                                            </th>
+
+                                                                                        </tr>
+                                                                                    </thead>
+
+                                                                                    <tbody
+                                                                                        *ngFor="let orderitem of orderlistwithinvoice">
+                                                                                        <!-- <div > -->
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <!-- <a (click)="orderDetails(orderitem.ORDERNUMBER, orderitem.DELIVERYDATE, orderitem.QUANTITY,orderitem.BUSINESSPARTNERTEXT, orderitem.LINEITEMNUMBER, orderitem.LINEITEMTEXT, orderitem.CONTACTPERSONEMAILID, orderitem.PO_NUMBER, orderitem.DELIVERYADDRESS1)"
+                                                                                                    style="color: blue;cursor:pointer">
+                                                                                                </a> -->
+                                                                                                {{orderitem.DC}}
+                                                                                            </td>
+                                                                                            <!-- <td> <a (click)="orderDetails(orderitem)"> {{orderitem.ORDERNUMBER}} </a></td> -->
+                                                                                            <td class="upperDate">
+                                                                                                {{orderitem.DISPATCHDATE | date:'dd-MMM-yyyy'}}
+                                                                                            </td>
+                                                                                            <td>{{orderitem.QUANTITY}}
+                                                                                            </td>
+                                                                                            <td>{{orderitem.INVOICENUMBER}}
+                                                                                            </td>
+                                                                                            <td>{{orderitem.INVOICEDATE}}
+                                                                                            </td>
+                                                                                            <!-- <td style="min-width: 200px;" *ngIf="orderitem.STATUS == 'A'">
+                                                                                                    <a _ngcontent-cxk-c236="" (click)="navigate('orderitem',poData.PO_NUMBER,poData.VENDORID,poData.CONTACTPERSONEMAILID, orderitem, poitem.QUANTITY,poData.DATE)" class="button-submitInvoice">
+                                                                                                        <img src="./assets/img/arrow_icon_grey.png " alt="arrow icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                                </td>
+                                                                                                <td *ngIf="orderitem.STATUS != 'A'">
+                                                                                                    <img class="setting-icon" style="max-width: 30px;cursor: pointer;" src="./assets/img/single file_grey.png" (click)="gettotrackinvoicepage('orderitem',poData.PO_NUMBER,orderitem.LINEITEMNUMBER,orderitem.ORDERNUMBER)" tooltip="Invoices" />
+                                                                                                </td> -->
+                                                                                        </tr>
+                                                                                        <!-- <tr *ngIf = "orderlist == null">
+                                                                                                No Order Delivery Done Yet
+                                                                                            </tr> -->
+                                                                                        <!-- </div> -->
+
+                                                                                    </tbody>
+
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] "> ORDEL986781 </a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                        </td>
+                                                                                    </tr>
+                    
+                                                                                </tbody> -->
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] ">ORDEL986781 </a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                        </td>
+                                                                                    </tr>
+                    
+                                                                                </tbody> -->
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] ">ORDEL986781 </a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                        </td>
+                                                                                    </tr>
+                    
+                                                                                </tbody> -->
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] ">ORDEL986781</a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <div class="fixedTdSubmitWidth ">
+                                                                                                <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody> -->
+                                                                                </table>
+                                                                                <div *ngIf="poDataList.length==0"
+                                                                                    style="color: #777; font-size: 16px; font-weight: 600; text-align: center; ">
+                                                                                    <p>No Data Found</p>
+                                                                                </div>
+                                                                                <!-- <div class="accContent-invoice ">
+                                                                            <div class="acc-submitInv ">
+                                                                                <img src="./assets/img/submit_invoice.png " />
+                                                                                <p><a [routerLink]="[ '/submitInvoiceFromList'] ">Submit Invoice</a></p>
+                                                                            </div>
+                                                                        </div> -->
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- atbl-container -->
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <!-- EACH ITEMS END -->
+
+
+
+
+
+
+
+
+                                                        </tbody>
+
+                                                    </table>
+                                                    <!-- <div *ngIf="poDataList.length==0" style="color: #777; font-size: 16px; font-weight: 600; text-align: center;">
+                                                    <p class="text-center w-100">No Data Found</p>
+                                                </div> -->
+
+                                                    <!-- <div *ngIf="poDataList.length==0" style="color: #777; font-size: 16px; font-weight: 600; text-align: center;">
+                                                    <p class="text-center w-100">No Data Found</p>
+                                                </div> -->
+
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <!-- EACH ITEMS END -->
+
+
+
+
+
+
+
+
+                                    </tbody>
+                                </table>
+                                <div *ngIf="poDataList.length==0"
+                                    style="color: #777; font-size: 16px; font-weight: 600; text-align: center;">
+                                    <p class="text-center w-100">No Data Found</p>
+                                </div>
+
+                            </div>
+
+                            <!-- Pagination Wrapper -->
+                            <!-- <div class="paginationWrapper ">
+                        <nav aria-label="... ">
+                            <ul class="pagination justify-content-center ">
+                                <li class="page-item disabled ">
+                                    <a class="page-link " tabindex="-1 " aria-disabled="true ">Previous</a>
+                                </li>
+                                <li class="page-item "><a class="page-link ">1</a></li>
+                                <li class="page-item active " aria-current="page ">
+                                    <a class="page-link ">2</a>
+                                </li>
+                                <li class="page-item "><a class="page-link ">3</a></li>
+                                <li class="page-item ">
+                                    <a class="page-link ">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div> -->
+
+
+                            <div class="paginationWrapper " *ngIf="poDataList && poDataList.length> 0">
+
+                                <div class="tble-each-option" style="cursor: pointer;"
+                                    (click)="getPurOrderList('HOME');getmessageStatus()"
+                                    *ngIf="disableprevious ==false">
+                                    <img src="./assets/img/first_page_icon_option04.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Home" />
+                                    <!-- <p>Home</p> -->
+                                </div>
+                                <div class="tble-each-option" *ngIf="disableprevious ==true">
+                                    <img src="./assets/img/first_page_icon_disable02.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Home" />
+                                    <!-- <p>Home</p> -->
+                                </div>
+                                <div class="tble-each-option" style="cursor: pointer;"
+                                    (click)="getPurOrderList('PREV');getmessageStatus()"
+                                    *ngIf="disableprevious ==false">
+                                    <img src="./assets/img/first_page_icon_option03.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Previous" />
+                                    <!-- <p>Previous</p> -->
+                                </div>
+                                <div class="tble-each-option" *ngIf="disableprevious ==true">
+                                    <img src="./assets/img/first_page_icon_disable01.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Previous" />
+                                    <!-- <p>Previous</p> -->
+                                </div>
+                                <div class="tble-each-option" style="cursor: pointer;"
+                                    (click)="getPurOrderList('NEXT');getmessageStatus()" *ngIf="disablenext ==false">
+                                    <!-- <p style=" margin-right: 5px;">Next</p> -->
+                                    <img src="./assets/img/end_page_icon_option_03.png" class="nextprevicon__pagination"
+                                        alt="refresh image" tooltip="Next" />
+                                </div>
+                                <div class="tble-each-option" *ngIf="disablenext ==true">
+                                    <!-- <p style=" margin-right: 5px;">Next</p> -->
+                                    <img src="./assets/img/end_page_icon_disable_01.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Next" />
+                                </div>
+                                <div class="tble-each-option" style="cursor: pointer;"
+                                    (click)="getPurOrderList('END');getmessageStatus()" *ngIf="disablenext ==false">
+                                    <img src="./assets/img/end_page_icon_option_04.png" class="nextprevicon__pagination"
+                                        alt="refresh image" tooltip="End" />
+                                    <!-- <p>End</p> -->
+                                </div>
+                                <div class="tble-each-option" *ngIf="disablenext ==true">
+                                    <img src="./assets/img/end_page_icon_disable_02.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="End" />
+                                    <!-- <p>End</p> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- bootstrap Modal -->
+        <div class="modal fade customBootstrapModal" id="popupComment" data-backdrop="static" data-keyboard="false"
+            tabindex="-1" aria-labelledby="popupCommentLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="message.value=' ';ClosepopupMessage($event)">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="confirmation-title text-center">Messages</div>
+                    </div>
+                    <div class="modal-body pt-0">
+                        <div class="confirmationpopup">
+                            <div class="invoice-form p-0 messageBoxbBottom">
+                                <div class="inv-form-inputs mb-mt mt-0">
+                                    <div class="confirmation-formLabel">Enter Your Message </div>
+                                    <textarea class="form-control" name="" id="" cols="30" rows="2" #message
+                                        (keyup)="Check(message)" placeholder="Type here..."></textarea>
+                                </div>
+                            </div>
+                            <!-- <div class="btn btn-primary confirmationNo">
+                            <button [disabled]="validate" > <img src="./assets/img/arrow_icon_red.png" alt="arrow icon" class="arrowIcon" />Submit</button>
+                        </div> -->
+                            <!-- data-dismiss="modal" -->
+                            <div class="text-center w-100"> <button [disabled]="validate || message.value ==''"
+                                    class="btn button-primary confirmationNo"
+                                    (click)="sendMessage('N',message.value,'SubmitQuery', topic); message.value=' ';ClosepopupMessage($event)"><img
+                                        src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                        class="activeImg arrowIcon" />
+                                    <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                        class="disabledImg arrowIcon"> Submit</button></div>
+                            <br>
+
+                            <!-- <a [routerLink]="['/poOrderView']"> -->
+                            <p class="ponum pb-3">PO No : {{topic}}</p>
+                            <!-- </a> -->
+                            <div class="messageChatWrapper">
+                                <!-- Commented on 20 oct 2021 Angaj -->
+                                <!-- <div *ngFor="let message of messageList.slice().reverse();let i=index"> -->
+                                <div *ngFor="let message of messageList;let i=index">
+                                    <div class="chatboxWrapper">
+                                        <div class="chat__single">
+                                            <div class="chat__head">
+                                                <span class="messengerName">{{message.SENDER}} </span>
+                                                <span class="chat__date">
+                                                    <span class="upperDate">({{message.CREATEDON |
+                                                        date:'dd-MMM-yyyy'}})</span></span>&nbsp;
+                                                <span class="chat-time">{{message.CREATEDON | date:'mediumTime'}}</span>
+                                            </div>
+                                            <div class="chat__desc">{{message.MESSAGETEXT}}</div>
+                                            <div *ngIf="messageList.length==0"
+                                                style="color: #777; font-size: 16px; font-weight: 600; text-align: center;">
+                                                <p class="text-center w-100">No Data Found</p>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="chat__single bgVendor" *ngIf="i%2==1">
+                                        <div class="chat__head">
+                                            <span class="messengerName">Buyer Name- {{message.SENDER}}</span>
+                                            <span class="chat__date">
+                                        <span class="chat-time">10:30AM</span>
+                                            <span class="upperDate">{{message.CREATEDON | date:'dd-MMM-yyyy'}}</span></span>
+                                        </div>
+                                        <div class="chat__desc">{{message.MESSAGETEXT}}</div>
+                                    </div> -->
+                                        <!-- <div class="chat__single">
+                                <div class="chat__head">
+                                    <span class="messengerName">Buyer Name - General Manager</span>
+                                    <span class="chat__date"><span class="chat-time">10:30AM</span>
+                                    <span>15/03/2021</span></span>
+                                </div>
+                                <div class="chat__desc">
+                                    When will you complete the development
+                                </div>
+                            </div>
+                            <div class="chat__single bgVendor">
+                                <div class="chat__head">
+                                    <span class="messengerName">Vendor Name</span>
+                                    <span class="chat__date"><span class="chat-time">10:30AM</span>
+                                    <span>15/03/2021</span></span>
+                                </div>
+                                <div class="chat__desc">started working on UI design</div>
+                            </div>
+                            <div class="chat__single">
+                                <div class="chat__head">
+                                    <span class="messengerName">Buyer Name - General Manager</span>
+                                    <span class="chat__date"><span class="chat-time">10:30AM</span>
+                                    <span>15/03/2021</span></span>
+                                </div>
+                                <div class="chat__desc">
+                                    When will you complete the development
+                                </div>
+                            </div>
+                            <div class="chat__single bgVendor">
+                                <div class="chat__head">
+                                    <span class="messengerName">Vendor Name</span>
+                                    <span class="chat__date"><span class="chat-time">10:30AM</span>
+                                    <span>15/03/2021</span></span>
+                                </div>
+                                <div class="chat__desc">started working on UX design</div>
+                            </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div> -->
+                </div>
+            </div>
+        </div>
+        <app-dialog-model></app-dialog-model>
+
+
+
+        <!-- Confirmation PopUP -->
+        <div id="popup2" class="overlay">
+            <div class="popup confirmationPopup">
+                <a class="close" (click)="closePopup($event)" href="#/purchaseOrdersList">&times;</a><br />
+                <div class="container">
+                    <div class="confirmationpopup mb-2">
+                        <div class="confirmation-title">Confirmation</div>
+                        <p class="confirmation-para">
+                            Kindly confirm you want to proceed with this Purchase Order
+                        </p>
+                        <div class="button__wrapper">
+                            <a class="btn btn-primary button-primary"
+                                (click)="sendMessage('Y','','POconfirmation','');closePopup($event)">Yes</a>
+                            <a class="btn btn-primary button-primary confirmationNo"
+                                (click)="showSubmitBox($event)">No</a>
+                        </div>
+                        <div class="confirmation_submit" *ngIf="confirmationNoAction">
+                            <div class="invoice-form p-0">
+                                <div class="inv-form-inputs mb-mt mt-2">
+                                    <div class="confirmation-formLabel">
+                                        Remarks
+                                    </div>
+                                    <mat-form-field appearance="none">
+                                        <mat-label>Type here...</mat-label>
+                                        <textarea matInput placeholder="Type here..." #message value=""
+                                            (keyup)="Check(message)" maxlength="2000"></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="text-center w-100"> <button [disabled]="validate || message.value ==''"
+                                        class="btn btn-primary button-primary confirmationNo"
+                                        (click)="sendMessage('N',message.value,'POconfirmation'); message.value=' ';closePopup($event)"><img
+                                            src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                            class="activeImg arrowIcon" />
+                                        <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                            class="disabledImg arrowIcon"> Submit</button></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

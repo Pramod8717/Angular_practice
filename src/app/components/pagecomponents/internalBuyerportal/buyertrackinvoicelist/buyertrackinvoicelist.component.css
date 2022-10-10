@@ -1,0 +1,170 @@
+.fixedPOnumber img {
+    max-width: 30px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+.displayBlock {
+    display: block !important;
+}
+
+.displayNone {
+    display: none !important;
+}
+.InfofixedPOnumber img {
+    max-width: 30px;
+    margin-left: 3px;
+    margin-right: 5px;
+}
+
+.InfofixedPOnumber {
+    min-width: 40px;
+}
+.fixedPOnumber img {
+    max-width: 30px;
+    margin-left: 3px;
+    margin-right: 5px;
+}
+.item-accepted {
+    border-left: 7px solid #f8f552;
+}
+
+.item-rejected {
+    border-left: 7px solid red;
+}
+
+.item-managerpending {
+    border-left: 7px solid #368b8b;
+}
+
+.item-withoutPo {
+    border-left: 7px solid #364c8b;
+}
+
+.item-pending {
+    border-left: 7px solid #368b8b;
+}
+
+.item-hold {
+    border-left: 7px solid #f7af13;
+}
+
+.item-grn {
+    border-left: 7px solid #0ef706;
+}
+
+.item-transported {
+    border-left: 7px solid #024aec;
+}
+
+.item-new {
+    border-left: 7px solid #999999;
+}
+
+.item-complete {
+    border-left: 7px solid #17d104;
+}
+.item-shortQuantity {
+    border-left: 7px solid #c03004;
+}
+
+.item-returned {
+    border-left: 7px solid #213261
+}
+@supports (-moz-appearance:none){
+    .item-accepted {
+        border-left: 15px solid #f8f552;
+    }
+    
+    .item-rejected {
+        border-left: 15px solid red;
+    }
+    
+    .item-managerpending {
+        border-left: 15px solid #368b8b;
+    }
+    
+    .item-withoutPo {
+        border-left: 15px solid #364c8b;
+    }
+    
+    .item-pending {
+        border-left: 15px solid #368b8b;
+    }
+    
+    .item-hold {
+        border-left: 15px solid #f7af13;
+    }
+    
+    .item-grn {
+        border-left: 15px solid #0ef706;
+    }
+    
+    .item-transported {
+        border-left: 15px solid #024aec;
+    }
+    
+    .item-new {
+        border-left: 15px solid #999999;
+    }
+    
+    .item-complete {
+        border-left: 15px solid #17d104;
+    }
+    .item-shortQuantity {
+        border-left: 15px solid #c03004;
+    }
+    
+    .item-returned {
+        border-left: 15px solid #213261
+    }
+}
+
+.status-link {
+    color: #6c757d !important;
+    background-color: transparent;
+    text-decoration: underline;
+    cursor: pointer;
+    position: relative;
+}
+
+.main-content.margin-top .container.dashboardpt {
+    margin-top: 0px;
+}
+
+
+/* .st-shortQuantity {
+    background-color: #c03004;
+} */
+
+
+
+::ng-deep .tooltip-inner {
+    max-width: 340px;
+    text-align: left;
+    background-color: #000;
+    color: #fff !important;
+  }
+
+  .status-title {position: relative;}
+  .badgeNum {
+    position: absolute;
+    top: -10px;
+    right: 0;
+    padding: 0;
+    border-radius: 800px;
+    font-size: 10px;
+    /* min-width: 35px; */
+    text-align: center;
+    line-height: 1;
+    display: inline-block;
+    font-weight: bold;
+    color: #000;
+  }
+
+.invStatusRightalign
+{
+    flex-basis: 100%;
+display: flex;
+justify-content: flex-end;
+}

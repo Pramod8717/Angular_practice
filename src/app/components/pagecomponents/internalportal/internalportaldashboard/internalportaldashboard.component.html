@@ -1,0 +1,1424 @@
+<div class="main-content margin-top">
+    <div class="container internalpt">
+        <!--Quick Links Start-->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card card-stats mt-0">
+                    <div class="card-header card-header-danger card-header-icon">
+                        <h3 class="card-title">Dashboard</h3>
+                    </div>
+                    <div class="card-body Quick-main">
+                        <form [formGroup]="searchList">
+                            <div class="invoice-form" style="display: block; padding:0;">
+                                <div class="row">
+
+                                    <div class="col-lg-3 col-md-6 col-sm-12">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <mat-label>Select Document</mat-label>
+                                            <mat-form-field appearance="none">
+                                                <!-- <mat-label>PO</mat-label> -->
+                                                <mat-select formControlName="modeType"
+                                                    (selectionChange)="setMode($event)">
+                                                    <mat-option *ngFor="let modedata of modelist"
+                                                        [value]="modedata.name">
+                                                        {{ modedata.name }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-12">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <mat-label>Vendor Name</mat-label>
+                                            <mat-form-field appearance="none">
+                                                <mat-label>Enter Vendor Name</mat-label>
+                                                <input type="text" matInput placeholder="Enter Vendor name"
+                                                    formControlName="Vendor" (input)="getVendorData($event)"
+                                                    [matAutocomplete]="auto4">
+                                                <mat-autocomplete #auto4="matAutocomplete">
+                                                    <mat-option *ngFor="let vendordata of vendorList"
+                                                        [value]="vendordata.VENDORID">
+                                                        {{vendordata.BUSINESSPARTNERTEXT}} ({{ vendordata.VENDORID}})
+                                                    </mat-option>
+                                                </mat-autocomplete>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-12" *ngIf="invoiceMode">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <mat-label>Invoice Number</mat-label>
+                                            <mat-form-field appearance="none">
+                                                <mat-label>Enter invoice no.</mat-label>
+                                                <input matInput placeholder="Enter invoice no."
+                                                    formControlName="InvNumber"
+                                                    (keypress)="keyPressAlphanumeric($event)" value="" maxlength="16">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-12">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <mat-label>PO Number</mat-label>
+                                            <mat-form-field appearance="none">
+                                                <mat-label>Enter PO Number</mat-label>
+                                                <input matInput placeholder="Enter PO Number"
+                                                    formControlName="PONumber" value="" maxlength="10" (keypress)="isNumber($event)" >
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-6 col-sm-12">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <mat-label>Plant Name</mat-label>
+                                            <mat-form-field appearance="none">
+                                                <input type="text" matInput formControlName="Plant"
+                                                    (input)="getPlantData($event)" [matAutocomplete]="auto1">
+                                                <mat-autocomplete #auto1="matAutocomplete">
+                                                    <mat-option *ngFor="let plantdata of tempPlantList"
+                                                        [value]="plantdata.PLANTNAME">
+                                                        {{plantdata.PLANTNAME}} ({{ plantdata.PLANTCODE}})
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-12">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <mat-label>From Date </mat-label>
+                                            <mat-form-field appearance="none">
+                                                <mat-label>From Date</mat-label>
+                                                <input matInput [max]="maxdate" [min]="mindate" [matDatepicker]="picker"
+                                                    formControlName="fromDate" (dateChange)="onDateChange()" readonly>
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                        <mat-error *ngIf="fromdateerror">
+                                            From date is required</mat-error>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-12">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <mat-label>To Date </mat-label>
+                                            <mat-form-field appearance="none">
+                                                <mat-label>To Date </mat-label>
+                                                <input matInput [min]="mintodate" [matDatepicker]="Topicker"
+                                                    formControlName="toDate" (dateChange)="onDateChange()" readonly>
+                                                <mat-datepicker-toggle matSuffix [for]="Topicker">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #Topicker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                        <mat-error *ngIf="todateerror">
+                                            To date is required</mat-error>
+                                    </div>
+                                    <!-- <div class="col-lg-3 col-md-6 col-sm-12">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%; overflow: visible;">
+                                            <mat-label>Duration</mat-label> -->
+                                    <!-- <input type="text" matInput ngxDaterangepickerMd [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}"
+                                        startKey="start"
+                                        endKey="end" class="form-control"/> -->
+                                    <!-- <div class="datepickerWrapper"> -->
+                                    <!-- [(ngModel)]="selected" -->
+                                    <!-- <input type="text" matInput ngxDaterangepickerMd style="line-height: 1.572; border: 2px solid #dce1e4;
+                                        padding: 9px 20px; font-size: 18px; color: #333;"
+                                             formControlName="selected" value=""
+                                            name="daterange" [locale]="{applyLabel: 'ok', format: 'DD/MMM/YY'}"/> -->
+                                    <!-- <img class="datepickerImg" src="./assets/img/datepickerIcon.png"> -->
+                                    <!-- <i class="fa-regular fa-calendar-day"></i>
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-lg-3 col-md-6 col-sm-12">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <mat-label>Purchasing Group</mat-label>
+                                            <mat-form-field appearance="none">
+                                                <input type="text" matInput formControlName="Purchasegroup"
+                                                    (input)="getPurchaseData($event)" [matAutocomplete]="auto5">
+                                                <mat-autocomplete #auto5="matAutocomplete">
+                                                    <mat-option *ngFor="let purchasedata of purchaseList"
+                                                        [value]="purchasedata.MATERIALTYPE">
+                                                        {{purchasedata.MATERIALDESCRIPTION}} ({{
+                                                        purchasedata.MATERIALTYPE}})
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-lg-3 col-md-6 col-sm-12">
+                                    <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                        <mat-label>Category</mat-label>
+                                        <mat-form-field appearance="none">
+                                            <mat-select>
+                                                <mat-option selected value="Consumbles">Consumbles </mat-option>
+                                                <mat-option value="modedata2">modedata2 </mat-option>
+                                                <mat-option value="modedata3">modedata3 </mat-option>
+                                                <mat-option value="modedata4">modedata 4</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div> -->
+                                    <div class="col-lg-3 col-md-6 col-sm-12">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <mat-label>Ageing</mat-label>
+                                            <mat-form-field appearance="none">
+                                                <mat-select formControlName="Ageing">
+                                                    <mat-option *ngFor="let ageingData of ageingList"
+                                                        [value]="ageingData.name">
+                                                        {{ ageingData.name }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-12" *ngIf="invoiceMode == true">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <mat-label>Status</mat-label>
+                                            <mat-form-field appearance="none">
+                                                <mat-select formControlName="Status">
+                                                    <mat-option *ngFor="let invoicestatusData of invoicestatusList"
+                                                        [value]="invoicestatusData.stype">
+                                                        {{ invoicestatusData.stype }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-12" *ngIf="invoiceMode == false">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <mat-label>Status</mat-label>
+                                            <mat-form-field appearance="none">
+                                                <mat-select formControlName="Status">
+                                                    <mat-option *ngFor="let postatusData of postatusList"
+                                                        [value]="postatusData.stype">
+                                                        {{ postatusData.stype }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-12">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <mat-label>Requisitioner</mat-label>
+                                            <mat-form-field appearance="none">
+                                                <mat-label>Enter Email ID</mat-label>
+                                                <!-- <i class="fa fa-search" (click)="callDynamicData()" style="cursor: pointer;padding: 8px;position: absolute;top: 50%;right: 10px;transform: translateY(-50%);"></i> -->
+                                                <input matInput placeholder="Enter Email ID"
+                                                    formControlName="Requisitioner" value=""
+                                                    (keyup)="ValidateEmail($event)">
+                                            </mat-form-field>
+                                            <div class="error" *ngIf="submitted">* Please enter valid emailid !!</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-12 " *ngIf="invoiceMode">
+                                        <div class="inv-form-inputs mb-mt" style="width:100%">
+                                            <!-- <mat-label>Invoice Amount</mat-label> -->
+                                            <div class="row">
+
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                                    <mat-label>Min Amt</mat-label>
+                                                    <!-- <mat-label>MIN</mat-label> -->
+                                                    <mat-form-field appearance="none" style="padding: 0 10px;">
+                                                        <mat-label>MIN</mat-label>
+                                                        <!-- <i class="fa fa-search" (click)="callDynamicData()" style="cursor: pointer;padding: 8px;position: absolute;top: 50%;right: 10px;transform: translateY(-50%);"></i> -->
+                                                        <input matInput name="invoicemin"
+                                                            (keyup)="Validateamount($event)" id="invoicemin"
+                                                            formControlName="invoicemin" value="" valDecimal>
+                                                    </mat-form-field>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                                    <mat-label>Max Amt</mat-label>
+
+                                                    <!-- <mat-label>MAX</mat-label> -->
+                                                    <mat-form-field appearance="none" style="padding: 0 10px;">
+                                                        <mat-label>MAX</mat-label>
+                                                        <!-- <i class="fa fa-search" (click)="callDynamicData()" style="cursor: pointer;padding: 8px;position: absolute;top: 50%;right: 10px;transform: translateY(-50%);"></i> -->
+                                                        <input matInput name="invoicemax"
+                                                            (keyup)="Validateamount($event)" id="invoicemax"
+                                                            formControlName="invoicemax" value="" valDecimal>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="error" *ngIf="error">Please check min and max amounts !!</div>
+                                            <div class="error" *ngIf="subceed">Amount cannot be negative !!</div>
+                                            <div class="error" *ngIf="empty">Min and max amount cannot be empty simultaneously!!</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-6 col-sm-12" *ngIf="invoiceMode ==false">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%;">
+                                            <!-- <mat-label>POAmount</mat-label> -->
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                                    <mat-label>Min Amt</mat-label>
+                                                    <mat-form-field appearance="none" style="padding: 0 10px;">
+                                                        <mat-label>MIN</mat-label>
+                                                        <!-- <i class="fa fa-search" (click)="callDynamicData()" style="cursor: pointer;padding: 8px;position: absolute;top: 50%;right: 10px;transform: translateY(-50%);"></i> -->
+                                                        <input matInput name="pomin" id="pomin" formControlName="pomin"
+                                                            (keyup)="Validateamount($event)" value="" valDecimal>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
+                                                    <mat-label>Max Amt</mat-label>
+                                                    <mat-form-field appearance="none" style="padding: 0 10px;">
+                                                        <mat-label>MAX</mat-label>
+                                                        <!-- <i class="fa fa-search" (click)="callDynamicData()" style="cursor: pointer;padding: 8px;position: absolute;top: 50%;right: 10px;transform: translateY(-50%);"></i> -->
+                                                        <input matInput name="pomax" id="pomax" formControlName="pomax"
+                                                            (keyup)="Validateamount($event)" value="" valDecimal>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="error" *ngIf="error">Please check min and max amounts !!</div>
+                                            <div class="error" *ngIf="subceed">Amount cannot be negative !!</div>
+                                            <div class="error" *ngIf="empty">Min and max amount cannot be empty simultaneously!!</div>
+                                        </div>
+
+                                    </div>
+                                    <!-- <div class="col-lg-3 col-md-6 col-sm-12" *ngIf="invoiceMode">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%; overflow: visible;">
+                                            <mat-label>Invoice Amount</mat-label>
+                                            <mat-label>(In Lacs)</mat-label>
+                                            <div class="npmSliderWrapper">
+                                                <npn-slider [min]="0" [max]="500" step="1" showStepIndicator=true
+                                                    (onChange)="onSliderChange($event)"></npn-slider>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-12" *ngIf="invoiceMode ==false">
+                                        <div class="inv-form-inputs mb-mt" style="width: 100%; overflow: visible;">
+                                            <mat-label>POAmount</mat-label>
+                                            <mat-label>(In Lacs)</mat-label>
+                                            <div class="npmSliderWrapper">
+                                                <npn-slider [min]="0" [max]="500" step="1" showStepIndicator=true
+                                                    (onChange)="onSliderChange($event)"></npn-slider>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="w-100 text-center" style="margin-top:10px">
+                                        <button type="submit" class="btn button-primary" (click)="SearchData();"
+                                            [disabled]="disable" style="margin-right: 20px;">
+                                            <img _ngcontent-dnd-c329="" src="./assets/img/arrow_icon_red.png"
+                                                alt="arrow icon" class="activeImg arrowIcon">
+                                            <img ngcontent-dnd-c329="" src="./assets/img/arrow_icon_light_grey.png"
+                                                alt="arrow icon" class="disabledImg arrowIcon">search
+                                        </button>
+                                        <button type="submit" class="btn button-primary" (click)="ResetData();">
+                                        <img _ngcontent-dnd-c329="" src="./assets/img/arrow_icon_red.png"
+                                            alt="arrow icon" class="activeImg arrowIcon">
+                                        reset
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="inv-table-container" *ngIf="invoiceMode" >
+                            <!-- invStatusMainWrapper -->
+                            <div class="invStatusMainWrapper">
+                                <div class="invStatusRightWrap ml-auto">
+                                    <div class="inv-status-wrapper">
+                                        <!-- (click)="sortdata('ALL')" -->
+                                        <div class="inv-wrapper">
+                                            <span class="status-color st-withoutPo"></span>
+                                            <p class="status-title">All</p>
+                                        </div>
+                                        <!-- (click)="sortWithoutPO()" -->
+                                        <!-- <div class="inv-wrapper" >
+                                            <span class="status-color st-withoutPo"></span>
+                                            <p class="status-title">Without PO</p>
+                                        </div> -->
+                                        <!-- (click)="sortdata('P')" -->
+                                        <div class="inv-wrapper active" id="stManagerpending">
+                                            <span class="status-color st-managerpending"></span>
+                                            <p class="status-title">Pending
+                                                <span class="badgeNum">{{pendingPo}}</span>
+                                            </p>
+                                        </div>
+                                        <!-- (click)="sortdata('C')" -->
+                                        <!-- <div class="inv-wrapper">
+                                            <span class="status-color st-shortQuantity"></span>
+                                            <p class="status-title ">Short Quantity</p>
+                                        </div> -->
+                                        <!-- (click)="sortdata('V')" -->
+                                        <div class="inv-wrapper">
+                                            <span class="status-color st-rejected"></span>
+                                            <p class="status-title ">Returned
+                                                <span class="badgeNum">{{invoiceCountAsPerStatus?.V != null ? invoiceCountAsPerStatus?.V : 0}}</span>
+                                            </p>
+                                        </div>
+                                        <!-- (click)="sortdata('A')" -->
+                                        <div class="inv-wrapper">
+                                            <span class="status-color st-accepted"></span>
+                                            <p class="status-title ">Approved
+                                                <span class="badgeNum">{{invoiceCountAsPerStatus?.A != null ? invoiceCountAsPerStatus?.A : 0}}</span>
+                                            </p>
+                                        </div>
+                                        <!-- (click)="sortdata('O')" -->
+                                        <div class="inv-wrapper">
+                                            <span class="status-color st-hold"></span>
+                                            <p class="status-title ">On Hold
+                                                <span class="badgeNum">{{invoiceCountAsPerStatus?.O != null ? invoiceCountAsPerStatus?.O : 0}}</span>
+                                            </p>
+                                        </div>
+                                        <!-- (click)="sortdata('PRO')" -->
+                                        <div class="inv-wrapper">
+                                            <span class="status-color st-transported"></span>
+                                            <p class="status-title">Processed
+                                                <span class="badgeNum">{{invoiceCountAsPerStatus?.PRO != null ? invoiceCountAsPerStatus?.PRO : 0}}</span>
+                                   
+                                            </p>
+                                        </div>
+                                        <!-- (click)="sortdata('PP')" -->
+                                        <div class="inv-wrapper">
+                                            <span class="status-color st-complete partialyLarge"
+                                                style="width: 17px; height: 20px;"></span>
+                                            <span class="status-color st-incomplete st-grey partialySmall"
+                                                style="width: 8px; height: 20px; background: #024aec;"></span>
+                                            <p class="status-title ">Partially Paid
+                                                <span class="badgeNum">{{invoiceCountAsPerStatus?.PP != null ? invoiceCountAsPerStatus?.PP : 0}}</span>
+                                   
+                                            </p>
+                                        </div>
+
+                                        <!-- (click)="sortdata('PD')" -->
+                                        <div class="inv-wrapper">
+                                            <span class="status-color st-complete"></span>
+                                            <p class="status-title">Paid
+                                                <span class="badgeNum">{{invoiceCountAsPerStatus?.PD != null ? invoiceCountAsPerStatus?.PD : 0}}</span>
+                                  
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inv-table-header">
+                                <p class="tbl-header-title">Invoices List</p>
+
+                                <div class="tbl-options">
+                                    <div class="nextpreviconWrapper">
+                                        <div class="nextprevicoSingle" style="cursor: pointer;"
+                                            (click)="gettrackInvPoList('HOME')" *ngIf="disableprevious ==false">
+                                            <img src="./assets/img/first_page_icon_option04.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Home" />
+                                            <!-- <p>Home</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" *ngIf="disableprevious ==true">
+                                            <img src="./assets/img/first_page_icon_disable02.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Home" />
+                                            <!-- <p>Home</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" style="cursor: pointer;"
+                                            (click)="gettrackInvPoList('PREV')" *ngIf="disableprevious ==false">
+                                            <img src="./assets/img/first_page_icon_option03.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Previous" />
+                                            <!-- <p>Previous</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" *ngIf="disableprevious ==true">
+                                            <img src="./assets/img/first_page_icon_disable01.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Previous" />
+                                            <!-- <p>Previous</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" style="cursor: pointer;"
+                                            (click)="gettrackInvPoList('NEXT')" *ngIf="disablenext ==false">
+                                            <!-- <p style=" margin-right: 5px;">Next</p> -->
+                                            <img src="./assets/img/end_page_icon_option_03.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Next" />
+                                        </div>
+                                        <div class="nextprevicoSingle" *ngIf="disablenext ==true">
+                                            <!-- <p style=" margin-right: 5px;">Next</p> -->
+                                            <img src="./assets/img/end_page_icon_disable_01.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Next" />
+                                        </div>
+                                        <div class="nextprevicoSingle" style="cursor: pointer;"
+                                            (click)="gettrackInvPoList('END')" *ngIf="disablenext ==false">
+                                            <img src="./assets/img/end_page_icon_option_04.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="End" />
+                                            <!-- <p>End</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" *ngIf="disablenext ==true">
+                                            <img src="./assets/img/end_page_icon_disable_02.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="End" />
+                                            <!-- <p>End</p> -->
+                                        </div>
+                                    </div>
+                                    <div class="tble-each-option" (click)="downloadinvoicelist()"
+                                        style="cursor: pointer;" *ngIf = "invoicedetailsList.length != 0">
+                                        <img src="./assets/img/download.png" alt="download image" />
+                                        <p>Download List</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- table  -->
+                            <div class="table-responsive">
+                                <table class="table customTableStripped ">
+                                    <!-- noAccordionTable-->
+                                    <thead class="text-primary">
+                                        <tr>
+                                            <th scope="col" class="text-left new-th">
+                                                <div style="margin-left: 12px;">
+                                                    Invoice No.
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="text-left new-th">Invoice Date</th>
+                                            <th scope="col" class="text-left new-th">PO No.</th>
+                                            <th scope="col" class="text-right new-th">Invoice Amt.</th>
+                                            <th scope="col" class="text-right new-th">Paid Amt.</th>
+                                            <th scope="col" class="text-left new-th">Overall Status</th>
+                                            <!-- <th scope="col" class="text-left">Approvals</th> -->
+                                            <!-- <th scope="col" class="text-left">Messages</th> -->
+                                            <th scope="col" class="text-left new-th">Last Modified On</th>
+                                            <th scope="col" class="text-left new-th">Info</th>
+                                            <!-- <th scope="col" class="=text-right" style="width: 5%;">Msgs</th> -->
+                                            <!-- <th scope="col" class="text-left">Action</th>
+                                            <th scope="col" class="text-left">Credit Note</th> -->
+                                            <!-- <th></th> -->
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <!-- tr start  -->
+
+                                        <!-- tr end  -->
+
+                                        <!-- tr start  -->
+                                        <!--id="search"  #search [scrollTop]="search.scrollHeight" -->
+                                        <tr  (focus)="invoicedetailsList.length!=0" class="customtbl-accordion-head" style="border-top: 1px solid #dee2e6;"
+                                            [ngClass]="{'item-aknowledge': invoice.OVERALLSTATUS== 'A', 'item-managerpending': invoice.OVERALLSTATUS == 'P' || invoice.OVERALLSTATUS == 'M' , 'item-hold': invoice.OVERALLSTATUS == 'O', 'item-rejected': invoice.OVERALLSTATUS == 'R','item-transported': invoice.OVERALLSTATUS == 'PRO', 'item-rejected': invoice.OVERALLSTATUS == 'V',
+                                        'partiallyRow': invoice.OVERALLSTATUS == 'PP','item-complete': invoice.OVERALLSTATUS == 'PD','item-shortQuantity': ((invoice.OVERALLSTATUS != 'A' && invoice.OVERALLSTATUS != 'PD' && invoice.OVERALLSTATUS != 'P' && invoice.OVERALLSTATUS != 'M' && invoice.OVERALLSTATUS != 'O' && invoice.OVERALLSTATUS != 'R' && invoice.OVERALLSTATUS != 'PRO' && invoice.OVERALLSTATUS != 'PP' && invoice.OVERALLSTATUS != 'V')  && invoice.CREDITADVICENO != null )}"
+                                            *ngFor="let invoice of invoicedetailsList;  let k=index">
+                                            <td class="preventClick" class="text-left fixedPOnumber"
+                                                style="margin-left: 12px;min-width: 200px;" >
+                                                <div style="min-width: 165px;">
+                                                    <img src="./assets/img/pdf_icon03.png" alt="pdf image"
+                                                        style="cursor: pointer;"
+                                                        (click)="download(invoice.SAVEDFILENAME, 'listdownload',invoice.ACTUALFILENAME)" />
+                                                    <a class="linkTable" style="cursor: pointer;"
+                                                        (click)="getInvDetails(invoice.INVOICENUMBER,invoice.PONUMBER)">{{invoice.INVOICENUMBER}}</a>
+                                                    <!-- <span>{{invoice.INVOICENUMBER}}</span> -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-left fixedDateCol">
+                                                    {{invoice.INVOICEDATE | date:'dd-MMM-yyyy'}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-left">
+                                                    <a class="linkTable"
+                                                        (click)="downloadPo(invoice.PONUMBER,'singlepodownload')">
+                                                        {{invoice.PONUMBER}}
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-right">
+                                                    <!-- {{invoice.TOTALAMOUNT| number:'0.0-0'}} -->
+                                                    {{invoice.TOTALAMOUNT | currency:'INR' }}
+                                                    <!-- {{changetoindian(invoice.TOTALAMOUNT)}} -->
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-right" *ngIf="invoice.PAYMENTAMOUNT !=null">
+                                                    {{invoice.PAYMENTAMOUNT | currency:'INR' }}
+                                                </div>
+                                                <div class="text-right" *ngIf="invoice.PAYMENTAMOUNT ==null">
+                                                    0.00
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-center" *ngIf="invoice.OVERALLSTATUS == 'P'">
+                                                    Pending
+                                                </div>
+                                                <div class="text-center" *ngIf="invoice.OVERALLSTATUS == 'M'">
+                                                    Pending
+                                                </div>
+                                                <div class="text-center" *ngIf="invoice.OVERALLSTATUS == 'O'">
+                                                    On Hold
+                                                </div>
+                                                <div class="text-center" *ngIf="invoice.OVERALLSTATUS == 'A'">
+                                                    Approved
+                                                </div>
+                                                <div class="text-center" *ngIf="invoice.OVERALLSTATUS == 'V'">
+                                                    Returned
+                                                </div>
+                                                <div class="text-center" *ngIf="invoice.OVERALLSTATUS == 'R'">
+                                                    Rejected
+                                                </div>
+                                                <div class="text-center" *ngIf="invoice.OVERALLSTATUS == 'RSAP'">
+                                                    Sap Returned
+                                                </div>
+                                                <div class="text-center" *ngIf="invoice.OVERALLSTATUS == 'PRO'">
+                                                    Processed
+                                                </div>
+                                                <div class="text-center" *ngIf="invoice.OVERALLSTATUS == 'PP'">
+                                                    Partilly Paid
+                                                </div>
+                                                <div class="text-center" *ngIf="invoice.OVERALLSTATUS == 'PD'">
+                                                    Paid
+                                                </div>
+                                            </td>
+                                            <!-- <td style="min-width: 112px; max-width: 110px; ">
+                                                <div class="invoice-form-select">
+                                                    <div class="inv-form-select">
+
+                                                        <div class="form-group">
+                                                            <div class="customFormGroup">
+                                                               
+
+                                                                <select disabled
+                                                                    class="form-control form-select"
+                                                                    aria-label="Default select example"
+                                                                    id="Seluser{{k}}">
+
+                                                                   
+                                                                    <option *ngIf="invoice.OVERALLSTATUS == 'P'">Pending</option>
+                                                                     <option *ngIf="invoice.OVERALLSTATUS == 'M'">Pending</option>
+                                                                    <option *ngIf="invoice.OVERALLSTATUS == 'O'">On Hold</option>
+                                                                    <option *ngIf="invoice.OVERALLSTATUS == 'A'">Approved</option>
+                                                                    <option *ngIf="invoice.OVERALLSTATUS == 'V'">Returned</option>
+                                                                    <option *ngIf="invoice.OVERALLSTATUS == 'R'">Rejected</option>
+                                                                    <option *ngIf="invoice.OVERALLSTATUS == 'RSAP'">Sap Returned</option>
+                                                                    <option *ngIf="invoice.OVERALLSTATUS == 'PRO'">Processed</option>
+                                                                    <option *ngIf="invoice.OVERALLSTATUS == 'PP'">Partially Paid</option>
+                                                                    <option *ngIf="invoice.OVERALLSTATUS == 'PD'">Paid</option>
+                                                                </select>
+
+                                                                <div class="wizard-form-error"></div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </td> -->
+
+                                            <!-- WIP -->
+                                            <!-- <td>
+                                                <div class="text-left">
+                                                    <div class="commentDiv" *ngIf="disableoff==false">
+                                                        <div class="commentIcon" style="cursor: pointer;"
+                                                            (click)="ShowpopupMessage(event);
+                                                    getInvoiceQuerry(invoice.PONUMBER, invoice.INVOICENUMBER, invoice.CONTACTPERSON);getStatusUpdate(invoice.BUSINESSPARTNEROID ,invoice.PONUMBER,invoice.INVOICENUMBER, k)"
+                                                            *ngIf="invoice.STATUS != null">
+                                                            <img src="./assets/img/unreadMessages.png"
+                                                                style="max-width: 30px; cursor: pointer; display: none;"
+                                                                id="green{{k}}" />
+                                                            <img src="./assets/img/Message.png"
+                                                                style="max-width: 30px; cursor: pointer;"
+                                                                id="white{{k}}" />
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </td> -->
+                                            <td>
+                                                <div class="text-right">
+                                                    {{invoice.MODIFIEDON}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-left" >
+                                                    <ng-template #statusTemplate>Plant : {{invoice.PLANTNAME}} <br> Vendor : {{invoice.VENDORNAME}} <br>Onex Exp Sheet ID : {{invoice.EXPENSESHEETID}}</ng-template>
+                                                <a style="cursor: pointer;"
+                                                [ngbTooltip]="statusTemplate" container="body">
+                                                <img src="./assets/img/info.png" style = "padding-left: 10px;max-width: 30px;"></a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <div *ngIf="invoicedetailsList.length==0"
+                                    style="color: #777; font-size: 16px; font-weight: 600; text-align: center;">
+                                    <p class="text-center w-100">No Data Found</p>
+                                </div>
+                            </div>
+                            <div class="paginationWrapper " *ngIf="invoicedetailsList.length!=0">
+
+                                <div class="tble-each-option" style="cursor: pointer;"
+                                    (click)="gettrackInvPoList('HOME')" *ngIf="disableprevious ==false">
+                                    <img src="./assets/img/first_page_icon_option04.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Home" />
+                                </div>
+                                <div class="tble-each-option" *ngIf="disableprevious ==true">
+                                    <img src="./assets/img/first_page_icon_disable02.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Home" />
+                                </div>
+                                <div class="tble-each-option" style="cursor: pointer;"
+                                    (click)="gettrackInvPoList('PREV')" *ngIf="disableprevious ==false">
+                                    <img src="./assets/img/first_page_icon_option03.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Previous" />
+                                </div>
+                                <div class="tble-each-option" *ngIf="disableprevious ==true">
+                                    <img src="./assets/img/first_page_icon_disable01.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Previous" />
+                                </div>
+                                <div class="tble-each-option" style="cursor: pointer;"
+                                    (click)="gettrackInvPoList('NEXT')" *ngIf="disablenext ==false">
+                                    <img src="./assets/img/end_page_icon_option_03.png" class="nextprevicon"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Next" />
+                                </div>
+                                <div class="tble-each-option" *ngIf="disablenext ==true">
+                                    <img src="./assets/img/end_page_icon_disable_01.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Next" />
+                                </div>
+                                <div class="tble-each-option" style="cursor: pointer;"
+                                    (click)="gettrackInvPoList('END')" *ngIf="disablenext ==false">
+                                    <img src="./assets/img/end_page_icon_option_04.png" class="nextprevicon__pagination"
+                                        alt="refresh image" tooltip="End" />
+                                </div>
+                                <div class="tble-each-option" *ngIf="disablenext ==true">
+                                    <img src="./assets/img/end_page_icon_disable_02.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="End" />
+                                    <!-- <p>End</p> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inv-table-container" *ngIf="invoiceMode ==false" id = "search">
+                            <!-- invStatusMainWrapper -->
+                            <div class="invStatusMainWrapper">
+
+                                <div class="invStatusRightWrap ml-auto">
+                                    <div class="inv-status-wrapper">
+                                        <div class="inv-wrapper" id="allPO">
+                                            <span class=""></span>
+                                            <p class="status-title ">All</p>
+                                        </div>
+                                        <div class="inv-wrapper" *ngIf="invoicenumber == undefined">
+                                            <span class="status-color st-new"></span>
+                                            <p class="status-title ">New PO(s)
+                                                <span class="badgeNum">{{poCountAsPerStatus?.N != null ? poCountAsPerStatus?.N : 0}}</span>
+                                            
+                                            </p>
+                                        </div>
+                                        <div class="inv-wrapper">
+                                            <span class="status-color st-aknowledge"></span>
+                                            <p class="status-title ">Accepted
+                                                <span class="badgeNum">{{poCountAsPerStatus?.A != null ? poCountAsPerStatus?.A : 0}}</span>
+                                          
+                                            </p>
+                                        </div>
+                                        <div class="inv-wrapper">
+                                            <span class="status-color st-inProgress"></span>
+                                            <p class="status-title ">Work In Progress
+                                                <span class="badgeNum">{{poCountAsPerStatus?.P != null ? poCountAsPerStatus?.P : 0}}</span>
+                                            
+                                            </p>
+                                        </div>
+                                        <div class="inv-wrapper">
+                                            <span class="status-color st-transported"></span>
+                                            <p class="status-title ">Shipped
+                                                <span class="badgeNum">{{poCountAsPerStatus?.S != null ? poCountAsPerStatus?.S : 0}}</span>
+                                            
+                                            </p>
+                                        </div>
+                                        <div class="inv-wrapper">
+                                            <span class="status-color st-complete"></span>
+                                            <p class="status-title ">Complete
+                                                <span class="badgeNum">{{poCountAsPerStatus?.C != null ? poCountAsPerStatus?.C : 0}}</span>
+                                          
+                                            </p>
+                                        </div>
+                                        <div class="inv-wrapper">
+                                            <span class="status-color st-service"></span>
+                                            <p class="status-title ">Service PO
+                                                <span class="badgeNum">{{(poCountAsPerStatus?.SP != null && poCountAsPerStatus?.SP != 0) ? poCountAsPerStatus?.SP : 0}}</span>
+                                           
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inv-table-header">
+                                <p class="tbl-header-title">Purchase Order List</p>
+
+                                <div class="tbl-options">
+                                    <div class="nextpreviconWrapper">
+                                        <div class="nextprevicoSingle" style="cursor: pointer;"
+                                            (click)="gettrackInvPoList('HOME')" *ngIf="disableprevious ==false">
+                                            <img src="./assets/img/first_page_icon_option04.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Home" />
+                                            <!-- <p>Home</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" *ngIf="disableprevious ==true">
+                                            <img src="./assets/img/first_page_icon_disable02.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Home" />
+                                            <!-- <p>Home</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" style="cursor: pointer;"
+                                            (click)="gettrackInvPoList('PREV')" *ngIf="disableprevious ==false">
+                                            <img src="./assets/img/first_page_icon_option03.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Previous" />
+                                            <!-- <p>Previous</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" *ngIf="disableprevious ==true">
+                                            <img src="./assets/img/first_page_icon_disable01.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Previous" />
+                                            <!-- <p>Previous</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" style="cursor: pointer;"
+                                            (click)="gettrackInvPoList('NEXT')" *ngIf="disablenext ==false">
+                                            <!-- <p style=" margin-right: 5px;">Next</p> -->
+                                            <img src="./assets/img/end_page_icon_option_03.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Next" />
+                                        </div>
+                                        <div class="nextprevicoSingle" *ngIf="disablenext ==true">
+                                            <!-- <p style=" margin-right: 5px;">Next</p> -->
+                                            <img src="./assets/img/end_page_icon_disable_01.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="Next" />
+                                        </div>
+                                        <div class="nextprevicoSingle" style="cursor: pointer;"
+                                            (click)="gettrackInvPoList('END')" *ngIf="disablenext ==false">
+                                            <img src="./assets/img/end_page_icon_option_04.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="End" />
+                                            <!-- <p>End</p> -->
+                                        </div>
+                                        <div class="nextprevicoSingle" *ngIf="disablenext ==true">
+                                            <img src="./assets/img/end_page_icon_disable_02.png" class="nextprevicon"
+                                                alt="refresh image" tooltip="End" />
+                                            <!-- <p>End</p> -->
+                                        </div>
+                                    </div>
+                                    <div class="tble-each-option" (click)="downloadpolist()" style="cursor: pointer;" *ngIf = "poDataList.length != 0">
+                                        <img src="./assets/img/download.png" alt="download image" />
+                                        <p>Download List</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- table  -->
+                            <div class="table-responsive">
+                                <table class="table customTableStripped ">
+                                    <!-- noAccordionTable-->
+                                    <thead class="text-primary">
+                                        <tr>
+                                            <th scope="col" class="text-left ">
+                                                <div style="margin-left: 12px;">
+                                                    PO No.
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="text-left ">PO Date</th>
+                                            <th scope="col" class="text-right columnWidth "> PO Amt.</th>
+                                            <th scope="col" class="text-left ">
+                                                <div style="margin-left: 100px;">
+                                                    Messages
+                                                </div>
+                                            </th>
+                                            <!-- <th scope="col" class="text-left">Invoices</th> -->
+                                            <th scope="col" class="text-left ">
+                                                <div style="margin-left: 90px;">
+                                                    Info
+                                                </div>
+                                            </th>
+                                            <!-- <th scope="col" class="text-center">View</th> -->
+                                            <!-- <th scope="col" class="text-center">Action</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let poData of poDataList ;let i=index">
+
+                                        <!-- tr start  -->
+                                        <tr class="tablecol-Five" [attr.data-accordion]="'poacc'+i" style="border-top: 1px solid #dee2e6;" 
+                                            [ngClass]="{'item-aknowledge': poData.STATUS == 'A', 'item-transported': poData.STATUS == 'S', 'item-inProgress': poData.STATUS == 'P', 'item-complete': poData.STATUS == 'C', 'item-new hidePlusSign': poData.STATUS == 'N'}"
+                                            (click)="getPOitems(poData.PO_NUMBER, poData.CONTACTPERSONEMAILID, poData.REQUSITIONER);openAccordionTab($event)">
+                                            <td class="preventClick">
+                                                <div class="fixedPOnumber text-left" *ngIf="poData.STATUS =='N'">
+                                                    <!-- <a class="" (click)="goToLink(poData.PO_NUMBER)"> <img src="./assets/img/pdf_icon01.png" alt="pdf image" /> {{poData.PO_NUMBER}} <sup class="starRed" *ngIf="poData.STATUS =='N'">*</sup></a> -->
+                                                    <img src="./assets/img/pdf_icon03.png" alt="pdf image"
+                                                        (click)="downloadPo(poData.PO_NUMBER,'singlepodownload')"
+                                                        style="cursor: pointer;" />
+                                                    <div style="display:inline-block;margin-left:3px">
+                                                        {{poData.PO_NUMBER}} <sup class="starRed">*</sup>
+                                                    </div>
+                                                </div>
+                                                <div class="fixedPOnumber text-left" *ngIf="poData.STATUS !='N'">
+                                                    <!-- <a class="" (click)="goToLink(poData.PO_NUMBER)"> <img src="./assets/img/pdf_icon01.png" alt="pdf image" /> {{poData.PO_NUMBER}} <sup class="starRed" *ngIf="poData.STATUS =='N'">*</sup></a> -->
+                                                    <img src="./assets/img/pdf_icon03.png" alt="pdf image"
+                                                        (click)="downloadPo(poData.PO_NUMBER,'singlepodownload')"
+                                                        style="cursor: pointer;" />
+                                                    <div style="display:inline-block;margin-left:3px">
+                                                        {{poData.PO_NUMBER}}
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <div class="text-left upperDate ">
+                                                    {{poData.DATE | date:'dd-MMM-yyyy' }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-right">
+                                                    {{poData.AMOUNT}}
+                                                </div>
+                                            </td>
+                                            <td>
+
+                                                <div class="">
+
+                                                    <div class="commentDiv text-left" style="margin-left: 100px;">
+                                                        <!-- <div class="commentInputWrap editableFalse">
+                                                        <input type="text" class="form-control ellipsisInput" value="{{poData.QUERY}}" placeholder="pending...." readonly />
+                                                    </div> -->
+                                                        <div class="commentIcon"
+                                                            (click)="ShowpopupMessage($event);
+                                                     getQuerry(poData.PO_NUMBER, poData.CONTACTPERSONEMAILID) ; getStatusUpdate(poData.BUSINESSPARTNEROID,poData.PO_NUMBER ,'',i)"
+                                                            *ngIf="poData.STATUS != null">
+                                                            <!-- getStatusUpdate(poData.PO_NUMBER ,'') -->
+                                                            <!-- <i class="fa fa-comment" aria-hidden="true"></i> -->
+                                                            <img src="./assets/img/unreadMessages.png"
+                                                                style="max-width: 30px; cursor: pointer; display: none;"
+                                                                id="green{{i}}" />
+                                                            <img src="./assets/img/Message.png"
+                                                                style="max-width: 30px; cursor: pointer; display: none;"
+                                                                id="white{{i}}" />
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </td>
+                                            <!-- <td *ngIf="invoicenumber == undefined">
+                                                <span *ngIf="poData.STATUS !='N'">
+                                                    <img class="setting-icon" style="max-width: 30px;cursor: pointer;"
+                                                        src="./assets/img/multiple_file_icon_grey.png"
+                                                        (click)="gettotrackinvoicepage('poitem',poData.PO_NUMBER,'','')"
+                                                        tooltip="Invoices" />
+                                                </span>
+                                            </td> -->
+                                            <td class="fixedPOnumber text-left">
+                                                <div class="commentDiv " style="margin-left: 80px;">
+                                                    <ng-template #statusTemplate1>Plant : {{poData.PLANTNAME}} <br>
+                                                        Vendor : {{poData.VENDORNAME}}</ng-template>
+                                                    <a style="cursor: pointer;" [ngbTooltip]="statusTemplate1"
+                                                        container="body">
+                                                        <img src="./assets/img/info.png"
+                                                            style="padding-left: 10px;max-width: 30px;"></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- tr end  -->
+
+                                        <!-- accordion content-->
+                                        <tr class="tbl-accordion-content" id="poacc{{i}}">
+                                            <td colspan="8">
+                                                <div class="table-responsive ">
+                                                    <table class="table customTableStripped bgTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col"
+                                                                    style="width: 200px; font-weight: bold;">
+                                                                    Item</th>
+                                                                <th scope="col"
+                                                                    style="width: 140px; font-weight: bold;">
+                                                                    Material Code </th>
+                                                                <th scope="col" class="text-right columnWidth"
+                                                                    style="width: 190; font-weight: bold;">Order Qty
+                                                                </th>
+                                                                <th scope="col" class="text-right columnWidth"
+                                                                    style="width: 190; font-weight: bold;">Balance Qty
+                                                                </th>
+                                                                <th scope="col" class="text-center"
+                                                                    style="width: 450px; font-weight: bold;">PER</th>
+                                                                <th scope="col" class="text-center"
+                                                                    style="width: 140px; font-weight: bold;">UOM</th>
+                                                                <th scope="col" class="text-right"
+                                                                    style="width: 200px; padding-left: 0px;font-weight: bold;">
+                                                                    Rate</th>
+                                                                <!-- <th scope="col" class="text-center" style="width: 200px; padding-left: 0px;
+                                                         padding-right: 25px;font-weight: bold;
+                                                     " *ngIf="poData.STATUS !='N'">Action </th> -->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody *ngFor="let poitem of uniquelineitems; let j=index">
+
+                                                            <!-- tr start  -->
+                                                            <tr class="customtbl-accordion-head-inner"
+                                                                id="lineitem{{i}}{{j}}"
+                                                                [attr.data-accordion]="'poaccInner'+j">
+                                                                <td class="preventClick">
+                                                                    <div class="fixedPOnumber">
+                                                                        {{poitem.LINEITEMNUMBER}}
+
+                                                                    </div>
+
+                                                                </td>
+                                                                <td>
+                                                                    <div class="text-left">
+                                                                        {{poitem.LINEITEMTEXT}}
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="text-right">
+                                                                        {{poitem.QUANTITY | number}}
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="text-right">
+                                                                        {{poitem.BALANCE_QTY}}
+                                                                    </div>
+                                                                </td>
+
+                                                                <td>
+                                                                    <div class="text-center">
+                                                                        1
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="text-center">
+                                                                        {{poitem.UNITOFMEASURE}}
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="text-right">
+                                                                        <!-- {{poData.AMOUNT| number:'0.0-0'}} -->
+                                                                        {{poitem.RATEPERQTY | number:'1.2-2'}}
+                                                                    </div>
+                                                                </td>
+
+                                                                <td class="text-center">
+                                                                    <!-- <div class="dropPmWrapper">
+                                                                        <div class="dropdown">
+                                                                            <a href="javascript:void;" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                                                <div class="settingIconWrapper" *ngIf="poData.STATUS !='N'">
+                                                                                    <div class="settingIcon">
+                                                                                        <img class="setting-icon" src="./assets/img/setting.png" />
+                                                                                    </div>
+                                                                                    <span class="fa fa-chevron-down downArrow"></span>
+                                                                                </div>
+                                                                            </a>
+                                                                            <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                                                <a class="dropdown-item" (click)="navigate2('lineitem', poitem.LINEITEMNUMBER ,poitem.LINEITEMTEXT, poitem.QUANTITY, poData.VENDORID,poData.CONTACTPERSONEMAILID,poitem.BALANCE_QTY)">
+                                                                                    <img src="./assets/img/track_po.png" />
+                                                                                    <div class="settingIconWrapper__text">
+                                                                                        Create Delivery
+                                                                                    </div>
+                                                                                </a>
+                                                                                <a class="dropdown-item">
+                                                                                    <img src="./assets/img/po_icon_grey.png" />
+                                                                                    <div class="settingIconWrapper__text" (click)="navigate('lineitem',poData.PO_NUMBER, poData.VENDORID, poData.CONTACTPERSONEMAILID,poitem,poitem.QUANTITY,poData.DATE)">
+                                                                                        Submit Invoice
+                                                                                    </div>
+                                                                                </a>
+
+                                                                            </div>
+                                                                            <span class="plusminusArrow fa fa-plus" (click)="openAccordioninnerTab($event,i,j);openAccordionNestedTab($event,poitem.LINEITEMNUMBER,poData.PO_NUMBER);getorderitems(poitem.LINEITEMNUMBER,poData.PO_NUMBER)"></span>
+                                                                        </div>
+                                                                    </div> -->
+                                                                    <span class="plusminusArrow fa fa-plus"
+                                                                        (click)="openAccordioninnerTab($event,i,j);openAccordionNestedTab($event,poitem.LINEITEMNUMBER,poData.PO_NUMBER);getorderitems(poitem.LINEITEMNUMBER,poData.PO_NUMBER)"></span>
+                                                                </td>
+                                                                <!-- <td>
+                                                                    <img class="setting-icon" style="max-width: 30px;cursor: pointer;" src="./assets/img/multiple_file_icon_grey.png" 
+                                                                    (click)="gettotrackinvoicepage('lineitem',poData.PO_NUMBER,poitem.LINEITEMNUMBER,'')" tooltip="Invoices" />
+                                                                </td> -->
+                                                                <!-- <span class="plusminusArrow fa fa-plus" style="margin-right: 25px;" (click)="openAccordioninnerTab($event,i,j);openAccordionNestedTab($event,poitem.LINEITEMNUMBER,poData.PO_NUMBER)"></span> -->
+                                                            </tr>
+                                                            <!-- tr end  -->
+
+                                                            <!-- accordion content-->
+                                                            <tr class="tbl-accordion-content-inner"
+                                                                id="poaccInner{{j}}">
+                                                                <td colspan="8">
+                                                                    <div class="aNestedTblAccordion accordion-wrapper">
+
+                                                                        <!-- atbl-container -->
+                                                                        <div class="atbl-container">
+                                                                            <!-- <thead>
+                                                                            <tr>
+                                                                                <th>Order Delivery</th>
+                                                                                <th>Dispatch Date</th>
+                                                                                <th>Quantity</th>
+                                                                                <th>Remark</th>
+                                                                                <th>Action</th>
+                                                                            </tr>
+                                                                        </thead> -->
+
+                                                                            <!-- <tbody>
+                                                                            <tr>
+                                                                                <td>00010</td>
+                                                                                <td>170000000210 / IT SOFTWARE RENEWAL SERVICES</td>
+                                                                                <td>12</td>
+                                                                                <td>1</td>
+                                                                                <td>NO</td>
+                                                                            </tr>
+                                                                        </tbody> -->
+                                                                            <!-- <div class="atbl-btn" (click)="openAccordionNestedTab($event,poitem.LINEITEMNUMBER)">
+                                                                            <div class="dropPmWrapper">
+                                                                                <div class="dropdown">
+                                                                                    <a href="javascript:void;" class="" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                                                        <div class="settingIconWrapper">
+                                                                                            <div class="settingIcon">
+                                                                                                <img class="setting-icon" src="./assets/img/setting.png" />
+                                                                                            </div>
+                                                                                            <span class="fa fa-chevron-down downArrow"></span>
+                                                                                        </div>
+                                                                                    </a>
+                                                                                    <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                                                         <a class="dropdown-item" (click)="navigate2(poitem.LINEITEMNUMBER ,poitem.LINEITEMTEXT)">
+                                                                                            <img src="./assets/img/track_po.png" />
+                                                                                            <div class="settingIconWrapper__text">Create Delivery
+                                                                                            </div>
+                                                                                        </a>
+                                                                                        <a class="dropdown-item" (click)="navigate('lineitem',poData.VENDORID,poData.CONTACTPERSONEMAILID)">
+                                                                                            <img src="./assets/img/po_icon_grey.png" />
+                                                                                            <div class="settingIconWrapper__text">Submit Invoice
+                                                                                            </div>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <span class="plusminusArrow"></span>
+                                                                            </div>
+                                                                        </div> -->
+                                                                            <div>
+                                                                                <table>
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th><strong> Order Delivery
+                                                                                                </strong></th>
+                                                                                            <th><strong>Dispatch Date
+                                                                                                </strong></th>
+                                                                                            <th><strong>Quantity
+                                                                                                </strong>
+                                                                                            </th>
+                                                                                            <th><strong>Remark </strong>
+                                                                                            </th>
+                                                                                            <div
+                                                                                                class="text-center; margin-left:50px">
+                                                                                                <th><strong>Action
+                                                                                                    </strong>
+                                                                                                </th>
+                                                                                            </div>
+                                                                                        </tr>
+                                                                                    </thead>
+
+                                                                                    <tbody
+                                                                                        *ngFor="let orderitem of orderlistoflineitemmp">
+                                                                                        <!-- <div > -->
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <!-- <a (click)="orderDetails(orderitem.ORDERNUMBER, orderitem.DELIVERYDATE, orderitem.QUANTITY,orderitem.BUSINESSPARTNERTEXT, orderitem.LINEITEMNUMBER, orderitem.LINEITEMTEXT, orderitem.CONTACTPERSONEMAILID, orderitem.PO_NUMBER, orderitem.DELIVERYADDRESS1)"
+                                                                                                    style="color: blue;cursor:pointer">
+                                                                                                </a> -->
+                                                                                                {{orderitem.DC}}
+                                                                                            </td>
+                                                                                            <!-- <td> <a (click)="orderDetails(orderitem)"> {{orderitem.ORDERNUMBER}} </a></td> -->
+                                                                                            <td class="upperDate">
+                                                                                                {{orderitem.DISPATCHDATE | date:'dd-MMM-yyyy'}}
+                                                                                            </td>
+                                                                                            <td>{{orderitem.QUANTITY}}
+                                                                                            </td>
+                                                                                            <td>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                            </td>
+                                                                                            <!-- <td>{{orderitem.REMARK}}</td> -->
+                                                                                            <!-- <td style="min-width: 200px;" *ngIf="orderitem.STATUS == 'A'">
+                                                                                                    <a _ngcontent-cxk-c236="" (click)="navigate('orderitem',poData.PO_NUMBER,poData.VENDORID,poData.CONTACTPERSONEMAILID, orderitem, poitem.QUANTITY,poData.DATE)" class="button-submitInvoice">
+                                                                                                        <img src="./assets/img/arrow_icon_grey.png " alt="arrow icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                                </td>
+                                                                                                <td *ngIf="orderitem.STATUS != 'A'">
+                                                                                                    <img class="setting-icon" style="max-width: 30px;cursor: pointer;" src="./assets/img/single file_grey.png" (click)="gettotrackinvoicepage('orderitem',poData.PO_NUMBER,orderitem.LINEITEMNUMBER,orderitem.ORDERNUMBER)" tooltip="Invoices" />
+                                                                                                </td> -->
+                                                                                        </tr>
+                                                                                        <!-- <tr *ngIf = "orderlist == null">
+                                                                                                No Order Delivery Done Yet
+                                                                                            </tr> -->
+                                                                                        <!-- </div> -->
+
+                                                                                    </tbody>
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] "> ORDEL986781 </a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                        </td>
+                                                                                    </tr>
+                    
+                                                                                </tbody> -->
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] ">ORDEL986781 </a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                        </td>
+                                                                                    </tr>
+                    
+                                                                                </tbody> -->
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] ">ORDEL986781 </a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                        </td>
+                                                                                    </tr>
+                    
+                                                                                </tbody> -->
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] ">ORDEL986781</a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <div class="fixedTdSubmitWidth ">
+                                                                                                <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody> -->
+                                                                                </table>
+                                                                                <div *ngIf="poDataList.length==0"
+                                                                                    style="color: #777; font-size: 16px; font-weight: 600; text-align: center; ">
+                                                                                    <p>No Data Found</p>
+                                                                                </div>
+                                                                                <!-- <div class="accContent-invoice ">
+                                                                            <div class="acc-submitInv ">
+                                                                                <img src="./assets/img/submit_invoice.png " />
+                                                                                <p><a [routerLink]="[ '/submitInvoiceFromList'] ">Submit Invoice</a></p>
+                                                                            </div>
+                                                                        </div> -->
+
+                                                                            </div>
+                                                                            <div
+                                                                                style="border-top: 2px solid rgb(189, 182, 182);">
+                                                                                <table>
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th><strong> Order Delivery
+                                                                                                </strong></th>
+                                                                                            <th><strong>Dispatch Date
+                                                                                                </strong></th>
+                                                                                            <th><strong>Quantity
+                                                                                                </strong>
+                                                                                            </th>
+                                                                                            <th><strong>Invoice Number
+                                                                                                </strong>
+                                                                                            </th>
+                                                                                            <th><strong>Invoice Date
+                                                                                                </strong>
+                                                                                            </th>
+
+                                                                                        </tr>
+                                                                                    </thead>
+
+                                                                                    <tbody
+                                                                                        *ngFor="let orderitem of orderlistwithinvoice">
+                                                                                        <!-- <div > -->
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <!-- <a (click)="orderDetails(orderitem.ORDERNUMBER, orderitem.DELIVERYDATE, orderitem.QUANTITY,orderitem.BUSINESSPARTNERTEXT, orderitem.LINEITEMNUMBER, orderitem.LINEITEMTEXT, orderitem.CONTACTPERSONEMAILID, orderitem.PO_NUMBER, orderitem.DELIVERYADDRESS1)"
+                                                                                                    style="color: blue;cursor:pointer">
+                                                                                                </a> -->
+                                                                                                {{orderitem.DC}}
+                                                                                            </td>
+                                                                                            <!-- <td> <a (click)="orderDetails(orderitem)"> {{orderitem.ORDERNUMBER}} </a></td> -->
+                                                                                            <td class="upperDate">
+                                                                                                {{orderitem.DISPATCHDATE | date:'dd-MMM-yyyy'}}
+                                                                                            </td>
+                                                                                            <td>{{orderitem.QUANTITY}}
+                                                                                            </td>
+                                                                                            <td>{{orderitem.INVOICENUMBER}}
+                                                                                            </td>
+                                                                                            <td>{{orderitem.INVOICEDATE}}
+                                                                                            </td>
+                                                                                            <!-- <td style="min-width: 200px;" *ngIf="orderitem.STATUS == 'A'">
+                                                                                                    <a _ngcontent-cxk-c236="" (click)="navigate('orderitem',poData.PO_NUMBER,poData.VENDORID,poData.CONTACTPERSONEMAILID, orderitem, poitem.QUANTITY,poData.DATE)" class="button-submitInvoice">
+                                                                                                        <img src="./assets/img/arrow_icon_grey.png " alt="arrow icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                                </td>
+                                                                                                <td *ngIf="orderitem.STATUS != 'A'">
+                                                                                                    <img class="setting-icon" style="max-width: 30px;cursor: pointer;" src="./assets/img/single file_grey.png" (click)="gettotrackinvoicepage('orderitem',poData.PO_NUMBER,orderitem.LINEITEMNUMBER,orderitem.ORDERNUMBER)" tooltip="Invoices" />
+                                                                                                </td> -->
+                                                                                        </tr>
+                                                                                        <!-- <tr *ngIf = "orderlist == null">
+                                                                                                No Order Delivery Done Yet
+                                                                                            </tr> -->
+                                                                                        <!-- </div> -->
+
+                                                                                    </tbody>
+
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] "> ORDEL986781 </a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                        </td>
+                                                                                    </tr>
+                    
+                                                                                </tbody> -->
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] ">ORDEL986781 </a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                        </td>
+                                                                                    </tr>
+                    
+                                                                                </tbody> -->
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] ">ORDEL986781 </a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                        </td>
+                                                                                    </tr>
+                    
+                                                                                </tbody> -->
+                                                                                    <!-- <tbody>
+                                                                                    <tr>
+                                                                                        <td><a [routerLink]="[ '/poOrderDispatched'] ">ORDEL986781</a></td>
+                                                                                        <td>02-SEP-2021</td>
+                                                                                        <td>1000</td>
+                                                                                        <td>Order Dispatch Done</td>
+                                                                                        <td>
+                                                                                            <div class="fixedTdSubmitWidth ">
+                                                                                                <a _ngcontent-cxk-c236=" " [routerLink]="[ '/submitInvoiceFromList'] " class="button-submitInvoice "> <img src="./assets/img/arrow_icon_grey.png " alt="arrow
+                                                                            icon " class="arrowIcon " /> Submit Invoice</a>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody> -->
+                                                                                </table>
+                                                                                <div *ngIf="poDataList.length==0"
+                                                                                    style="color: #777; font-size: 16px; font-weight: 600; text-align: center; ">
+                                                                                    <p>No Data Found</p>
+                                                                                </div>
+                                                                                <!-- <div class="accContent-invoice ">
+                                                                            <div class="acc-submitInv ">
+                                                                                <img src="./assets/img/submit_invoice.png " />
+                                                                                <p><a [routerLink]="[ '/submitInvoiceFromList'] ">Submit Invoice</a></p>
+                                                                            </div>
+                                                                        </div> -->
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- atbl-container -->
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <!-- EACH ITEMS END -->
+
+
+
+
+
+
+
+
+                                                        </tbody>
+
+                                                    </table>
+                                                    <!-- <div *ngIf="poDataList.length==0" style="color: #777; font-size: 16px; font-weight: 600; text-align: center;">
+                                                    <p class="text-center w-100">No Data Found</p>
+                                                </div> -->
+
+                                                    <!-- <div *ngIf="poDataList.length==0" style="color: #777; font-size: 16px; font-weight: 600; text-align: center;">
+                                                    <p class="text-center w-100">No Data Found</p>
+                                                </div> -->
+
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <!-- EACH ITEMS END -->
+
+
+
+
+
+
+
+
+                                    </tbody>
+                                </table>
+                                <div *ngIf="invoicedetailsList.length==0 && invoiceMode"
+                                    style="color: #777; font-size: 16px; font-weight: 600; text-align: center;">
+                                    <p class="text-center w-100">No Data Found</p>
+                                </div>
+                                <div *ngIf="poDataList.length==0 && invoiceMode == false"
+                                    style="color: #777; font-size: 16px; font-weight: 600; text-align: center;">
+                                    <p class="text-center w-100">No Data Found</p>
+                                </div>
+                            </div>
+                            <div class="paginationWrapper "
+                                *ngIf="invoicedetailsList.length!=0 || poDataList.length !=0">
+
+                                <div class="tble-each-option" style="cursor: pointer;"
+                                    (click)="gettrackInvPoList('HOME')" *ngIf="disableprevious ==false">
+                                    <img src="./assets/img/first_page_icon_option04.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Home" />
+                                </div>
+                                <div class="tble-each-option" *ngIf="disableprevious ==true">
+                                    <img src="./assets/img/first_page_icon_disable02.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Home" />
+                                </div>
+                                <div class="tble-each-option" style="cursor: pointer;"
+                                    (click)="gettrackInvPoList('PREV')" *ngIf="disableprevious ==false">
+                                    <img src="./assets/img/first_page_icon_option03.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Previous" />
+                                </div>
+                                <div class="tble-each-option" *ngIf="disableprevious ==true">
+                                    <img src="./assets/img/first_page_icon_disable01.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Previous" />
+                                </div>
+                                <div class="tble-each-option" style="cursor: pointer;"
+                                    (click)="gettrackInvPoList('NEXT')" *ngIf="disablenext ==false">
+                                    <img src="./assets/img/end_page_icon_option_03.png" class="nextprevicon__pagination"
+                                        alt="refresh image" tooltip="Next" />
+                                </div>
+                                <div class="tble-each-option" *ngIf="disablenext ==true">
+                                    <img src="./assets/img/end_page_icon_disable_01.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="Next" />
+                                </div>
+                                <div class="tble-each-option" style="cursor: pointer;"
+                                    (click)="gettrackInvPoList('END')" *ngIf="disablenext ==false">
+                                    <img src="./assets/img/end_page_icon_option_04.png" class="nextprevicon__pagination"
+                                        alt="refresh image" tooltip="End" />
+                                </div>
+                                <div class="tble-each-option" *ngIf="disablenext ==true">
+                                    <img src="./assets/img/end_page_icon_disable_02.png"
+                                        class="nextprevicon__pagination" alt="refresh image" tooltip="End" />
+                                    <!-- <p>End</p> -->
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

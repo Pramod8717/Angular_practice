@@ -1,0 +1,460 @@
+<!-- formWrapper Track PO  -->
+<div class="formWrapper">
+    <div class="container">
+        <div class="main-content">
+            <div class="formWrapper__box">
+                <div class="formWrapper__heading">Vendor list</div>
+
+                <!-- formWrapper__content -->
+                <div class="formWrapper__content pb-0 ">
+                    <form onsubmit="return false">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="VendorName" aria-describedby="VendorName" placeholder="Enter Vendor Name" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="VendorEmail" aria-describedby="VendorEmail" placeholder="Enter Vendor Email ID" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="VendorMobile" aria-describedby="VendorMobile" placeholder="Enter Vendor Mobile NO" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="VendorID" aria-describedby="VendorID" placeholder="Enter Vendor ID" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="CompanyName" aria-describedby="PurchaseGroup" placeholder="Enter Purchase Group" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <div class="customFormGroup">
+                                        <select class="form-control form-select" aria-label="Default select example">
+                                        <option selected>Select Industry</option>
+                                        <option value="1">Industry1</option>
+                                        <option value="1">Industry2</option>
+                                        </select>
+                                        <div class="wizard-form-error"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <!-- button wrapper  -->
+                <div class="buttonWrapper pb-30">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <button type="submit" class="btn button-primary">
+              <img
+                src="./assets/img/arrow_icon_red.png"
+                alt="arrow icon"
+                class="arrowIcon"
+              />
+              Search
+            </button>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="vendor-list__wrapper">
+                    <div class="formWrapper__heading no-bg">Vendor List</div>
+
+                    <!-- formWrapper__content -->
+                    <div class="formWrapper__content">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead class="text-primary">
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email ID</th>
+                                        <th scope="col">Mobile No</th>
+                                        <th scope="col">Vendor ID</th>
+                                        <th scope="col">Purchase Group</th>
+                                        <th scope="col">Industry</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="">
+                                        <td>
+                                            <div class="">Vendor 01</div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                john@gmail.com
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                9876543212
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                VI98700
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" ">
+                                                Purchase Group 01
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" ">
+                                                Manufacturing
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a href="javascript:void;" class="" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                    <div class="settingIconWrapper">
+                                                        <div class="settingIcon">
+                                                            <img class="setting-icon" src="./assets/img/setting.png" />
+                                                        </div>
+                                                        <span class="fa fa-chevron-down downArrow"></span>
+                                                    </div>
+                                                </a>
+                                                <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/view-vendor-details']">
+                                                        <img src="./assets/img/view_icon.png" />
+                                                        <div class="settingIconWrapper__text">View Details</div>
+                                                    </a>
+                                                    <!-- <a class="dropdown-item" href="#">
+                                                        <img src="./assets/img/edit_icon.png" />
+                                                        <div class="settingIconWrapper__text">Edit</div>
+                                                    </a> -->
+                                                </div>
+                                            </div>
+
+
+                                            <!-- <div class="setting-option">
+                      <div class="setting-btn">
+                        <img class="setting-icon" src="./assets/img/setting.png" />
+                        <span class="fa fa-chevron-down"></span>
+                      </div>
+                      <ul class="setting-option-list">
+                        <li>
+                          <img src="./assets/img/view_icon.png" />
+                          <p>View</p>
+                        </li>
+                        <li>
+                          <img src="./assets/img/edit_icon.png" />
+                          <p>Edit</p>
+                        </li>
+                      </ul>
+                    </div> -->
+
+                                        </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td>
+                                            <div class="">Vendor 02</div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                john@gmail.com
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                9876543212
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                VI98700
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" ">
+                                                Purchase Group 02
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" ">
+                                                Retail
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a href="javascript:void;" class="" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                    <div class="settingIconWrapper">
+                                                        <div class="settingIcon">
+                                                            <img class="setting-icon" src="./assets/img/setting.png" />
+                                                        </div>
+                                                        <span class="fa fa-chevron-down downArrow"></span>
+                                                    </div>
+                                                </a>
+                                                <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/view-vendor-details']">
+                                                        <img src="./assets/img/view_icon.png" />
+                                                        <div class="settingIconWrapper__text">View Details</div>
+                                                    </a>
+                                                    <!-- <a class="dropdown-item" href="#">
+                                                        <img src="./assets/img/edit_icon.png" />
+                                                        <div class="settingIconWrapper__text">Edit</div>
+                                                    </a> -->
+                                                </div>
+                                            </div>
+
+
+                                            <!-- <div class="setting-option">
+                      <div class="setting-btn">
+                        <img class="setting-icon" src="./assets/img/setting.png" />
+                        <span class="fa fa-chevron-down"></span>
+                      </div>
+                      <ul class="setting-option-list">
+                        <li>
+                          <img src="./assets/img/view_icon.png" />
+                          <p>View</p>
+                        </li>
+                        <li>
+                          <img src="./assets/img/edit_icon.png" />
+                          <p>Edit</p>
+                        </li>
+                      </ul>
+                    </div> -->
+
+                                        </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td>
+                                            <div class="">Vendor 03</div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                john@gmail.com
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                9876543212
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                VI98700
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" ">
+                                                Purchase Group 03
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" ">
+                                                Retail
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a href="javascript:void;" class="" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                    <div class="settingIconWrapper">
+                                                        <div class="settingIcon">
+                                                            <img class="setting-icon" src="./assets/img/setting.png" />
+                                                        </div>
+                                                        <span class="fa fa-chevron-down downArrow"></span>
+                                                    </div>
+                                                </a>
+                                                <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/view-vendor-details']">
+                                                        <img src="./assets/img/view_icon.png" />
+                                                        <div class="settingIconWrapper__text">View Details</div>
+                                                    </a>
+                                                    <!-- <a class="dropdown-item" href="#">
+                                                        <img src="./assets/img/edit_icon.png" />
+                                                        <div class="settingIconWrapper__text">Edit</div>
+                                                    </a> -->
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td>
+                                            <div class="">Vendor 04</div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                john@gmail.com
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                9876543212
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                VI98700
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" ">
+                                                Purchase Group 04
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" ">
+                                                Retail
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a href="javascript:void;" class="" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                    <div class="settingIconWrapper">
+                                                        <div class="settingIcon">
+                                                            <img class="setting-icon" src="./assets/img/setting.png" />
+                                                        </div>
+                                                        <span class="fa fa-chevron-down downArrow"></span>
+                                                    </div>
+                                                </a>
+                                                <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/view-vendor-details']">
+                                                        <img src="./assets/img/view_icon.png" />
+                                                        <div class="settingIconWrapper__text">View Details</div>
+                                                    </a>
+                                                    <!-- <a class="dropdown-item" href="#">
+                                                        <img src="./assets/img/edit_icon.png" />
+                                                        <div class="settingIconWrapper__text">Edit</div>
+                                                    </a> -->
+                                                </div>
+                                            </div>
+
+
+                                            <!-- <div class="setting-option">
+                      <div class="setting-btn">
+                        <img class="setting-icon" src="./assets/img/setting.png" />
+                        <span class="fa fa-chevron-down"></span>
+                      </div>
+                      <ul class="setting-option-list">
+                        <li>
+                          <img src="./assets/img/view_icon.png" />
+                          <p>View</p>
+                        </li>
+                        <li>
+                          <img src="./assets/img/edit_icon.png" />
+                          <p>Edit</p>
+                        </li>
+                      </ul>
+                    </div> -->
+
+                                        </td>
+                                    </tr>
+                                    <tr class="">
+                                        <td>
+                                            <div class="">Vendor 05</div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                john@gmail.com
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                9876543212
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                VI98700
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" ">
+                                                Purchase Group 05
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class=" ">
+                                                Retail
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <a href="javascript:void;" class="" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                    <div class="settingIconWrapper">
+                                                        <div class="settingIcon">
+                                                            <img class="setting-icon" src="./assets/img/setting.png" />
+                                                        </div>
+                                                        <span class="fa fa-chevron-down downArrow"></span>
+                                                    </div>
+                                                </a>
+                                                <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                    <a class="dropdown-item" href="javascript:void(0)" [routerLink]="['/view-vendor-details']">
+                                                        <img src="./assets/img/view_icon.png" />
+                                                        <div class="settingIconWrapper__text">View Details</div>
+                                                    </a>
+                                                    <!-- <a class="dropdown-item" href="#">
+                                                        <img src="./assets/img/edit_icon.png" />
+                                                        <div class="settingIconWrapper__text">Edit</div>
+                                                    </a> -->
+                                                </div>
+                                            </div>
+
+
+                                            <!-- <div class="setting-option">
+                      <div class="setting-btn">
+                        <img class="setting-icon" src="./assets/img/setting.png" />
+                        <span class="fa fa-chevron-down"></span>
+                      </div>
+                      <ul class="setting-option-list">
+                        <li>
+                          <img src="./assets/img/view_icon.png" />
+                          <p>View</p>
+                        </li>
+                        <li>
+                          <img src="./assets/img/edit_icon.png" />
+                          <p>Edit</p>
+                        </li>
+                      </ul>
+                    </div> -->
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="paginationWrapper">
+                            <nav aria-label="...">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item active" aria-current="page">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

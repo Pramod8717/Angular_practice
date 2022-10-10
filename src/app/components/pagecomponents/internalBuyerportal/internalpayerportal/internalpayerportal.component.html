@@ -1,0 +1,571 @@
+<div class="main-content">
+    <div class="container dashboardpt">
+        <!--Quick Links Start-->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card card-stats mt-0">
+                    <div class="card-header card-header-danger card-header-icon">
+                        <h3 class="card-title">Quick Links</h3>
+                    </div>
+                    <div class="card-body Quick-main">
+
+                        <div class="row justify-content-center">
+                            <div class="col-lg-3 col-md-3 col-sm-3 vendorQuickLink" [routerLink]="['/purchaseOrdersList']">
+                                <div class="icon-img">
+                                    <img src="./assets/img/po_icon_grey_circle.png" />
+                                </div>
+                                <div class="content-text">
+                                    <h2>Purchase Orders</h2>
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-3 col-md-3 col-sm-3" [routerLink]="['/invoice-list']">
+                              <div class="icon-img">
+                                  <img src="./assets/img/my_invoices_grey_circle.png"/>
+                              </div>
+                              <div class="content-text">
+                                  <h2>My Invoices</h2>
+                                  <p>SearchInvoices</p>
+                              </div>
+                           </div> -->
+                            <div class="col-lg-3 col-md-3 col-sm-3 vendorQuickLink" [routerLink]="['/trackInvoiceList']">
+                                <div class="icon-img">
+                                    <img src="./assets/img/track_payment_icon_grey.png" />
+                                </div>
+                                <div class="content-text">
+                                    <h2>Track Invoice</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Quick Links End-->
+
+        <!--Dashboard Page Search Start-->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="formWrapper__box mt-0">
+                    <!-- <div class="formWrapper__heading">My Purchase Orders</div> -->
+
+                    <form [formGroup]="searchList">
+                        <div class="invoice-form">
+                            <div class="inv-form-inputs mb-mt">
+                                <mat-form-field appearance="none">
+                                    <mat-label>PO</mat-label>
+                                    <mat-select formControlName="PONumber">
+                                        <mat-option *ngFor="let poNumber of poNumberList" [value]="poNumber">
+                                            {{ poNumber }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="inv-form-inputs mb-mt">
+                                <mat-form-field appearance="none">
+                                    <mat-label>Last 3 Months</mat-label>
+                                    <mat-select formControlName="Status">
+                                        <mat-option *ngFor="let status of Duration" [value]="status">
+                                            {{ status }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <!-- <div class="inv-form-inputs mb-mt">
+                                  <mat-form-field appearance="none">
+                                      <mat-label>From </mat-label>
+                                      <input matInput [matDatepicker]="fromDate" formControlName="fromDate" />
+                                      <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+                                      <mat-datepicker #fromDate></mat-datepicker>
+                                  </mat-form-field>
+                              </div> -->
+                            <div class="inv-form-inputs mb-mt">
+                                <mat-form-field appearance="none">
+                                    <mat-label>From</mat-label>
+                                    <input matInput [matDatepicker]="fromDate" formControlName="fromDate" />
+                                    <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #fromDate></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="inv-form-inputs mb-mt">
+                                <mat-form-field appearance="none">
+                                    <mat-label>To</mat-label>
+                                    <input matInput [matDatepicker]="toDate" formControlName="toDate" />
+                                    <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                                    <mat-datepicker #toDate></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- button wrapper  -->
+                        <!-- <div style="padding-bottom: 15px;">
+                              <button class="submit-btn" (click)="searchData()">
+                                  <img src="./assets/img/arrow_icon_red.png" />
+                                  <span>Search</span>
+                                  </button>
+                          </div> -->
+
+                        <!-- <div class="buttonWrapper mt-20 pb-30">
+                              <div class="row">
+                                  <div class="col-lg-12 text-center" (click)="searchData()">
+                                      <button type="submit" class="btn button-primary"> 
+                                          <img src="./assets/img/arrow_icon_red.png" alt="arrow icon" class="arrowIcon" />
+                                          Search PO's
+                                      </button>
+          
+                                  </div>
+                              </div>
+                          </div> -->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Dashboard Page Search Start End-->
+
+        <!--Notification List Start-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card  card-notification">
+                    <div class="card-header card-header-default">
+                        <h4 class="card-title">Notification List</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="notificationList">
+                            <div class="notificationList__single">
+                                <div class="notificationList__head">
+                                    Purchase Order Notification
+                                    <span class="notification__date">02.07.2021</span>
+                                </div>
+                                <div class="notificationList__desc">
+                                    5 New Purchase Order list Updated
+                                </div>
+                            </div>
+                            <div class="notificationList__single">
+                                <div class="notificationList__head">
+                                    Invoice Notification
+                                    <span class="notification__date">02.07.2021</span>
+                                </div>
+                                <div class="notificationList__desc">
+                                    5 New Purchase Order list Updated
+                                </div>
+                            </div>
+                            <div class="notificationList__single">
+                                <div class="notificationList__head">
+                                    Payment Received
+                                    <span class="notification__date">02.07.2021</span>
+                                </div>
+                                <div class="notificationList__desc">
+                                    5 New Purchase Order list Updated
+                                </div>
+                            </div>
+                            <div class="notificationList__single">
+                                <div class="notificationList__head">
+                                    Track Invoice
+                                    <span class="notification__date">02.07.2021</span>
+                                </div>
+                                <div class="notificationList__desc">
+                                    5 New Purchase Order list Updated
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card card-chart" style="min-height: 434px !important;">
+                    <div class="card-header card-header-default">
+                        <h4 class="card-title">
+                            <div class="row">
+                                <!-- <div class="col-md-7 inv-form-inputs" id="MatSelect">
+                                  <mat-form-field appearance="none" style="padding-top:0px !important">
+                                      <mat-label>Unpaid Invoices</mat-label>
+                                      <mat-select formControlName="invoiceType">
+                                          <mat-option *ngFor="let invType of invoiceType" [value]="invType">
+                                              {{ invType }}
+                                          </mat-option>
+                                      </mat-select>
+                                  </mat-form-field>
+                              </div> -->
+                                <div class="form-group m-0 p-0 defaultSelectD">
+                                    <!-- <label for="unpaidInvoice">Unpaid Invoices</label> -->
+                                    <select class="form-control" id="unpaidInvoice" formControlName="invoiceType">
+                                          <option>Unpaid Invoices</option>
+                                          <option>Invoices without PO</option>
+                                     
+                                  </select>
+                                </div>
+                                <div class="col-md-5  inv-form-inputs">
+                                    <label style="font-weight: 600; color: #333333; font-size: 16px; float: right !important;">Last 3 months</label>
+                                </div>
+                            </div>
+                            <!-- <a href=""><i style="color: #333333;" class="fa fa-caret-down" aria-hidden="true"></i>
+                          </a>  -->
+                            <!-- <a href="javascript:void(0)" 
+                            style="font-weight: 600; color: #333333; font-size: 16px; float: right !important;"
+                             >Last 3 months</a> -->
+
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="ct-chart" id="websiteViewsChart"></div>
+                        <div style="display: block;">
+                            <canvas baseChart height="180px" [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType" [colors]="chartColors">
+                              
+                            </canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats showalltr">
+                            <a href="javascript:void(0)" [routerLink]="['/invoice-list']"><i class="material-icons">arrow_right_alt</i> Show All Invoices</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Notification List End-->
+
+
+        <!--New Purches unpaid Start-->
+        <!-- <div class="row">
+              <div class="col-md-12">
+                  <div class="card card-purchaseOrder">
+                      <div class="card-header card-header-default">
+                          <h4 class="card-title">New Purchase Order<a href="javascript:void(0)" [routerLink]="['/dashboard']"></a></h4>
+                      </div>
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="table">
+                                  <thead class=" text-primary">
+                                      <th>
+                                          PO No.
+                                      </th>
+                                      <th>
+                                          PO Value
+                                      </th>
+                                      <th>
+                                          Date Submitted
+                                      </th>
+                                      <th>
+                                          Status
+                                      </th>
+  
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                          <td>
+                                              1
+                                          </td>
+                                          <td>
+                                              Dakota Rice
+                                          </td>
+                                          <td>
+                                              Niger
+                                          </td>
+                                          <td>
+                                              Accepted
+                                          </td>
+  
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              2
+                                          </td>
+                                          <td>
+                                              Minerva Hooper
+                                          </td>
+                                          <td>
+                                              Curaçao
+                                          </td>
+                                          <td>
+                                              Work in Progress
+                                          </td>
+  
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              3
+                                          </td>
+                                          <td>
+                                              Sage Rodriguez
+                                          </td>
+                                          <td>
+                                              Netherlands
+                                          </td>
+                                          <td>
+                                              Shipped
+                                          </td>
+  
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              4
+                                          </td>
+                                          <td>
+                                              Philip Chaney
+                                          </td>
+                                          <td>
+                                              Korea, South
+                                          </td>
+                                          <td>
+                                              Complete
+                                          </td>
+  
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              5
+                                          </td>
+                                          <td>
+                                              Doris Greene
+                                          </td>
+                                          <td>
+                                              Malawi
+                                          </td>
+                                          <td>
+                                              Complete
+                                          </td>
+  
+                                      </tr>
+  
+                                  </tbody>
+                              </table>
+                          </div>
+  
+                      </div>
+                      <div class="card-footer">
+                          <div class="stats viewall">
+                              <a href="javascript:void(0)" [routerLink]="['/purchaseOrdersList']"><i class="material-icons">arrow_right_alt</i> View All POs</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>   -->
+        <!--New Purches unpaid End-->
+
+    </div>
+    <!-- <div class="row">
+              <div class="col-md-12">
+                  <div class="card card-latestInvoice">
+                      <div class="card-header card-header-default">
+                          <h4 class="card-title">Latest Invoices<a href="javascript:void(0)" [routerLink]="['/dashboard']"></a></h4>
+                      </div>
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="table">
+                                  <thead class=" text-primary">
+                                      <th>
+                                          Invoice No.
+                                      </th>
+                                      <th>
+                                          Invoice Date
+                                      </th>
+                                      <th>
+                                          PO No.
+                                      </th>
+                                      <th>
+                                          Due Date
+                                      </th>
+                                      <th>
+                                          Amount
+                                      </th>
+                                      <th>
+                                          Status
+                                      </th>
+  
+                                  </thead>
+                                  <tbody>
+                                      <tr>
+                                          <td>
+                                              1
+                                          </td>
+                                          <td>
+                                              Dakota Rice
+                                          </td>
+                                          <td>
+                                              Niger
+                                          </td>
+                                          <td>
+                                              10-12-2020
+                                          </td>
+                                          <td>
+                                              Submitted
+                                          </td>
+                                          <td>
+                                              Oud-Turnhout
+                                          </td>
+  
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              1
+                                          </td>
+                                          <td>
+                                              Dakota Rice
+                                          </td>
+                                          <td>
+                                              Niger
+                                          </td>
+                                          <td>
+                                              Oud-Turnhout
+                                          </td>
+                                          <td>
+                                              09-10-2021
+                                          </td>
+                                          <td>
+                                              Process
+                                          </td>
+  
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              1
+                                          </td>
+                                          <td>
+                                              Dakota Rice
+                                          </td>
+                                          <td>
+                                              Niger
+                                          </td>
+                                          <td>
+                                              Oud-Turnhout
+                                          </td>
+                                          <td>
+                                              09-12-2021
+                                          </td>
+                                          <td>
+                                              Paid
+                                          </td>
+  
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              1
+                                          </td>
+                                          <td>
+                                              Dakota Rice
+                                          </td>
+                                          <td>
+                                              Niger
+                                          </td>
+                                          <td>
+                                              Oud-Turnhout
+                                          </td>
+                                          <td>
+                                              10-03-2020
+                                          </td>
+                                          <td>
+                                              Paid(Less GST)
+                                          </td>
+  
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              1
+                                          </td>
+                                          <td>
+                                              Dakota Rice
+                                          </td>
+                                          <td>
+                                              Niger
+                                          </td>
+                                          <td>
+                                              Oud-Turnhout
+                                          </td>
+                                          <td>
+                                              10-03-2020
+                                          </td>
+                                          <td>
+                                              Process
+                                          </td>
+  
+                                      </tr>
+  
+                                      <tr>
+                                          <td>
+                                              1
+                                          </td>
+                                          <td>
+                                              Dakota Rice
+                                          </td>
+                                          <td>
+                                              Niger
+                                          </td>
+                                          <td>
+                                              Oud-Turnhout
+                                          </td>
+                                          <td>
+                                              10-03-2020
+                                          </td>
+                                          <td>
+                                              Process
+                                          </td>
+  
+                                      </tr>
+  
+                                      <tr>
+                                          <td>
+                                              1
+                                          </td>
+                                          <td>
+                                              Dakota Rice
+                                          </td>
+                                          <td>
+                                              Niger
+                                          </td>
+                                          <td>
+                                              Oud-Turnhout
+                                          </td>
+                                          <td>
+                                              10-03-2022
+                                          </td>
+                                          <td>
+                                              Paid
+                                          </td>
+  
+                                      </tr>
+  
+                                      <tr>
+                                          <td>
+                                              1
+                                          </td>
+                                          <td>
+                                              Dakota Rice
+                                          </td>
+                                          <td>
+                                              Niger
+                                          </td>
+                                          <td>
+                                              Oud-Turnhout
+                                          </td>
+                                          <td>
+                                              10-03-2020
+                                          </td>
+                                          <td>
+                                              Paid(LessGST)
+                                          </td>
+  
+                                      </tr>
+  
+                                  </tbody>
+                              </table>
+                          </div>
+  
+                      </div>
+                      <div class="card-footer">
+                          <div class="stats viewall">
+                              <a href="javascript:void(0)" [routerLink]="['/invoiceList']"><i class="material-icons">arrow_right_alt</i> Show All Invoices</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div> -->
+</div>
+<!-- <div class="inv-form-inputs mb-mt">
+          <mat-form-field appearance="none">
+              <mat-label>Delivery dates</mat-label>
+              <input matInput [matDatepicker]="fromDate"  />
+              <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+              <mat-datepicker #fromDate></mat-datepicker>
+          </mat-form-field>
+          <mat-error>
+              * Date is required</mat-error>
+      </div> -->

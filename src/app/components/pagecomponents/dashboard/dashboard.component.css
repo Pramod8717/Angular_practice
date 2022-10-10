@@ -1,0 +1,419 @@
+/* ============================================== */
+
+
+/* dashboard search css  */
+
+
+/* ============================================== */
+
+@media (max-width: 767px) {
+    .dashboardpt {
+        padding-top: 30px;
+    }
+}
+
+.DashboardPageSearch__Wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.DashboardPageSearch__inputWrap {
+    flex: 1;
+}
+
+.DashboardPageSearch__buttonWrap {
+    margin-left: 15px;
+    /* flex: 0 0 130px; */
+}
+
+.DashboardPageSearch__Wrapper input {
+    border: 2px solid #dce1e4;
+    padding: 10px 20px;
+}
+
+.DashboardPageSearch__card .card-body {
+    padding: 20px 20px;
+}
+
+@media (max-width: 767px) {
+    .DashboardPageSearch__Wrapper {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .DashboardPageSearch__inputWrap {
+        flex-basis: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .Quick-main .justify-content-center {
+        justify-content: flex-start !important;
+    }
+    .vendorQuickLink {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+.vendorQuickLink {
+    cursor: pointer;
+}
+
+
+/* ============================================== */
+
+
+/* notification dashboard css  */
+
+
+/* ============================================== */
+
+.fixedTable {
+    /* table-layout: fixed; */
+    width: 100%;
+}
+
+/* .fixedTable td {
+    width: calc(100%/6);
+} */
+
+.notificationList__single {
+    margin-bottom: 30px;
+    padding: 7px;
+    background: #fff;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.notificationList__head {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.notificationList__desc {
+    font-size: 14px;
+}
+
+.notification__date {
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.card-stats .card-header.card-header-danger {
+    background: #cc0000;
+}
+
+.card-stats .card-header .card-title {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.card-stats .card-header,
+.card-notification .card-header,
+.card-purchaseOrder .card-header,
+.card-latestInvoice .card-header {
+    padding: 20px 40px !important;
+}
+
+.card-stats .card-title,
+.card-notification .card-title,
+.card-purchaseOrder .card-title,
+.card-latestInvoice .card-title {
+    font-size: 24px;
+    margin-bottom: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+.imgWithNotification {
+    display: inline-block;
+    position: relative;
+}
+
+.imgWithNotification__div {
+    position: absolute;
+    top: -7px;
+    border: 1px solid #FFF;
+    right: 0px;
+    font-size: 12px;
+    background: #f44336;
+    color: #FFFFFF;
+    padding: 0px 5px;
+    /* min-width: 20px; */
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    /* border-radius: 10px; */
+    text-align: center;
+    line-height: 19px;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ellipsisInput {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 250px;
+    min-width: 250px;
+    text-align: center;
+    border: none;
+}
+
+.commentIcon {
+    display: inline-block;
+}
+
+.displayBlock {
+    display: block !important;
+}
+
+.displayNone {
+    display: none !important;
+}
+
+.commentInputWrap {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.commentInputWrap[_ngcontent-cgo-c287] input[_ngcontent-cgo-c287] {
+    font-size: 14px;
+    border: none;
+    min-width: 140px;
+    max-width: 200px;
+    height: auto;
+    padding: 5px 5px !important;
+}
+
+.editableFalse input {
+    background-color: #f4f0ef;
+}
+
+
+/* ============================================== */
+
+
+/* media css start here  */
+
+
+/* ============================================== */
+
+@media (max-width: 992px) {
+    .card-stats .card-title,
+    .card-notification .card-title,
+    .card-purchaseOrder .card-title,
+    .card-latestInvoice .card-title {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-stats .card-header,
+    .card-notification .card-header,
+    .card-purchaseOrder .card-header,
+    .card-latestInvoice .card-header {
+        padding: 15px 15px !important;
+    }
+}
+
+@media (max-width: 475px) {
+    .notification__date {
+        margin-left: 0;
+        display: block;
+    }
+}
+
+.status-link {
+    color: #6c757d !important;
+    background-color: transparent;
+    position: relative;
+}
+
+.customtbl-accordion-head1 {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+
+/* poRowFlex column  */
+
+.poRowFlex {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    background: #efedee;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.poRowFlex__col .invStatusMainWrapper {
+    margin-bottom: 0;
+}
+
+.poRowFlex__col .inv-status-wrapper {
+    margin: 0;
+}
+
+.poRowFlex__col .inv-wrapper {
+    margin-top: 0;
+    margin-bottom: 5px;
+    margin-left: 15px;
+}
+.poRowFlex  .invStatusMainWrapper {
+    margin-left: 50px;
+}
+@media (max-width: 1199px) {
+    .poRowFlex {
+        flex-wrap: wrap; 
+    }
+    .poRowFlex  .invStatusMainWrapper {
+        margin-left: 0;
+    }
+    .poRowFlex .invStatusRightWrap {
+        margin-top: 10px;   /* add 14 */
+    }
+    .invStatusRightWrap.ml-auto { 
+        margin-left: 0 !important;
+    }
+    .poRowFlex__col {flex-basis: 100%;}
+    .poRowFlex__col .inv-wrapper {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    .poRowFlex__col .inv-wrapper {
+        margin-left: 0;
+    }
+    .poRowFlex__col .inv-wrapper {
+        margin-right: 10px;
+    }
+}
+
+
+/* ----------------------------------------app.component.css copied--------------------------- */
+
+
+/* timescape-essentials fixed right */
+
+ul,
+li {
+    list-style: none;
+}
+
+.timescape-essentialsUl {
+    margin: 0 8px;
+}
+
+.timescape-essentials {
+    position: fixed;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    /* background: #113c5c; */
+    background: transparent;
+    color: #fff;
+    z-index: 999;
+    padding: 7px 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.timescape-essentials li {
+    /* border-bottom: 1px solid #7a7a7a; */
+    margin-bottom: 0;
+    padding: 0;
+    padding-bottom: 0;
+    cursor: pointer;
+}
+
+.timescape-essentials li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.li-seperator {
+    width: 100%;
+    display: flex;
+    text-align: center;
+    margin: 0 0 7px 0;
+    justify-content: center;
+}
+
+.li-seperator:before {
+    content: "";
+    width: 16px;
+    height: 2px;
+    display: inline-block;
+    background-color: #7a7a7a;
+}
+
+.arrowImg {
+    margin-bottom: 7px;
+}
+
+.arrowImg img {
+    max-width: 40px;
+}
+
+.rhs-round {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    text-align: center;
+    font-size: initial;
+    border: 2px solid #7a7a7a;
+    color: #7a7a7a;
+    border-radius: 50%;
+    line-height: 1;
+    margin-bottom: 7px;
+    transition: all 0.2s ease-in-out;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rhs-round img {
+    max-width: 100%;
+}
+
+@media (max-width: 600px) {
+    .timescape-essentialsUl {
+        margin: 0 0;
+    }
+    .rhs-round {
+        width: 30px;
+        height: 30px;
+        font-size: initial;
+    }
+    .arrowImg img {
+        max-width: 30px;
+    }
+}
+
+::ng-deep .mat-typography p.ponum {
+    margin-bottom: 0 !important;
+    padding-bottom: 10px !important;
+}
+.partiallyRow {
+    border-left: 0 !important;
+    border-left: 5px solid #0ef706 !important;
+    position: relative;
+}
+
+.fixedPOnumber img {
+    max-width: 30px;
+    margin-left: 3px;
+    margin-right: 5px;
+}
+
+.fixedPOnumber {
+    min-width: 190px;
+}

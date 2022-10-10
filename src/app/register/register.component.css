@@ -1,0 +1,93 @@
+.img{
+
+    background-repeat: no-repeat;
+}
+
+h1{
+    text-align: center;
+    color: white;
+    margin-left: 7%;
+}
+
+.container{
+
+    padding: 80px;
+    /* width: 550px; */
+    height: 450px;
+    margin-left: 10%;
+    margin-right: 10%;
+    align-content: center;
+    /* background-color: aqua; */
+    margin-bottom: 5%;
+    border-radius: 15px;
+}
+
+.form{
+
+    padding-left: 250px;
+    flex-direction: row;
+    color: white;
+}
+
+.form1{
+    padding-left: 250px;
+    flex-direction: row;
+    justify-content: space-between;
+    color: white;
+}
+
+input {
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    background: none;  
+}
+
+
+::placeholder {
+    color: white;
+    opacity: 1; /* Firefox */
+  }
+  
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: white;
+  }
+  
+  ::-ms-input-placeholder { /* Microsoft Edge */
+   color: white;
+  }
+
+.box{
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+}
+
+.radio{
+
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    
+}
+
+.adr{
+
+    padding: 30px;
+    margin-left: 29.5%;
+    width: 37.5%;
+}
+
+
+.btn {
+
+    color: white; 
+    padding: 14px 28px;
+    cursor: pointer; 
+    border-radius: 15px;
+  }
+
+.success {background: none;}
+.success:hover {background: none;}

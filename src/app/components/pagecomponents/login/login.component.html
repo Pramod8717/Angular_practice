@@ -1,0 +1,144 @@
+<div class="bg-img">
+    <div class="container">
+        <div class="login-text">
+            <!-- <h1 class="login-head">BCCL PartnerDX</h1> -->
+            <!-- <p>Welcome to BCCL PartnerDX</p> -->
+            <p>Welcome to an integrated Portal that includes PO Confirmations, Delivery Acceptance, Invoice Approval and
+                Payment Remittances on real time basis giving you the ability to manage your business relationship with
+                BCCL digitally.</p>
+        </div>
+        <div class="container">
+            <div class="login-flexRight">
+                <div class="loginFormWrapper text-center pan-dm">
+                    <label style="color: red;" *ngIf="emailmessage !='otpsuccess'">{{loginMessage}}</label>
+                    <label style="color: #000000" *ngIf="emailmessage =='otpsuccess'">{{loginMessage}} </label>
+                    <br> {{otp}}
+                    <form [formGroup]="loginForm">
+                        <div class="frm-sec-1" *ngIf="div1" class="form-group" class="form">
+                            <input type="text" name="text" class="" id="Email" formControlName="Email"
+                                autocomplete="off" placeholder="Enter email id" required
+                                (keyup)="ValidateEmail($event)">
+                            <div class="ErrorWrapper">
+                                <div class="error" *ngIf="loginForm.controls['Email'].hasError('required')
+                                && submitted">* Please enter valid emailid !!</div>
+                                <!-- <div class="error error1" *ngIf="f.PAN.errors?.pattern">*PAN must have first 5 alphabets , next 4 numbers and last single alphabet </div> -->
+                                <!-- <div class="error error1" *ngIf="f.PAN.errors?.maxlength" style="margin-left: 15px;">*PAN should be 10 digit Long </div> -->
+                            </div>
+                            <button type="submit" name="submit" class="btn button-primary" style="margin-top: 60px;"
+                                [disabled]="f.Email.errors || submitted"
+                                (click)="sendemailid(loginForm.controls['Email'].value)">
+                                <img src="./assets/img/arrow_icon_red.png" class="activeImg arrowIcon">
+                                <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                    class="disabledImg arrowIcon">
+                                Send OTP</button>
+                        </div>
+
+                        <div class="frm-sec-2" *ngIf="div2" class="form-group" class="form">
+                            <input type="text" name="text" class="" id="Email" formControlName="Email"
+                                placeholder="FZw2222276543" disabled>
+                            <!-- <input type="text" name="email" class="" id="Email" formControlName="Email" placeholder="johdeo123@gmail.com"> -->
+                            <!-- <select class=" form-select" name="text" id="email" aria-label="Default select example" formControlName="Email" ngModel="">
+                                <option hidden="" value="">--Please Select Email--</option>   
+                                <option  *ngFor="let email of emails" value="{{email}}">{{email}}</option>       
+                             </select>
+                            <div class="error" *ngIf="loginForm.controls['Email'].hasError('required')
+                             && loginForm.controls['Email'].touched">*Please Select MailID </div> -->
+                            <!-- <div class="inv-form-inputs">
+                                <mat-form-field appearance="none">
+                                    <mat-label>Select Email ID</mat-label>
+                                    <mat-select formControlName="Email">
+                                        <mat-option *ngFor="let email of mail; let i=index" [value]="email">
+                                            {{ email }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field> -->
+
+                            <!-- <div class="inv-form-inputs mb-10">
+                                <div class="invInputWicon">
+                                    <mat-form-field appearance="none">
+                                        <mat-label>Select Email ID</mat-label>
+                                        <mat-select formControlName="Email" (selectionChange)="resetbelowvalue($event)">
+                                            <mat-option *ngFor="let email of mail; let i=index" [value]="email" [ngClass]="{'hide':submitted==false}">
+                                                {{ email }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <div class="ErrorWrapper">
+                                        <div class="error" *ngIf="submitted && !loginForm.controls['Email'].value" style="margin: auto;">Select E-mail ID </div>
+                                    </div>
+                                </div>
+    
+                            </div> -->
+
+                            <!-- </div> -->
+
+
+                            <!--<div class="resend-linkWrapper text-right" *ngIf="!div3">
+                                 <a href="javascript:;" (click)="sendOTP(loginForm.controls['PAN'].value, loginForm.controls['Email'].value )" class="resendLink">Send OTP</a>
+                            </div> -->
+                            <p *ngIf="timerFlag" style="color: red;" class="text-right"> Resend OTP after {{
+                                timeDifference }} seconds</p>
+                            <div *ngIf="div3">
+                                <div class="resend-linkWrapper text-right">
+                                    <a href="javascript:;" *ngIf="timeDifference==0"
+                                        (click)="sendemailid(loginForm.controls['Email'].value); clearform()"
+                                        class="resendLink">Resend OTP</a>
+                                </div>
+
+                                <input type="text" name="text" class="" id="OTP" formControlName="OTP"
+                                    autocomplete="off" placeholder="OTP" style="text-transform: capitalize;" required
+                                    maxlength="6" OnlyNumber="true" (keyup)="checkotp($event)">
+
+                                <div class="error" *ngIf="loginForm.controls['OTP'].hasError('required')
+                            && loginForm.controls['OTP'].touched">Enter OTP </div>
+                                <div class="error error1" *ngIf="f.OTP.errors?.pattern">Enter 6 digit OTP.</div>
+                                <div class="error error1" *ngIf="f.OTP.errors?.maxlength" style="margin-left: 15px;">
+                                    *OTP should be 6 digit Long </div>
+                                <div class="error error1" *ngIf="invalid">{{invalidmessage}}</div>
+                                <div class="error error1" *ngIf="wrongotp">Invalid OTP</div>
+
+                                <!-- <h4 class="otpMessage"><b>One time password (OTP) has been sent to your registered Email Address</b></h4> -->
+                                <!-- <div class="resend-linkWrapper text-right">
+                                    <a href="javascript:;" (click)="sendOTP(loginForm.controls['PAN'].value, loginForm.controls['Email'].value)" class="resendLink">Resend OTP</a>
+                                </div> -->
+                                <!-- <div class="g-recaptcha" data-sitekey=""></div> -->
+                                <div class="captcha">
+                                    <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" formControlName="recaptcha">
+                                    </ngx-recaptcha2>
+                                </div>
+                                <div style="margin-top: 12px">
+                                    <button type="button" name="" class="btn button-primary " [disabled]="(!loginForm.controls['OTP'].valid) 
+                                    || (!loginForm.controls['recaptcha'].value) || (loginForm.invalid) || wrongotp"
+                                        (click)="login()">
+                                        <img src="./assets/img/arrow_icon_red.png" class="activeImg arrowIcon">
+                                        <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                            class="disabledImg arrowIcon">
+                                        Login</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <!-- <form>
+                <div *ngif="step == 1">
+                    <h3>Step 1</h3>
+                    <div class="form-group">
+                        <input type="text" class="" placeholder="Name">
+                    </div>
+                </div>
+    
+                <div *ngif="step == 2">
+                    <h3>Step 1</h3>
+                    <div class="form-group">
+                        <input type="text" class="" placeholder="Name">
+                    </div>
+                </div>
+            </form> -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- <app-dialog-model></app-dialog-model> -->

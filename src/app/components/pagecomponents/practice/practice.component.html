@@ -1,0 +1,293 @@
+<div class="main-content margin-top">
+  <div class="container dashboardpt">
+      <div class="inv-page-container ">
+          <div class="inv-page-wrapper container">
+              <div class="inv-page-header">
+                  <!-- <p class="invoice-number" *ngIf="invoicenumber == undefined">Purchase Orders</p> -->
+                  <p class="invoice-number">Purchase Orders</p>
+              </div>
+              <div class="advanceSearchWrapper">
+                <div class="advanceSearch__header">
+                    <p class="advanceSearch__title">Advance Search</p>
+                    <div class="advanceSearcIcon" (click)="openAdavnceSearch()">
+                        <img src="./assets/img/close-arrow.png" alt="download image" id="closeArrow"
+                            style="display: none;">
+                        <img src="./assets/img/open-arrow.png" alt="refresh image" id="openArrow">
+                    </div>
+                </div>
+                <div class="advanceSearc__box" style="display: none;" id="advanceSearcBox">
+                    <form [formGroup]="POOrderList">
+                        <div class="invoice-form">
+                            <div class="inv-form-inputs mb-mt" style="text-align: left;">
+                                <mat-label>PO Number</mat-label>
+                                <div class="invInputWicon">
+                                    <mat-form-field appearance="none">
+                                        <mat-label>Enter PO Number</mat-label>
+                                        <input matInput placeholder="Enter PO Number" formControlName="PONumber"
+                                            value="" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+       
+                       
+                            <div class="inv-form-inputs mb-mt"  style="text-align: left;">
+                                <mat-label>From Date</mat-label>
+                                <div class="invInputWicon">
+                                    <mat-form-field appearance="none">
+                                        <mat-label>From </mat-label>
+                                        <input matInput [max]="maxdate" [min]="mindate"
+                                            [matDatepicker]="fromDate" formControlName="fromDate"
+                                            (dateChange)="onDateChange()" />
+                                        <mat-datepicker-toggle matSuffix [for]="fromDate">
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #fromDate></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+
+                            <div class="inv-form-inputs mb-mt"  style="text-align: left;">
+                                <mat-label>To Date</mat-label>
+                                <div class="invInputWicon">
+                                    <mat-form-field appearance="none">
+                                        <mat-label>To</mat-label>
+                                        <input matInput [max]="maxdate" [min]="mintodate"
+                                            [matDatepicker]="toDate" formControlName="toDate"
+                                            (dateChange)="onDateChange()" />
+                                        <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+                                        <mat-datepicker #toDate></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <mat-error *ngIf="todateerror">
+                                    To date is required</mat-error>
+                            </div>
+                       
+                        </div>
+      
+                        <div class="w-100 text-center">
+                          <button class="btn button-primary" (click)="searchorders()"
+                              [disabled]="disable">
+                              <img _ngcontent-dnd-c329="" src="./assets/img/arrow_icon_red.png"
+                                  alt="arrow icon" class="activeImg arrowIcon">
+                              <img ngcontent-dnd-c329="" src="./assets/img/arrow_icon_light_grey.png"
+                                  alt="arrow icon" class="disabledImg arrowIcon"> search
+                          </button>
+                        </div></form></div>
+              
+              
+                        <div class="vendor-list__wrapper">
+                          <!-- formWrapper__content -->
+                          <div class="formWrapper__content">
+  
+                              <!-- invStatusMainWrapper -->
+                              <div class="invStatusMainWrapper">
+  
+                                  <div class="invStatusRightWrap invStatusRightalign">
+                                      <div class="inv-status-wrapper">
+                                          <div class="inv-wrapper" id="allPO" (click)="sortData('ALL')">
+                                              <span class="" style="position: relative;">
+                                                  <!-- <span class="badgeNum" style="top: -26px !important;">{{poCountAsPerStatus?.ALL != null ? poCountAsPerStatus?.ALL : 0}}</span> -->
+                                              </span>
+                                              <p class="status-title status-link">All </p>
+                                          </div>
+                                          <div class="inv-wrapper" (click)="sortData('N')"
+                                              *ngIf="invoicenumber == undefined">
+                                              <span class="status-color st-new">
+                                                  
+                                              </span>
+                                              <p class="status-title status-link">New PO(s)
+                                                  <span class="badgeNum">{{poCountAsPerStatus?.N != null ? poCountAsPerStatus?.N : 0}}</span>
+                                              </p>
+                                          </div>
+                                          <div class="inv-wrapper" (click)="sortData('A')">
+                                              <span class="status-color st-aknowledge">
+                                                  
+                                              </span>
+                                              <p class="status-title status-link">Accepted
+                                                  <span class="badgeNum">{{poCountAsPerStatus?.A != null ? poCountAsPerStatus?.A : 0}}</span>
+                                              </p>
+                                          </div>
+                                          <div class="inv-wrapper" (click)="sortData('P')">
+                                              <span class="status-color st-inProgress">
+                                                  
+                                              </span>
+                                              <p class="status-title status-link">Work In Progress
+                                                  <span class="badgeNum">{{poCountAsPerStatus?.P != null ? poCountAsPerStatus?.P : 0}}</span>
+                                              </p>
+                                          </div>
+                                          <div class="inv-wrapper" (click)="sortData('S')">
+                                              <span class="status-color st-transported">
+                                                  
+                                              </span>
+                                              <p class="status-title status-link">Shipped
+                                                  <span class="badgeNum">{{poCountAsPerStatus?.S != null ? poCountAsPerStatus?.S : 0}}</span>
+                                              </p>
+                                          </div>
+                                          <div class="inv-wrapper" (click)="sortData('C')">
+                                              <span class="status-color st-complete">
+                                                  
+                                              </span>
+                                              <p class="status-title status-link">Complete
+                                                  <span class="badgeNum">{{poCountAsPerStatus?.C != null ? poCountAsPerStatus?.C : 0}}</span>
+                                              </p>
+                                          </div>
+                                          <div class="inv-wrapper" (click)="ServicePO()">
+                                              <span class="status-color st-service">
+                                                  
+                                              </span>
+                                              <p class="status-title status-link">Service PO
+                                                  <span class="badgeNum">{{(poCountAsPerStatus?.SP != null && poCountAsPerStatus?.SP != 0) ? poCountAsPerStatus?.SP : 0}}</span>
+                                              </p>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+  
+                            <div class="advanceSearchWrapper" >
+                              <div class="inv-table-header" >
+                                  <p class="advanceSearch__title">Purchase Order List</p>
+                                  </div>
+                              </div>
+
+<!-- *************POlist table**************** -->
+<div>
+    <table class="table customTableStripped fixedTable">
+      <thead class="text-primary">
+        <tr>
+          <th scope="col" class="text-left">
+            <div style="margin-left: 12px">PO No.</div>
+          </th>
+          <th scope="col" class="text-left">PO Date</th>
+          <th scope="col" class="text-right columnWidth">PO Amt.</th>
+          <th scope="col" class="text-right columnWidth"> PO Details</th>
+        </tr>
+      </thead>
+
+      <tbody *ngFor="let poData of poDataList ; let i = index">
+        <tr
+          class=""
+          [ngClass]="{
+            'item-aknowledge': poData.STATUS == 'A',
+            'item-transported': poData.STATUS == 'S',
+            'item-inProgress': poData.STATUS == 'P',
+            'item-complete': poData.STATUS == 'C',
+            'item-new': poData.STATUS == 'N'
+          }"
+        >
+          <td class="preventClick" style="margin-left: 12px">
+            <div
+              class="fixedPOnumber text-left"
+              style="max-width: 170px; min-width: 145px; margin-left: 2px"
+              *ngIf="poData.STATUS == 'N'" 
+            >
+              <img
+                src="./assets/img/pdf_icon03.png"
+                style="max-width: 30px; margin-left: 3px; cursor: pointer"
+                alt="pdf image"
+                (click)="downloadPo(poData.PO_NUMBER, 'singlepodownload')"
+              />
+              <div style="display: inline-block; margin-left: 3px">
+                {{ poData.PO_NUMBER }}
+                <sup class="starRed">*</sup>
+              </div>
+            </div>
+            <div
+              class="fixedPOnumber text-left"
+              style="max-width: 170px; min-width: 145px"
+              *ngIf="poData.STATUS != 'N'"
+            >
+              <img
+                src="./assets/img/pdf_icon03.png"
+                style="max-width: 30px; margin-left: 3px; cursor: pointer"
+                alt="pdf image"
+                (click)="downloadPo(poData.PO_NUMBER, 'singlepodownload')"
+              />
+              <div style="display: inline-block; margin-left: 3px">
+                {{ poData.PO_NUMBER }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="text-left upperDate fixedDate">
+              {{ poData.DATE | date: "dd-MMM-yyyy" }}
+            </div>
+          </td>
+          <td>
+            <div scope="col" class="text-right">
+              {{ poData.AMOUNT }}
+            </div>
+          </td>
+          <td>
+              <div scope="col" class="text-right">
+              <!-- <button (click)="onDetails(poData.PO_NUMBER,poData.DATE,poData.AMOUNT)">Details</button> -->
+
+              <button type="button" class="btn btn-danger btn-arrow-right" (click)="onDetails(poData.PO_NUMBER,poData.DATE,poData.AMOUNT)">Details</button>
+             
+              </div>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+<!-- **************AdminForm & CustomerForm***************** -->
+
+<h1 *ngIf="formStatus then ifBlock else elseBlock"></h1>
+
+<ng-template #elseBlock>
+<form [formGroup]="adminForm">
+  <h1>Admin Form</h1>
+  <input type="text" placeholder="Enter Name" name="name" formControlName="name"><br>
+  <span *ngIf="name && name.invalid && name.touched">Please enter valid name</span>
+  <br>
+  <input type="email" placeholder="Enter Email" name="email" formControlName="email"><br>
+  <span *ngIf="email && email.invalid && email.touched">Please enter valid email</span>
+  <br>
+  <input type="text" placeholder="Enter Mobile No" name="mobile" formControlName="mobile" maxlength="10" numbersOnly="true"><br>
+  <span *ngIf="mobile && mobile.invalid && mobile.touched">Please enter valid mobile no</span>
+  <br>
+  <input type="text" placeholder="Enter Amount" name="amount" formControlName="amount" matInput valThreeDecimal numbersOnly="true"><br>
+  <span *ngIf="amount && amount.invalid && amount.touched"></span>
+  <br>
+  <button [disabled]="adminForm.invalid" (click)="onSubmit($event)">Submit</button>
+</form>
+</ng-template>
+
+<ng-template #ifBlock>
+<form [formGroup]="customerForm">
+  <h1>Customer Form</h1>
+  <input type="text" placeholder="Enter Customer Name" name="cname" formControlName="cname"><br>
+  <span *ngIf="cname && cname.invalid && cname.touched">Please enter valid name</span>
+  <br>
+  <input type="email" placeholder="Enter Customer Email" name="cemail" formControlName="cemail"><br>
+  <span *ngIf="cemail && cemail.invalid && cemail.touched">Please enter valid email</span>
+  <br>
+  <input type="text" placeholder="Enter Mobile No" name="cmobile" formControlName="cmobile" maxlength="10" numbersOnly="true"><br>
+  <span *ngIf="cmobile && cmobile.invalid && cmobile.touched">Please enter valid mobile no</span>
+  <br>
+  <input type="text" placeholder="Enter Amount" name="camount" formControlName="camount" matInput valThreeDecimal numbersOnly="true"><br>
+  <span *ngIf="camount && camount.invalid && camount.touched"></span>
+  <br>
+  <button [disabled]="customerForm.invalid" (click)="onClick($event)">Submit</button>
+</form> 
+</ng-template> 
+</div>
+</div>
+
+<html>
+<body>
+
+<h1>Show Checkboxes</h1>
+
+<form action="/action_page.php">
+  <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+  <label for="vehicle1"> I have a bike</label><br>
+  <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+  <label for="vehicle2"> I have a car</label><br>
+  <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+  <label for="vehicle3"> I have a boat</label><br><br>
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

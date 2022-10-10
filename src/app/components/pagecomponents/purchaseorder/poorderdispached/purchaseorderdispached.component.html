@@ -1,0 +1,57 @@
+<!-- formWrapper Track PO  -->
+<div class="main-content margin-top">
+    <div class="container dashboardpt">
+        <div class="inv-page-container">
+            <div class="inv-page-wrapper container">
+
+                <div class="inv-page-header">
+                    <img class="left-arrow" src="./assets/img/arrow_icon_grey_prev.png" [routerLink]="['/purchaseOrdersList']" />
+                    <p class="invoice-number">{{orderNo}}</p>
+                </div>
+
+                <!-- formWrapper__content -->
+                <div class="formWrapper__content">
+                    <div class="">
+                        <div class="invoice-form ">
+                            <div class="inv-form-inputs">
+                                <p class="input-title">PO No : <span>{{poNumber}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Delivery Name : <span>{{lineItemNumber}} {{lineItemText}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Dispatch Order No: <span> {{orderNo}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Quantity : <span>{{Quantity}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Dispatch Date : <span>{{Date | date: dd-MMM-yyyy}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Email ID : <span>{{email}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Dispatch Address : <span>{{address}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Remark : <span>{{message}} </span></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

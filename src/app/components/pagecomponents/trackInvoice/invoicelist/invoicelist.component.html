@@ -1,0 +1,392 @@
+<div class="main-content margin-top">
+    <div class="container dashboardpt">
+
+        <div class="inv-page-container">
+            <div class="inv-page-wrapper container">
+                <div class="inv-page-header">
+                    <p class="invoice-number">Invoices</p>
+                </div>
+                <form [formGroup]="invoiceList">
+                    <div class="invoice-form">
+                        <div class="inv-form-inputs mb-mt">
+                            <mat-form-field appearance="none">
+                                <mat-label>Enter Invoice Number</mat-label>
+                                <input matInput placeholder="Enter Invoice Number" type="text" formControlName="invoiceNo" value="">
+                            </mat-form-field>
+                            <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Quantity" placement="left" showDelay="300"></span>
+                            <mat-error *ngIf="hasError('invoiceNo', 'required') && invoiceList.controls['invoiceNo'].touched">
+                                *Invoice Number is required</mat-error>
+                        </div>
+                        <div class="inv-form-inputs mb-mt">
+                            <mat-form-field appearance="none">
+                                <mat-label>Enter Purchase Order Number</mat-label>
+                                <mat-select formControlName="PONumber">
+                                    <mat-option *ngFor="let purchase of [1,2,3,5]" [value]="purchase">
+                                        {{purchase}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Quantity" placement="left" showDelay="300"></span>
+                            <mat-error *ngIf="hasError('PONumber', 'required') && invoiceList.controls['PONumber'].touched">
+                                *Invoice Number is required</mat-error>
+                        </div>
+                        <div class="inv-form-inputs mb-mt">
+                            <mat-form-field appearance="none">
+                                <mat-label>Select Invoice Status</mat-label>
+                                <mat-select formControlName="invoiceStatus">
+                                    <mat-option *ngFor="let status of [1,2,3,5]" [value]="status">
+                                        {{status}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Quantity" placement="left" showDelay="300"></span>
+                            <mat-error *ngIf="hasError('invoiceStatus', 'required') && invoiceList.controls['invoiceStatus'].touched">
+                                *Invoice Status is required</mat-error>
+                        </div>
+                        <div class="inv-form-inputs mb-mt">
+                            <mat-form-field appearance="none">
+                                <mat-label>Enter Invoice Value</mat-label>
+                                <input matInput placeholder="Enter Invoice Value" formControlName="invoiceValue" value="">
+                            </mat-form-field>
+                            <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Quantity" placement="left" showDelay="300"></span>
+                            <mat-error *ngIf="hasError('invoiceValue', 'required') && invoiceList.controls['invoiceValue'].touched">
+                                *Invoice Value is required</mat-error>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" (click)="getInvoice()">
+                    <img src="./assets/img/arrow_icon_red.png" />
+                    <span>Search Invoice</span>
+                </button>
+
+                </form>
+
+                <div class="inv-table-container">
+                    <div class="inv-status-wrapper">
+                        <div class="inv-wrapper">
+                            <p class="status-title"><a href="javascript:void(0)">All Invoices</a></p>
+                        </div>
+                        <div class="inv-wrapper">
+                            <span class="status-color st-aknowledge"></span>
+                            <p class="status-title">Submitted</p>
+                        </div>
+                        <div class="inv-wrapper">
+                            <span class="status-color st-inProgress"></span>
+                            <p class="status-title">Process</p>
+                        </div>
+                        <div class="inv-wrapper">
+                            <span class="status-color st-complete"></span>
+                            <p class="status-title">Paid</p>
+                        </div>
+                        <div class="inv-wrapper">
+                            <span class="status-color st-complete"></span>
+                            <p class="status-title"> <span class="dotPaid"></span>Paid(less GST)</p>
+                        </div>
+                    </div>
+
+
+                    <!-- inv-table-header -->
+                    <div class="inv-table-header">
+                        <p class="tbl-header-title">Invoices List</p>
+                        <div class="tbl-options">
+                            <div class="tble-each-option">
+                                <img src="./assets/img/download.png" alt="download image" />
+                                <p>Download List</p>
+                            </div>
+                            <div class="tble-each-option">
+                                <img src="./assets/img/refresh.png" alt="refresh image" />
+                                <p>Refresh</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- table  -->
+                    <div class="table-responsive pl-forIcon">
+                        <table class="table customTableStripped noAccordionTable">
+                            <thead class="text-primary">
+                                <tr>
+                                    <th scope="col">Invoice No.</th>
+                                    <th scope="col"> Invoice Date</th>
+                                    <th scope="col">PO No.</th>
+                                    <th scope="col">Due Date</th>
+                                    <th scope="col"> Amount</th>
+                                    <th scope="col">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+
+                                <!-- tr start  -->
+                                <tr class="customtbl-accordion-head item-inProgress">
+                                    <td class="preventClick">
+                                        <a class="" [routerLink]="['/poOrderView']">INV234561</a>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            22.12.2020
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            230004500
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            22.12.2020
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            250000
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="javascript:void;" class="" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                <div class="settingIconWrapper">
+                                                    <div class="settingIcon">
+                                                        <img class="setting-icon" src="./assets/img/setting.png" />
+                                                    </div>
+                                                    <span class="fa fa-chevron-down downArrow"></span>
+                                                </div>
+                                            </a>
+                                            <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                    <img src="./assets/img/po_icon_grey.png" />
+                                                    <div class="settingIconWrapper__text" [routerLink]="['/submitInvoiceFromList']">Submit Invoice
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <!-- tr end  -->
+
+                                <!-- tr start  -->
+                                <tr class="customtbl-accordion-head item-inProgress">
+                                    <td class="preventClick">
+                                        <a class="" [routerLink]="['/poOrderView']">INV234561</a>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            22.12.2020
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            230004500
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            22.12.2020
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            250000
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="javascript:void;" class="" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                <div class="settingIconWrapper">
+                                                    <div class="settingIcon">
+                                                        <img class="setting-icon" src="./assets/img/setting.png" />
+                                                    </div>
+                                                    <span class="fa fa-chevron-down downArrow"></span>
+                                                </div>
+                                            </a>
+                                            <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                    <img src="./assets/img/po_icon_grey.png" />
+                                                    <div class="settingIconWrapper__text" [routerLink]="['/submitInvoiceFromList']">Submit Invoice
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <!-- tr end  -->
+
+                                <!-- tr start  -->
+                                <tr class="customtbl-accordion-head item-inProgress">
+                                    <td class="preventClick">
+                                        <a class="" [routerLink]="['/poOrderView']">INV234561</a>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            22.12.2020
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            230004500
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            22.12.2020
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            250000
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="javascript:void;" class="" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                <div class="settingIconWrapper">
+                                                    <div class="settingIcon">
+                                                        <img class="setting-icon" src="./assets/img/setting.png" />
+                                                    </div>
+                                                    <span class="fa fa-chevron-down downArrow"></span>
+                                                </div>
+                                            </a>
+                                            <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                    <img src="./assets/img/po_icon_grey.png" />
+                                                    <div class="settingIconWrapper__text" [routerLink]="['/submitInvoiceFromList']">Submit Invoice
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <!-- tr end  -->
+
+
+                                <!-- tr start  -->
+                                <tr class="customtbl-accordion-head item-inProgress">
+                                    <td class="preventClick">
+                                        <a class="" [routerLink]="['/poOrderView']"> <sup> <span class="dotPaid" ></span></sup>INV234561</a>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            22.12.2020
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            230004500
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            22.12.2020
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            250000
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="javascript:void;" class="" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                <div class="settingIconWrapper">
+                                                    <div class="settingIcon">
+                                                        <img class="setting-icon" src="./assets/img/setting.png" />
+                                                    </div>
+                                                    <span class="fa fa-chevron-down downArrow"></span>
+                                                </div>
+                                            </a>
+                                            <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                    <img src="./assets/img/po_icon_grey.png" />
+                                                    <div class="settingIconWrapper__text" [routerLink]="['/submitInvoiceFromList']">Submit Invoice
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <!-- tr end  -->
+
+                                <!-- tr start  -->
+                                <tr class="customtbl-accordion-head item-inProgress">
+                                    <td class="preventClick">
+                                        <a class="" [routerLink]="['/poOrderView']">INV234561</a>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            22.12.2020
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            230004500
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            22.12.2020
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="">
+                                            250000
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="javascript:void;" class="" type="button" id="settingAction" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                                <div class="settingIconWrapper">
+                                                    <div class="settingIcon">
+                                                        <img class="setting-icon" src="./assets/img/setting.png" />
+                                                    </div>
+                                                    <span class="fa fa-chevron-down downArrow"></span>
+                                                </div>
+                                            </a>
+                                            <div class="settingIconWrapper__dropdown dropdown-menu dropdown-menu-right" aria-labelledby="settingAction">
+                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                    <img src="./assets/img/po_icon_grey.png" />
+                                                    <div class="settingIconWrapper__text" [routerLink]="['/submitInvoiceFromList']">Submit Invoice
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- tr end  -->
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination Wrapper -->
+                    <div class="paginationWrapper">
+                        <nav aria-label="...">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="javascript:void(0)" tabindex="-1" aria-disabled="true">Previous</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)">1</a></li>
+                                <li class="page-item active" aria-current="page">
+                                    <a class="page-link" href="javascript:void(0)">2</a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="javascript:void(0)">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

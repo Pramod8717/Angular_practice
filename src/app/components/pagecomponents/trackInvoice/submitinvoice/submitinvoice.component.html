@@ -1,0 +1,540 @@
+<div class="main-content margin-top">
+    <div class="container dashboardpt">
+        <div class="inv-page-container ">
+            <div class="inv-page-wrapper container">
+                <div class="inv-page-header">
+                    <img class="left-arrow" style="cursor: pointer;" src="./assets/img/arrow_icon_grey_prev.png"
+                        [routerLink]="['/dashboard']" />
+                    <p class="invoice-number">Submit Invoice Without PO</p>
+                </div>
+                <form [formGroup]="InvoiceForm">
+                    <div class="invoice-form">
+
+                        <div class="w-100">
+
+                        </div>
+
+                        <div class="w-100" style="margin: 20px 0 0px">
+
+                        </div>
+                        <!-- <div class="invoice-form" style="padding-left: 0px; padding-right: 0px; padding-top: 0;
+                        padding-bottom: 0;"> -->
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="radioWrapper radioInline" (change)="checkInvoice($event)">
+                                <p>
+                                    <input type="radio" id="cpinvoice" value="Invoice" name="itrfield" checked="" />
+                                    <label for="cpinvoice" class="inv-wrapper active">Invoice</label>
+                                </p>
+                                <p>
+                                    <input type="radio" id="cpEinvoice" value="Einvoice" name="itrfield" />
+                                    <label for="cpEinvoice" class="inv-wrapper">E-Invoice</label>
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="add-file-input">
+                                <label for="input-file2" class="file-input" style="display: flex;
+                                flex-wrap: wrap;
+                                align-items: center;">
+                                    <img src="./assets/img/cloud-computing.png" style="cursor: pointer;" />Upload
+                                    Invoice <sup class="imp">*</sup>
+                                    <span style="margin-left: 5px;" class="InvStatus__date">(Filename can have spaces
+                                        but no special characters)</span>
+                                </label>
+                                <input type="file" id="input-file2" class="d-none" accept="application/pdf"
+                                    formControlName="attachments"
+                                    (change)="onFileSelectEventforinvoiceupload($event,'invoice')"  onclick="value = null">
+                                <!-- <p class="input-title">{{viewAttachmentName}}</p>
+                                <div *ngIf="viewAttachmentName!=null && viewAttachmentName!=''">
+                                    <i class="fa fa-close fileCrossIcon" aria-hidden="true" (click)="close()"></i>
+                                </div> -->
+
+                            </div>
+                            
+                            <!-- <p class="input-subtitle">Upload Other Supporting documents</p> -->
+                            <p class="input-subtitle">Upload PDF file (file size upto 4 MB)</p>
+                            <div class="uploadedFiles">
+                                <div class="uploadedFiles__name">{{viewAttachmentName}}</div>
+                                <div *ngIf="viewAttachmentName!=null && viewAttachmentName!=''"
+                                    class="fileCrossIcon">
+                                    <i class="fa fa-close" aria-hidden="true"
+                                        (click)="close()"></i>
+                                </div>
+                            </div>
+                            <p class="input-subtitle" style="color: red;" *ngIf="invoice">
+                                Please send the physical invoice as per process
+                            </p>
+
+                        </div>
+
+                        <!-- <div class="inv-form-inputs">
+                                    <div>
+                                        <mat-label for="">Bill Of Lading Date </mat-label><sup class="imp">*</sup>
+                                
+                                        <div class="invInputWicon">
+                                            <mat-form-field appearance="none">
+                                                <mat-label>Bill Of Lading Date </mat-label>
+                                                <input matInput [max]="maxdate" [min]="mindate"
+                                                    [matDatepicker]="billofladingdate"
+                                                    formControlName="billofladingdate" />
+                                                <mat-datepicker-toggle matSuffix [for]="billofladingdate">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #billofladingdate></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div> -->
+                        <div class="inv-form-inputs mb-mt">
+                            <mat-label>Invoice Number<sup class="imp">*</sup></mat-label>
+                            <div class="invInputWicon">
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter Invoice Number</mat-label>
+                                    <input matInput title="Invoice Number" placeholder="Invoice Number" maxlength="16"
+                                        (keypress)="keyPressAlphanumeric($event)" formControlName="Invnumber"
+                                        value="" />
+
+                                </mat-form-field>
+                            </div>
+                            <mat-error *ngIf="
+                          hasError('Invnumber', 'required') &&
+                          InvoiceForm.controls['Invnumber'].touched
+                        ">
+                                *Invoice Number is required</mat-error>
+                        </div>
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Bill Of Lading Date </mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Bill Of Lading Date</mat-label>
+                                    <input matInput [max]="maxdate" [min]="mindate" [matDatepicker]="billofladingdate"
+                                        formControlName="billofladingdate" readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="billofladingdate">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #billofladingdate></mat-datepicker>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="IRN Date"
+                                        placement="left" showDelay="300"></span> -->
+                            </div>
+
+                        </div>
+                        <!-- </div> -->
+                        <div class="inv-form-inputs mb-mt" *ngIf="irndetail">
+                            <div class="invInputWicon">
+                                <mat-label>IRN No</mat-label><sup class="imp">*</sup>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter IRN No</mat-label>
+                                    <input matInput placeholder="IRN No" type="text"
+                                        (keypress)="keyPressAlphanumeric($event)" maxlength="64" formControlName="IRNNo"
+                                        value="">
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="IRN No"
+                                    placement="left" showDelay="300"></span> -->
+                            </div>
+
+                        </div>
+                        <div class="inv-form-inputs mb-mt" *ngIf="irndetail">
+                            <div class="invInputWicon">
+                                <mat-label>IRN Date</mat-label><sup class="imp">*</sup>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Select IRN Date</mat-label>
+                                    <input matInput [matDatepicker]="IRNDate" formControlName="IRNDate" readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="IRNDate">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #IRNDate></mat-datepicker>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="IRN Date"
+                                    placement="left" showDelay="300"></span> -->
+                            </div>
+
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt">
+                            <mat-label>Email ID of BCCL User <sup class="imp">*</sup></mat-label>
+                            <div class="invInputWicon">
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter Email ID of BCCL User</mat-label>
+                                    <input matInput title="Email ID of BCCL User"
+                                        placeholder="Enter Email ID of BCCL User" formControlName="Useremail"
+                                        value="" />
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Email ID" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <mat-error *ngIf="
+                  hasError('Useremail', 'required') &&
+                  InvoiceForm.controls['Useremail'].touched
+                ">
+                                *User email is required</mat-error>
+                        </div>
+
+
+                        <!-- <div class="inv-form-inputs mb-mt">
+                        <mat-label>Invoice Date<sup class="imp">*</sup></mat-label>
+                        <div class="invInputWicon">
+                            <mat-form-field appearance="none">
+                                <mat-label>Invoice Date</mat-label>
+                                <input matInput [matDatepicker]="invDate" formControlName="InvDate" readonly />
+                                <mat-datepicker-toggle matSuffix [for]="invDate"></mat-datepicker-toggle>
+                                <mat-datepicker #invDate></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div> -->
+                        <!-- bootstrap Modal -->
+
+
+                        <div class="modal fade customBootstrapModal" id="popupComment" data-backdrop="static"
+                            data-keyboard="false" tabindex="-1" aria-labelledby="popupCommentLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                            (click)="closePopup($event)">
+                                            <!-- message.value=' '; -->
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <div class="confirmation-title text-center">Bulk upload Invoice with PO</div>
+
+
+                                    </div>
+                                    <br>
+                                    <div class="modal-body  pt-0">
+                                        <div class="confirmationpopup">
+                                            <div class="invoice-form p-0 messageBoxbBottom">
+                                                <div class="inv-form-inputs mb-mt mt-0">
+
+                                                    <div class="confirmation-formLabel ">
+                                                        <div class="headingFileUpload">
+                                                            Please select .pdf file to upload
+                                                        </div>
+                                                        <div class="inv-form-inputs mb-mt FileUploadIconWrap">
+                                                            <div class="add-file-input ">
+                                                                <label for="input-file2" class="file-input"
+                                                                    *ngIf="viewAttachmentName==null || viewAttachmentName==''">
+                                                                    <img src="./assets/img/cloud-computing.png"
+                                                                        style="cursor: pointer; " />
+                                                                    Upload Invoice <sup class="imp">*</sup>
+                                                                    <span style="margin-left: 5px;"
+                                                                        class="InvStatus__date">(Filename can have
+                                                                        spaces but no special characters)</span>
+
+                                                                </label>
+                                                                <input type="file" id="input-file2" class="d-none"
+                                                                    accept=".pdf" formcontrolname="attachments"
+                                                                    (change)="onFileSelectEventforinvoiceupload($event,'invoice')">
+                                                                <p class="input-title">{{viewAttachmentName}}</p>
+                                                                <div *ngIf="viewAttachmentName!=null && viewAttachmentName!=''">
+                                                                    <i class="fa fa-close" aria-hidden="true"
+                                                                        (click)="close()"></i>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <!-- <div class="w-100 text-center">
+                                                        <button type="submit" class="btn button-primary" (click)="uploadfile($event)" [disabled]="!isUploadpdf ||!isUpload">
+                                            <img _ngcontent-dnd-c329="" src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                            class="activeImg arrowIcon">
+                                            <img ngcontent-dnd-c329="" src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                            class="disabledImg arrowIcon"> Upload
+                                </button>
+                                                    </div> -->
+
+                                                    <!-- <textarea class="form-control" name="" id="" cols="30" rows="4" #message  required pattern="[a-zA-Z0-9\s]+"> -->
+                                                    <!-- <div>
+
+                                                        <ul *ngFor="let name of errorlist" class="">
+                                                            <li><b>Invoice No =></b> {{ name.invoicenumber}} <b>Message =></b> {{name.message}}</li>
+                                                        </ul>
+                                                        <ul *ngIf="flag == 'success'"><b>No of records inserted ==> {{insertcount}}</b></ul>
+                                                        <ul *ngIf="flag == 'success'"><b>No of records failed to insert ==> {{errorcount}}</b></ul>
+                                                        <ul></ul>
+
+                                                    </div> -->
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div>
+                            <div class="confirmation-formLabel noBorder">
+
+                                <div class="headingFileUpload">
+                                    Please select .pdf file to upload
+                                </div>
+                                <div class="inv-form-inputs mb-mt FileUploadIconWrap">
+                                    <div class="add-file-input pdfFileListing">
+                                        <label for="input-file3" class="file-input">
+                                            <img src="./assets/img/cloud-computing.png"
+                                                style="cursor: pointer; " />
+                                        </label>
+
+                                        <input type="file" id="input-file3" class="d-none" accept=".pdf"
+                                            multiple="multiple" (change)="onFileChanged($event)">
+
+                                        <ul class="listFiles">
+
+                                            <li *ngFor="let selected of ArrayOfSelectedFile; let i of index ">
+                                                {{selected.name}}</li>
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div> -->
+
+
+                        <div class="inv-form-inputs mb-mt">
+                            <mat-label>Invoice Date<sup class="imp">*</sup></mat-label>
+                            <div class="invInputWicon">
+                                <mat-form-field appearance="none">
+                                    <mat-label>Invoice Date </mat-label>
+                                    <input matInput [max]="maxdate" [min]="mindate" [matDatepicker]="InvDate"
+                                        formControlName="InvDate" />
+                                    <mat-datepicker-toggle matSuffix [for]="InvDate">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #InvDate></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="inv-form-inputs mb-mt">
+                            <mat-label>Invoice Amount<sup class="imp">*</sup></mat-label>
+                            <div class="invInputWicon">
+                                <mat-form-field appearance="none">
+                                    <mat-label>Invoice Amount</mat-label>
+                                    <input matInput placeholder="Enter Invoice Amount" formControlName="Invamount"
+                                        value="" valDecimal OnlyNumber="true" maxlength="13" />
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Invoice Amount" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <mat-error *ngIf="
+                  hasError('Invamount', 'required') &&
+                  InvoiceForm.controls['Invamount'].touched
+                ">
+                                *Invoice amount is required</mat-error>
+                        </div>
+                        <!-- <div class="inv-form-inputs mb-mt w-100">
+                        <div class="radioWrapper radioInline" (change)="checkIGST($event)">
+                            <p>
+                                <input type="radio" id="IGST" value="IGST" name="IGST" checked="" />
+                                <label for="IGST">IGST</label>
+                            </p>
+                            <p>
+                                <input type="radio" id="CGST/SGST" value="CGST/SGST" name="IGST" />
+                                <label for="CGST/SGST"> CGST/SGST</label>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="inv-form-inputs mb-mt" *ngIf="IGST">
+                        <mat-label>IGST <sup class="imp">*</sup></mat-label>
+                        <div class="invInputWicon">
+                            <mat-form-field appearance="none">
+                                <mat-select aria-label="Default select example" formControlName="IGSTValue" (selectionChange)="totalingfunction($event,'igst')">
+                                    <mat-label>Enter IGST</mat-label>
+                                    <mat-option *ngFor="let igst of igstlist" [value]="igst?.id">{{igst?.value}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                       
+                        <mat-error *ngIf="
+                  hasError('IGSTValue', 'required') &&
+                  InvoiceForm.controls['IGSTValue'].touched
+                ">
+                            *PO Value is required</mat-error>
+                    </div>
+                    <div class="inv-form-inputs mb-mt" *ngIf="!IGST">
+                        <mat-label>CGST <sup class="imp">*</sup></mat-label>
+                        <mat-form-field appearance="none">
+                            <mat-select aria-label="Default select example" formControlName="CGSTValue" (selectionChange)="totalingfunction($event,'cgst')">
+                                <mat-label>Enter CGST</mat-label>
+                                <mat-option *ngFor="let cgst of cgstandsgstlist" [value]="cgst?.id">{{cgst?.value}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-error *ngIf="
+                  hasError('CGSTValue', 'required') &&
+                  InvoiceForm.controls['CGSTValue'].touched
+                ">
+                            *is required</mat-error>
+                    </div>
+                    <div class="inv-form-inputs mb-mt" *ngIf="!IGST">
+                        <mat-label>SGST <sup class="imp">*</sup></mat-label>
+                        <div class="invInputWicon">
+                            <mat-form-field appearance="none">
+                                <mat-select aria-label="Default select example" formControlName="SGSTValue" (selectionChange)="totalingfunction($event,'sgst')">
+                                    <mat-label>Enter SGST</mat-label>
+                                    <mat-option *ngFor="let sgst of cgstandsgstlist" [value]="sgst?.id">{{sgst?.value}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            
+                        </div>
+
+                        <mat-error *ngIf="
+                  hasError('SGSTValue', 'required') &&
+                  InvoiceForm.controls['SGSTValue'].touched
+                ">
+                            *is required</mat-error>
+                    </div> 
+                     <div class="inv-form-inputs mb-mt">
+                        <mat-label>Total Amount<sup class="imp">*</sup></mat-label>
+                        <div class="invInputWicon">
+                            <mat-form-field appearance="none">
+                                <mat-label>Total Amount</mat-label>
+                                <input matInput placeholder="Total Amount" formControlName="TotalValue" value="" />
+                            </mat-form-field>
+                            </div>
+                    </div> -->
+                        <div class="inv-form-inputs mb-mt">
+                            <mat-label>Description<sup class="imp">*</sup></mat-label>
+                            <div class="invInputWicon">
+                                <mat-form-field appearance="none">
+                                    <mat-label>Description</mat-label>
+                                    <!-- <input matInput placeholder="Description" formControlName="POValue" value="" /> -->
+                                    <textarea matInput placeholder="Description" formControlName="Description"
+                                        value=""></textarea>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Description" placement="left" showDelay="300"></span> -->
+                            </div>
+                            <mat-error
+                                *ngIf="hasError('Description', 'required') && InvoiceForm.controls['Description'].touched">
+                                *Description is required</mat-error>
+                        </div>
+                        <!-- <div class="inv-form-inputs mb-mt w-100">
+                        <div class="radioWrapper radioInline" (change)="checkInvoice($event)">
+                            <p>
+                                <input type="radio" id="Invoice" value="Invoice" name="Invoice" checked="" />
+                                <label for="Invoice">Invoice</label>
+                            </p>
+                            <p>
+                                <input type="radio" id="Einvoice" value="Einvoice" name="Invoice" />
+                                <label for="Einvoice">E-Invoice</label>
+                            </p>
+                        </div>
+                    </div> -->
+                        <!-- <div class="inv-form-inputs">
+                        <div class="add-file-input">
+                            <label for="input-file" class="file-input">
+                                <img src="./assets/img/cloud-computing.png" style="cursor: pointer;" />
+                            </label>
+                            <input type="file" id="input-file" class="d-none" formcontrolname="attachments"
+                                accept="application/pdf" (change)="onFileSelectEvent($event,'invoice')">
+                            <p class="input-title">{{viewAttachmentName}}</p>
+                        </div>
+                        <p class="input-subtitle">
+                            Upload your invoice below 4mb
+                        </p>
+                        <p class="input-subtitle" style="color: red;" *ngIf="invoice">
+                            Please send the physical Invoice
+                        </p>
+                    </div> -->
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <div class="confirmation-formLabel noBorder">
+
+                                    <div class="headingFileUpload">
+                                        Supporting Docs <span style="margin-left: 5px;"
+                                            class="InvStatus__date">(Filename can have spaces but no special
+                                            characters)</span>
+                                    </div>
+                                    <div class=" FileUploadIconWrap" style="width: 100%;">
+                                        <div class="add-file-input pdfFileListing">
+                                            <label for="input-file3" class="file-input">
+                                                <img src="./assets/img/cloud-computing.png" style="cursor: pointer; " />
+                                            </label>
+
+                                            <input type="file" id="input-file3" class="d-none" multiple="multiple"
+                                                (change)="onFileChanged($event)"  onclick="value = null">
+
+                                            <ul class="listFiles">
+
+                                                <!-- <li *ngFor="let selected of ArrayOfSelectedFile; let i of index ">
+                                                {{selected.name}}
+                                            </li> -->
+                                                <li *ngFor="let selected of ArrayOfSelectedFilename;let i=index"
+                                                    class="fileUploadSingle">
+                                                    {{selected}} <i class="fa fa-close fileCrossIcon fileCrossIcon"
+                                                        aria-hidden="true" (click)="removeitem(i)"></i>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="w-100 text-center">
+                        <button type="submit" class="btn button-primary" (click)="submitinvoicedetail()"
+                            [disabled]="InvoiceForm.invalid">
+                            <img _ngcontent-dnd-c329="" src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                class="activeImg arrowIcon">
+                            <img ngcontent-dnd-c329="" src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                class="disabledImg arrowIcon">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="invoicePopup" class="overlay">
+            <div class="popup customPopup__small">
+                <div class="container">
+                    <div class="confirmationpopup mb-2">
+                        <div class="confirmation-title text-center">Confirmation
+                            <button type="button" class="close" (click)="closePopUp()">&times;</button>
+                        </div>
+                        <p class="confirmation-para text-center">
+                            would like to submit your invoice
+                        </p> -->
+                        <div class="radioWrapper submitRadioButton" (change)="submitInvoice($event)"
+                            style=" margin-top: 35px;">
+                            <p>
+                                <input type="radio" id="withPo" value="withPo" name="itrfield" />
+                                <label for="withPo">With PO (You will be redirected to the Purchase Orders page)</label>
+                            </p>
+                        </div>
+                        <div class="radioWrapper radioInline" (change)="submitInvoice($event)">
+                            <p>
+                                <input type="radio" id="withoutPo" value="withoutPo" name="itrfield" />
+                                <label for="withoutPo">Without PO</label>
+                            </p>
+                        </div>
+                        <div class="radioWrapper radioInline" (change)="submitInvoice($event)">
+                            <p>
+                                <input type="radio" id="bulkinvoice" value="bulkinvoice" name="itrfield" />
+                                <label for="withoutPo">Bulk Invoice</label>
+                            </p>
+                        </div>
+                        <div class="sbmt_Invoice">
+                            <button type="submit" class="btn button-primary" (click)="submit()"
+                                [disabled]="invoiceStatus == ''">
+                                <img src="./assets/img/arrow_icon_red.png" alt="arrow icon" class="activeImg arrowIcon">
+                                <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                    class="disabledImg arrowIcon">
+                                Submit </button>
+                        </div>
+                        <p style="font-size: 13px;"> * You will be redirected to the Purchase Orders page</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-dialog-model></app-dialog-model>

@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700;1,800&display=swap');
+
+body{
+    background-color: #dce1e4;
+    color: $black-color;
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif !important;
+    
+}
+
+legend {
+  border-bottom: 0;
+}
+
+.serif-font{
+    font-family: $font-family-serif;
+}
+.icon-img {
+  text-align: center;
+}
+
+.content-text {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.content-text h2 {
+  font-size: 24px;
+  font-weight: 600;
+  padding: 0px 0px 0px 0px;
+}
+i.material-icons.float-right {
+  color: #333;
+}
+.icon-img {
+  padding: 20px 0px 0px 0px;
+}
+
+.content-text p {
+  font-size: 18px;
+}
+
+b {
+  font-weight: 700;
+}
+// Prevent highlight on mobile
+* {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: transparent;
+  &:focus {
+    outline: 0;
+  }
+}
+
+a{
+  color: $link-color;
+  &:hover,
+  &:focus{
+      color: #cc0000; 
+      text-decoration: none;
+  }
+
+  &.text-info{
+      &:hover, &:focus{
+        color: #cc0000; 
+      }
+  }
+
+  & .material-icons {
+    vertical-align: middle;
+  }
+}
+
+.form-check,
+label{
+    font-size: 14px;
+    line-height: 1.42857;
+    color: $checkboxes-text-color;
+    font-weight: 400;
+}
+
+/*           Animations              */
+.animation-transition-general{
+    @include transition-all($general-transition-time, $transition-linear);
+}
+
+.animation-transition-slow{
+    @include transition-all($slow-transition-time, $transition-linear);
+}
+
+.animation-transition-fast{
+    @include transition-all($fast-transition-time, $transition-ease);
+}
+
+.caret,
+.sidebar a{
+    @include transition-all($fast-transition-time, $transition-ease-in);
+}
+#map {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: calc(100vh - 70px);
+    margin-top: 70px;
+}

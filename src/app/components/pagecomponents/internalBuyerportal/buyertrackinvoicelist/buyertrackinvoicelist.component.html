@@ -1,0 +1,749 @@
+<div class="main-content margin-top">
+    <div class="container internalpt">
+        <div class="inv-page-container">
+            <div class="inv-page-wrapper container">
+                <div class="inv-page-header">
+                    <p class="invoice-number">Invoices</p>
+                </div>
+                <!--  -->
+                <div class="advanceSearchWrapper">
+                    <div class="advanceSearch__header">
+                        <p class="advanceSearch__title">Advance Search</p>
+                        <div class="advanceSearcIcon" (click)="openAdavnceSearch()">
+                            <img src="./assets/img/close-arrow.png" alt="download image" id="closeArrow" style="display: none;">
+                            <img src="./assets/img/open-arrow.png" alt="refresh image" id="openArrow">
+                        </div>
+                    </div>
+                    <div class="advanceSearc__box" style="display: none;" id="advanceSearcBox">
+                        <form [formGroup]="invoiceList">
+                            <div class="invoice-form">
+
+
+                                <div class="inv-form-inputs mb-mt">
+                                    <div class="invInputWicon">
+                                        <mat-label>Invoice Number</mat-label>
+                                        <mat-form-field appearance="none">
+                                            <mat-label>Enter Invoice Number</mat-label>
+                                            <!--  -->
+                                            <input matInput placeholder="Enter Invoice Number" formControlName="InvoiceNumber" value="" (keypress)="keyPressAlphanumeric($event)">
+                                        </mat-form-field>
+                                        <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Invoice Number " placement="left" showDelay="300"></span> -->
+                                    </div>
+                                    <!-- <mat-error *ngIf="hasError('InvoiceNumber', 'required') && paymentList.controls['InvoiceNumber'].touched">
+                            *Invoice Number is required</mat-error> -->
+                                </div>
+
+                                <div class="inv-form-inputs mb-mt">
+                                    <div class="invInputWicon">
+                                        <mat-label>PO Number</mat-label>
+                                        <mat-form-field appearance="none">
+                                            <mat-label>Enter PO Number</mat-label>
+                                            <!--  -->
+                                            <input matInput placeholder="Enter PO Number" value="" formControlName="POrealNumber">
+                                            <!-- <mat-select formControlName="paymentMethod">
+                                    <mat-option *ngFor="let payment of [1,2,3,5]" [value]="payment">
+                                        {{payment}}
+                                    </mat-option>
+                                </mat-select> -->
+                                        </mat-form-field>
+                                        <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="PO Number" placement="left" showDelay="300"></span> -->
+                                    </div>
+                                    <!-- <mat-error *ngIf="hasError('POrealNumber', 'required') && POrealNumber.controls['PONumber'].touched">
+                            *PO Number is required</mat-error> -->
+                                </div>
+                                <!-- <div class="inv-form-inputs mb-mt" *ngIf="disableoff == false">
+                            <div class="invInputWicon">
+                                <mat-label>Line Item Number</mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter line item number</mat-label>
+                                     formControlName="POlineitemNumber" 
+                                    <input matInput placeholder="Enter lineitem number" value="">
+                                     <mat-select formControlName="paymentMethod">
+                                    <mat-option *ngFor="let payment of [1,2,3,5]" [value]="payment">
+                                        {{payment}}
+                                    </mat-option>
+                                </mat-select> 
+                                </mat-form-field>
+                                <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="PO Number" placement="left" showDelay="300"></span> 
+                            </div>
+                             <mat-error *ngIf="hasError('POrealNumber', 'required') && POrealNumber.controls['PONumber'].touched">
+                            *PO Number is required</mat-error>
+                        </div> -->
+                                <!-- <div class="inv-form-inputs mb-mt" *ngIf="disableoff == false">
+                            <div class="invInputWicon">
+                                <mat-label>Delivery Order Number</mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter delivery order number</mat-label>
+                                     formControlName="POOrderNumber"
+                                    <input matInput placeholder="Enter delivery order number" value="">
+                                     <mat-select formControlName="paymentMethod">
+                                    <mat-option *ngFor="let payment of [1,2,3,5]" [value]="payment">
+                                        {{payment}}
+                                    </mat-option>
+                                </mat-select> 
+                                </mat-form-field>
+                                 <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="PO Number" placement="left" showDelay="300"></span> 
+                            </div>
+                            <mat-error *ngIf="hasError('POrealNumber', 'required') && POrealNumber.controls['PONumber'].touched">
+                            *PO Number is required</mat-error> 
+                        </div> -->
+                                <div class="inv-form-inputs mb-mt">
+                                    <div class="invInputWicon">
+                                        <mat-label>From Date </mat-label>
+                                        <mat-form-field appearance="none">
+                                            <mat-label>From Date</mat-label>
+                                            <!--  -->
+                                            <input matInput [max]="maxdate" [min]="mindate" [matDatepicker]="picker" formControlName="fromDate" (dateChange)="onDateChange()">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                        <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="From Date" placement="left" showDelay="300"></span> -->
+                                    </div>
+                                    <mat-error *ngIf="fromdateerror">
+                                        From date is required</mat-error>
+                                    <!-- <mat-error *ngIf="hasError('PODate', 'required') && POOrderList.controls['PODate'].touched">
+                            *PO Date is required</mat-error> -->
+                                </div>
+                                <div class="inv-form-inputs mb-mt">
+                                    <div class="invInputWicon">
+                                        <mat-label>To Date </mat-label>
+                                        <mat-form-field appearance="none">
+                                            <mat-label>To Date </mat-label>
+                                            <!--  -->
+                                            <input matInput [max]="maxdate" [min]="mintodate" formControlName="toDate" [matDatepicker]="Topicker" (dateChange)="onDateChange()">
+                                            <mat-datepicker-toggle matSuffix [for]="Topicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #Topicker></mat-datepicker>
+                                        </mat-form-field>
+                                        <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Quantity" placement="left" showDelay="300"></span> -->
+                                    </div>
+                                    <mat-error *ngIf="todateerror">
+                                        To date is required</mat-error>
+                                </div>
+                                <div class="inv-form-inputs mb-mt">
+                                    <mat-label>By Plant</mat-label>
+                                    <mat-form-field appearance="none">
+                                        <mat-label>By Plant</mat-label>
+                                        <input type="text"  matInput formControlName="Plant" (input) = "getPlantData($event)" [matAutocomplete]="auto1">
+                                        <mat-autocomplete #auto1="matAutocomplete" >
+                                            <mat-option *ngFor="let plantdata of tempPlantList" [value]="plantdata.PLANTNAME">
+                                               {{plantdata.PLANTNAME}} ({{ plantdata.PLANTCODE}})
+                                            </mat-option>
+                                          </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                                <div class="inv-form-inputs mb-mt">
+                                    <mat-label>By Vendor</mat-label>
+                                    <mat-form-field appearance="none">
+                                        <mat-label>By Vendor</mat-label>
+                                        <!-- <mat-select formControlName="Plant">
+                                            <mat-option *ngFor="let plantdata of PlantList" [value]="plantdata">
+                                                {{ plantdata }}
+                                            </mat-option>
+                                        </mat-select> -->
+                                        <input type="text"  matInput formControlName="Vendor" (input) = "getVendorData($event)" [matAutocomplete]="auto2">
+                                        <mat-autocomplete #auto2="matAutocomplete" >
+                                            <mat-option *ngFor="let vendordata of vendorList" [value]="vendordata.VENDORID">
+                                               {{vendordata.BUSINESSPARTNERTEXT}} ({{ vendordata.VENDORID}})
+                                            </mat-option>
+                                          </mat-autocomplete>
+                                    </mat-form-field>
+                                </div>
+                                <div class="inv-form-inputs mb-mt">
+                                    <div class="invInputWicon">
+                                        <!-- <mat-label>Search Type</mat-label> -->
+                                        <!-- <mat-form-field appearance="none">
+                                <mat-label>Enter Invoice Number</mat-label>
+                                <input matInput placeholder="Enter Invoice Number" formControlName="InvoiceNumber" value=""
+                                (keypress)="keyPressAlphanumeric($event)">
+                            </mat-form-field> -->
+                                        <section class="example-section">
+                                            <!-- <mat-checkbox class="example-margin" (change)="searchtype($event,'search')"><span style="color: #212529;">Approximate Search</span></mat-checkbox> -->
+                                            <!-- <mat-checkbox class="example-margin" formControlName="withoutpo" (change)="searchtype($event,'wpo')"><span style="color: #212529;">Invoice without PO</span></mat-checkbox> -->
+                                            <div class="customCheckbox">
+                                                <input type="checkbox" id="ch1" (click)="searchType($event,'C')"/><label for="ch1" style="color: #212529;"> Short Quantity </label>
+                                            </div>
+                                        </section>
+                                        <!-- <mat-radio-group aria-label="Select Type" formControlName="searchtype" (change)="changesearch($event)">
+                                <mat-radio-button checked=true value="E">Exact Search</mat-radio-button>
+                                <mat-radio-button value="A">Approximate Search</mat-radio-button>
+                              </mat-radio-group> -->
+                                    </div>
+                                </div>
+
+                                <!-- <div class="inv-form-inputs mb-mt">
+                        <mat-form-field appearance="none">
+                            <mat-label>Enter Payment Method</mat-label>
+                            <mat-select formControlName="paymentMethod">
+                                <mat-option *ngFor="let payment of [1,2,3,5]" [value]="payment">
+                                    {{payment}}
+                                </mat-option>
+                            </mat-select>
+                         </mat-form-field>
+                        <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Quantity" placement="left" showDelay="300"></span>
+                        <mat-error *ngIf="hasError('paymentMethod', 'required') && paymentList.controls['paymentMethod'].touched">
+                            *payment method is required</mat-error>
+                    </div>
+                    <div class="inv-form-inputs mb-mt">
+                        <mat-form-field appearance="none">
+                            <mat-label>Enter Payment Status</mat-label>
+                            <mat-select formControlName="paymentStatus">
+                                <mat-option *ngFor="let status of [1,2,3,5]" [value]="status">
+                                    {{status}}
+                                </mat-option>
+                            </mat-select>
+                         </mat-form-field>
+                        <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Quantity" placement="left" showDelay="300"></span>
+                        <mat-error *ngIf="hasError('paymentStatus', 'required') && paymentList.controls['paymentStatus'].touched">
+                            *payment status is required</mat-error>
+                    </div> -->
+                            </div>
+                            <!-- <button class="btn button-primary" (click)="trackPayment()">
+                    <img src="./assets/img/arrow_icon_red.png" />
+                    <span>Track Invoice</span>
+                </button> -->
+                            <div class="w-100 text-center">
+                                <button type="submit" class="btn button-primary" (click)="trackPayment('','','');" [disabled]="disable">
+                        <img _ngcontent-dnd-c329="" src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                            class="activeImg arrowIcon">
+                            <img ngcontent-dnd-c329=""   src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                            class="disabledImg arrowIcon"> search
+                    </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="inv-table-container" style="padding-top: 30px;">
+                    <!-- <div class="inv-status-wrapper">
+
+                    <div class="inv-wrapper">
+                        <span class="status-color"></span>
+                        <a href="#">
+                            <p class="status-title"> All Invoices </p>
+                        </a>
+                    </div>
+                    <div class="inv-wrapper">
+                        <span class="status-color st-aknowledge"></span>
+                        <p class="status-title">Submitted</p>
+                    </div>
+                    <div class="inv-wrapper">
+                        <span class="status-color st-processing"></span>
+                        <p class="status-title">Process</p>
+                    </div>
+                    <div class="inv-wrapper">
+                        <span class="status-color st-complete" style="width: 20px; height: 20px;"></span>
+                        <span class="status-color st-incomplete st-grey" style="width: 8px; height: 20px; background: #999999;"></span>
+                        <p class="status-title">Paid</p>
+                    </div>
+                    <div class="inv-wrapper">
+                        <span class="status-color  st-hold"></span>
+                        <p class="status-title">
+                          On Hold</p>
+                    </div>
+                </div> -->
+
+                    <!-- invStatusMainWrapper -->
+                    <div class="invStatusMainWrapper">
+                        <div class="invStatusRightWrap invStatusRightalign">
+                            <div class="inv-status-wrapper">
+                                <div class="inv-wrapper" (click)="sortdata('ALL')">
+                                    <span class="" style="position:relative;">
+                                        <!-- <span class="badgeNum" style="top: -26px !important;" >{{invoiceCountAsPerStatus.ALL != null ? invoiceCountAsPerStatus?.ALL : 0}}</span> -->
+                                    </span>
+                                    <p class="status-title status-link">All</p>
+                                </div>
+                                <!-- <div class="inv-wrapper" (click)="sortdata('P')">
+                                    <span class="status-color st-pending"></span>
+                                    <p class="status-title status-link">Pending</p>
+                                </div> -->
+                                <!-- <div class="inv-wrapper" (click)="sortWithoutPO()">
+                                    <span class="status-color st-withoutPo"></span>
+                                    <p class="status-title status-link">Without PO</p>
+                                </div> -->
+                                <div class="inv-wrapper active" id="stManagerpending" (click)="sortdata('P')">
+                                    <span class="status-color st-managerpending">
+                                        
+                                    </span>
+                                    <p class="status-title status-link">Pending
+                                        <span class="badgeNum">{{pendingPo}}</span>
+                                    </p>
+                                </div>
+                                <!-- <div class="inv-wrapper" (click)="sortdata('C')">
+                                    <span class="status-color st-shortQuantity"></span>
+                                    <p class="status-title status-link">Short Quantity</p>
+                                </div> -->
+                                <div class="inv-wrapper" (click)="sortdata('V')">
+                                    <span class="status-color st-rejected">
+                                        
+                                    </span>
+                                    <p class="status-title status-link">Returned
+                                        <span class="badgeNum">{{invoiceCountAsPerStatus.V != null ? invoiceCountAsPerStatus?.V : 0}}</span>
+                                    </p>
+                                </div>
+                                <div class="inv-wrapper" (click)="sortdata('O')">
+                                    <span class="status-color st-hold">
+                                        
+                                    </span>
+                                    <p class="status-title status-link">On Hold
+                                        <span class="badgeNum">{{invoiceCountAsPerStatus.O != null ? invoiceCountAsPerStatus?.O : 0}}</span>
+                                    </p>
+                                </div>
+                                <div class="inv-wrapper" (click)="sortdata('A')">
+                                    <span class="status-color st-accepted">
+                                       
+                                    </span>
+                                    <p class="status-title status-link">Approved
+                                        <span class="badgeNum">{{invoiceCountAsPerStatus.A != null ? invoiceCountAsPerStatus?.A : 0}}</span>
+                                    </p>
+                                </div>
+                                <!-- <div class="inv-wrapper" (click)="sortdata('R')">
+                                    <span class="status-color st-rejected"></span>
+                                    <p class="status-title status-link">Rejected</p>
+                                </div> -->
+                                <!-- <div class="inv-wrapper" (click)="sortdata('G')">
+                                    <span class="status-color st-grn"></span>
+                                    <p class="status-title status-link">GRN</p>
+                                </div> -->
+
+
+
+                                <!-- <div class="inv-wrapper" (click)="sortdata('S')">
+                                    <span class="status-color st-aknowledge"></span>
+                                    <p class="status-title status-link">Submitted</p>
+                                </div> -->
+
+                                <div class="inv-wrapper" (click)="sortdata('PRO')">
+                                    <span class="status-color st-transported">
+                                        
+                                    </span>
+                                    <p class="status-title status-link">Processed
+                                        <span class="badgeNum">{{invoiceCountAsPerStatus.PRO != null ? invoiceCountAsPerStatus?.PRO : 0}}</span>
+                                    </p>
+                                </div>
+
+                                <div class="inv-wrapper" (click)="sortdata('PP')">
+                                    <span style="position:relative;display: flex; align-items: center;">
+                                        <span class="status-color st-complete partialyLarge"></span>
+                                        <span class="status-color st-incomplete partialySmall st-grey" style="background: #024aec;"></span>
+                                        
+                                    </span> 
+                                    <p class="status-title status-link">Partially Paid
+                                        <span class="badgeNum">{{invoiceCountAsPerStatus.PP != null ? invoiceCountAsPerStatus?.PP : 0}}</span>
+                                    </p>
+                                </div>
+                                <div class="inv-wrapper" (click)="sortdata('PD')">
+                                    <span class="status-color st-complete">
+                                        
+                                    </span>
+                                    <p class="status-title status-link">Paid
+                                        <span class="badgeNum">{{invoiceCountAsPerStatus.PD != null ? invoiceCountAsPerStatus?.PD : 0}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- inv-table-header -->
+                    <div class="inv-table-header">
+                        <p class="tbl-header-title">Invoices List</p>
+                      
+                        <div class="tbl-options">
+                          <div class="nextpreviconWrapper" >
+                            <div class="nextprevicoSingle" style="cursor: pointer;" (click)="gettrackInvList('HOME');getmessageStatus()" *ngIf = "disableprevious ==false">
+                                <img src="./assets/img/first_page_icon_option04.png" class="nextprevicon" alt="refresh image" tooltip="Home"/>
+                                <!-- <p>Home</p> -->
+                            </div>
+                             <div class="nextprevicoSingle"  *ngIf = "disableprevious ==true">
+                                <img src="./assets/img/first_page_icon_disable02.png" class="nextprevicon" alt="refresh image" tooltip="Home"/>
+                                <!-- <p>Home</p> -->
+                            </div>
+                            <div class="nextprevicoSingle" style="cursor: pointer;" (click)="gettrackInvList('PREV');getmessageStatus()" *ngIf = "disableprevious ==false">
+                                <img src="./assets/img/first_page_icon_option03.png" class="nextprevicon" alt="refresh image" tooltip="Previous"/>
+                                <!-- <p>Previous</p> -->
+                            </div>
+                            <div class="nextprevicoSingle"  *ngIf = "disableprevious ==true">
+                                <img src="./assets/img/first_page_icon_disable01.png" class="nextprevicon" alt="refresh image" tooltip="Previous"/>
+                                <!-- <p>Previous</p> -->
+                            </div>
+                            <div class="nextprevicoSingle" style="cursor: pointer;" (click)="gettrackInvList('NEXT');getmessageStatus()" *ngIf = "disablenext ==false">
+                                <!-- <p style=" margin-right: 5px;">Next</p> -->
+                                <img src="./assets/img/end_page_icon_option_03.png" class="nextprevicon" alt="refresh image" tooltip="Next"/>
+                             </div>
+                            <div class="nextprevicoSingle"  *ngIf = "disablenext ==true">
+                                <!-- <p style=" margin-right: 5px;">Next</p> -->
+                                <img src="./assets/img/end_page_icon_disable_01.png" class="nextprevicon" alt="refresh image" tooltip="Next"/>
+                             </div>
+                             <div class="nextprevicoSingle" style="cursor: pointer;" (click)="gettrackInvList('END');getmessageStatus()" *ngIf = "disablenext ==false" >
+                                <img src="./assets/img/end_page_icon_option_04.png" class="nextprevicon" alt="refresh image" tooltip="End"/>
+                                <!-- <p>End</p> -->
+                            </div>
+                            <div class="nextprevicoSingle"  *ngIf = "disablenext ==true" >
+                                <img src="./assets/img/end_page_icon_disable_02.png" class="nextprevicon" alt="refresh image" tooltip="End"/>
+                                <!-- <p>End</p> -->
+                            </div>
+                        </div>
+                            <div class="tble-each-option" (click)="downloadinvoicelist()" style="cursor: pointer;">
+                                <img src="./assets/img/download.png" alt="download image" />
+                                <p>Download List</p>
+                            </div>
+
+                            <!-- <div class="tble-each-option" style="cursor: pointer;"
+                                (click)="getRefresh();getmessageStatus()">
+                                <img src="./assets/img/refresh.png" alt="refresh image" />
+                                <p>Refresh</p>
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- <div class="inv-table-header">
+                        <p class="tbl-header-title">Invoices List</p>
+                        <div class="tbl-options">
+                            <div class="tble-each-option" (click)="downloadinvoicelist()" style="cursor: pointer;">
+                                <img src="./assets/img/download.png" alt="download image" />
+                                <p>Download List</p>
+                            </div>
+                            <div class="tble-each-option" style="cursor: pointer;" (click)="getInvoiceData()">
+                                <img src="./assets/img/refresh.png" alt="refresh image" />
+                                <p>Refresh</p>
+                            </div>
+                        </div>
+                    </div> -->
+
+
+                    <!-- table  -->
+                    <div class="table-responsive">
+                        <table class="table customTableStripped">
+                            <thead class="text-primary">
+                                <tr>
+
+                                    <th scope="col" class="text-left">
+                                        <div style="margin-left: 12px;">
+                                            Invoice No.
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="text-left"> Invoice Date</th>
+                                    <th scope="col" class="text-left">
+                                        <div>
+                                            PO No.
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="text-right">Invoice Amt.</th>
+                                    <th scope="col" class="text-right">
+                                        <div>
+                                            Paid Amt.
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="text-left">
+                                        <div>
+                                            Messages
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="text-left">
+                                        <div>
+                                            Credit Note
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="text-left">
+                                        <div>
+                                            Info
+                                        </div>
+                                    </th>
+                                    <!-- <th></th> -->
+
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let invData of invoiceDataList ;let i=index">
+
+                                <tr [ngClass]="{'item-aknowledge': invData.OVERALLSTATUS == 'N', 
+                            'item-accepted': invData.OVERALLSTATUS=='A', 
+                            'item-rejected': invData.OVERALLSTATUS=='R',
+                            'item-managerpending': invData.OVERALLSTATUS=='P','item-hold': invData.OVERALLSTATUS=='O',
+                            'item-pending': invData.OVERALLSTATUS=='M','item-grn':invData.OVERALLSTATUS=='G', 'item-transported': invData.OVERALLSTATUS == 'PRO','item-rejected': invData.OVERALLSTATUS == 'V',
+                            'partiallyRow': invData.OVERALLSTATUS == 'PP','item-complete': invData.OVERALLSTATUS == 'PD','item-shortQuantity': ((invData.OVERALLSTATUS !='A' && invData.OVERALLSTATUS !='P' 
+                            && invData.OVERALLSTATUS !='WP' && invData.OVERALLSTATUS !='O' && invData.OVERALLSTATUS !='M' && invData.OVERALLSTATUS !='PRO' && invData.OVERALLSTATUS !='G' && invData.OVERALLSTATUS !='PP' && invData.OVERALLSTATUS !='PD' && invData.OVERALLSTATUS !='V') && invData.CREDITADVICENO != 'null')}">
+                                    <td class="preventClick" style="margin-left: 12px;min-width: 200px;">
+                                        <!-- <div class="text-left fixedPOnumber" style="cursor: pointer">
+                                            <img src="./assets/img/pdf_icon03.png" alt="pdf image" (click)="download(invData.SAVEDFILENAME, 'listdownload')" />
+                                            <a class="linkTable" style="cursor: pointer;" >{{invData.INVOICENUMBER}}</a>
+                                       </div> -->
+                                        <div class="text-left fixedPOnumber" style="cursor: pointer"><img src="./assets/img/pdf_icon03.png" alt="pdf image" (click)="download(invData.SAVEDFILENAME, 'listdownload',invData.ACTUALFILENAME)" />
+                                            <a class="linkTable" style="cursor: pointer;" (click)="getInvDetails(invData.INVOICENUMBER,invData.PONUMBER)">{{invData.INVOICENUMBER}}</a>
+                                            
+                                            
+                                        </div>
+                                        <!-- <div class="text-left fixedPOnumber linkTable" (click)="getInvDetails(invData.INVOICENUMBER,invData.PONUMBER)">
+                                            <img src="./assets/img/pdf_icon03.png" alt="pdf image" style="cursor: pointer;" (click)="download(invData.SAVEDFILENAME ,'listdownload')" /> {{invData.INVOICENUMBER}}
+                                        </div> -->
+
+                                    </td>
+                                    <td>
+                                        <div class="text-left upperDate fixedDateCol">
+                                            {{invData.INVOICEDATE| date:'dd-MMM-yyyy'}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-left" style="cursor: pointer ;">
+                                            <a class="linkTable" style="cursor: pointer;" (click)="downloadPo(invData.PONUMBER,'singlepodownload')">{{invData.PONUMBER}}</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-right">
+                                            {{invData.AMOUNT | currency:'INR'}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-right " *ngIf="invData.PAYMENTAMOUNT != null">
+                                            {{invData.PAYMENTAMOUNT | number:'1.2-2'}}
+                                        </div>
+                                        <div class="text-right" *ngIf="invData.PAYMENTAMOUNT == null">
+                                            0.00
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-left">
+                                            <div class="commentDiv " *ngIf="disableoff==false ">
+                                                <div class="commentIcon" style="cursor: pointer;" (click)="ShowpopupMessage(event);
+                                            getInvoiceQuerry(invData.PONUMBER, invData.INVOICENUMBER, invData.CONTACTPERSON); getStatusUpdate(invData.BUSINESSPARTNEROID ,invData.PONUMBER,invData.INVOICENUMBER, i)">
+                                                    <img src="./assets/img/unreadMessages.png" style="max-width: 30px; cursor: pointer; display: none;" id="green{{i}}" />
+                                                    <img src="./assets/img/Message.png" style="max-width: 30px; cursor: pointer;" id=white{{i}} />
+
+                                                </div>
+                                            </div>
+                                            <!-- <div *ngIf="(disableoff==true) && (!invData.POINVOICENUMBER)">
+                                                <img class="setting-icon" style="max-width: 30px;cursor: pointer;" src="./assets/img/document.png" (click)="gettoposubmitinvoicepage(invData.INVOICENUMBER,invData.INVOICEDATE)" tooltip="Attach PO" />
+                                            </div> -->
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-left ">
+                                            <div class="commentDiv ">
+                                                <div class="commentIcon " style="cursor: pointer; " (click)="createCreditNote(invData.INVOICENUMBER,invData.PONUMBER,invData.CREDITADVICENO)" *ngIf="invData.CREDITADVICENO != null && invData.CREDITNOTENO == null">
+                                                    <img src="./assets/img/credit_note_icon.png " style="max-width: 30px; cursor: pointer;" />
+                                                </div>
+                                                <div class="commentIcon " style="cursor: pointer; " (click)="getCreditNoteDetails(invData.INVOICENUMBER,invData.PONUMBER,invData.CREDITADVICENO)" *ngIf="invData.CREDITADVICENO != null && invData.CREDITNOTENO != null">
+                                                    <img src="./assets/img/credit_note_icon_with_tick.png " style="max-width: 30px; cursor: pointer;" />
+                                                </div>
+                                                <img src="./assets/img/resubmit.png " *ngIf="invData.STATUS =='V'" style="max-width: 38px; cursor: pointer; margin-left: 5px;" />
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                    
+                                    <td>
+                                        <div class=" text-left" style = "margin-left: -11px;">
+                                            <ng-template #statusTemplate1>Plant : {{invData.PLANTNAME}} <br> Vendor : {{invData.VENDORNAME}} <br>Onex Exp Sheet ID : {{invData.EXPENSESHEETID}}</ng-template>
+                                        <a style="cursor: pointer;"
+                                        [ngbTooltip]="statusTemplate1" container="body">
+                                        <img src="./assets/img/info.png" style = "padding-left: 10px;max-width: 30px;"></a>
+                                            <!-- <a style="cursor: pointer;"
+                                            tooltip="Plant : {{invData.PLANTNAME}} || Vendor : {{invData.VENDORNAME}}"
+                                            placement="bottom" showDelay="300">
+                                            <img src="./assets/img/info.png" style = "padding-left: 10px;max-width: 30px;"></a> -->
+                                            </div>
+                                    </td>
+                                    <!-- <td>
+                                        <div class="text-left ">
+                                            <div class="commentDiv " style="margin-left: 50px;">
+                                                <div class="commentIcon " style="cursor: pointer; " *ngIf="invData.STATUS =='V'">
+                                                    <img src="./assets/img/resubmit.png " style="max-width: 38px; cursor: pointer; margin-left: 5px;" />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </td> -->
+                                </tr>
+                                <!-- tr end  -->
+
+                            </tbody>
+                        </table>
+                        <div *ngIf="invoiceDataList.length==0 " style="color: #777; font-size: 16px; font-weight: 600; text-align: center; ">
+                            <p class="text-center w-100 ">No Data Found</p>
+                        </div>
+                    </div>
+
+
+                    <!-- Pagination Wrapper -->
+                    <!-- <div class="paginationWrapper ">
+                    <nav aria-label="... ">
+                        <ul class="pagination justify-content-center ">
+                            <li class="page-item disabled ">
+                                <a class="page-link " href="javascript:void(0) " tabindex="-1 " aria-disabled="true ">Previous</a>
+                            </li>
+                            <li class="page-item "><a class="page-link " href="javascript:void(0) ">1</a></li>
+                            <li class="page-item active " aria-current="page ">
+                                <a class="page-link " href="javascript:void(0) ">2</a>
+                            </li>
+                            <li class="page-item "><a class="page-link " href="javascript:void(0) ">3</a></li>
+                            <li class="page-item ">
+                                <a class="page-link " href="javascript:void(0) ">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div> -->
+                <div class="paginationWrapper " *ngIf="invoiceDataList.length!=0">
+                    <!-- <div class="tble-each-option" style="cursor: pointer;"
+                        (click)="getRefresh();getmessageStatus()">
+                        <img src="./assets/img/refresh.png" alt="refresh image" />
+                        <p>Previous</p>
+                    </div>
+                    <div class="tble-each-option" style="cursor: pointer;"
+                        (click)="getRefresh();getmessageStatus()">
+                        <p>Next</p>
+                        <img src="./assets/img/refresh.png" alt="refresh image" />
+                    </div> -->
+                    <div class="tble-each-option" style="cursor: pointer;" (click)="gettrackInvList('HOME');getmessageStatus()" *ngIf = "disableprevious ==false">
+                            <img src="./assets/img/first_page_icon_option04.png" class="nextprevicon__pagination" alt="refresh image" tooltip="Home"/>
+                            <!-- <p>Home</p> -->
+                        </div>
+                        <div class="tble-each-option" *ngIf = "disableprevious ==true">
+                            <img src="./assets/img/first_page_icon_disable02.png" class="nextprevicon__pagination" alt="refresh image" tooltip="Home"/>
+                            <!-- <p>Home</p> -->
+                        </div>
+                        <div class="tble-each-option" style="cursor: pointer;" (click)="gettrackInvList('PREV');getmessageStatus()" *ngIf = "disableprevious ==false">
+                            <img src="./assets/img/first_page_icon_option03.png" class="nextprevicon__pagination" alt="refresh image" tooltip="Previous"/>
+                            <!-- <p>Previous</p> -->
+                        </div>
+                        <div class="tble-each-option"  *ngIf = "disableprevious ==true">
+                            <img src="./assets/img/first_page_icon_disable01.png" class="nextprevicon__pagination" alt="refresh image" tooltip="Previous"/>
+                            <!-- <p>Previous</p> -->
+                        </div>
+                        <div class="tble-each-option" style="cursor: pointer;" (click)="gettrackInvList('NEXT');getmessageStatus()" *ngIf = "disablenext ==false">
+                            <!-- <p style=" margin-right: 5px;">Next</p> -->
+                            <img src="./assets/img/end_page_icon_option_03.png" class="nextprevicon__pagination" alt="refresh image" tooltip="Next"/>
+                         </div>
+                          <div class="tble-each-option"  *ngIf = "disablenext ==true">
+                            <!-- <p style=" margin-right: 5px;">Next</p> -->
+                            <img src="./assets/img/end_page_icon_disable_01.png" class="nextprevicon__pagination" alt="refresh image" tooltip="Next"/>
+                         </div>
+                         <div class="tble-each-option" style="cursor: pointer;" (click)="gettrackInvList('END');getmessageStatus()" *ngIf = "disablenext ==false" >
+                            <img src="./assets/img/end_page_icon_option_04.png" class="nextprevicon__pagination" alt="refresh image" tooltip="End"/>
+                            <!-- <p>End</p> -->
+                        </div>
+                         <div class="tble-each-option"  *ngIf = "disablenext ==true" >
+                            <img src="./assets/img/end_page_icon_disable_02.png" class="nextprevicon__pagination" alt="refresh image" tooltip="End"/>
+                            <!-- <p>End</p> -->
+                        </div>
+                   
+                </div>
+                    <!-- <div class="paginationWrapper " *ngIf="invoiceDataList && invoiceDataList.length> 0">
+                        <ngb-pagination [pageSize]="pageSize" [collectionSize]="totalItems" [(page)]="mPageNo" [maxSize]="10" (pageChange)="gettrackInvList($event)" aria-label="Default pagination">
+                            <ng-template ngbPaginationPrevious>Previous</ng-template>
+                            <ng-template ngbPaginationNext>Next</ng-template>
+                        </ngb-pagination>
+                    </div> -->
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <app-dialog-model></app-dialog-model>
+
+
+    <!-- bootstrap Modal -->
+    <div class="modal fade customBootstrapModal" id="popupComment" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="popupCommentLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="message.value=' ';ClosepopupMessage($event)">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                    <div class="confirmation-title text-center">INVOICE No. {{topic}}</div>
+                </div>
+                <div class="modal-body pt-0">
+                    <div class="confirmationpopup">
+                        <div class="invoice-form p-0 messageBoxbBottom">
+                            <div class="inv-form-inputs mb-mt mt-0">
+                                <div class="confirmation-formLabel">Enter Your Message </div>
+                                <textarea class="form-control" name="" id="" cols="30" rows="2" #message (keyup)="Check(message)" placeholder="Type here..."></textarea>
+                            </div>
+                        </div>
+                        <!-- <div class="btn btn-primary confirmationNo">
+                        <button [disabled]="validate" > <img src="./assets/img/arrow_icon_red.png" alt="arrow icon" class="arrowIcon" />Submit</button>
+                    </div> -->
+                        <div class="text-center w-100"> <button [disabled]="validate || message.value ==''" class="btn button-primary confirmationNo" (click)="sendConfirmation('N',message.value,'SubmitQuery', topic); message.value='';ClosepopupMessage($event)"><img
+                                src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                class="activeImg arrowIcon" />
+                                <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                            class="disabledImg arrowIcon">Submit</button></div>
+
+                        <!-- <a [routerLink]="['/poOrderView']"> -->
+                        <!-- <p class="ponum pb-3">INVOICE No. : {{topic}}</p> -->
+                        <!-- </a> -->
+                        <div class="messageChatWrapper">
+                            <!-- Commented on 20 oct 2021 Angaj -->
+                            <!-- <div *ngFor="let message of messageList.slice().reverse();let i=index"> -->
+                            <div *ngFor="let message of messageList;let i=index">
+                                <div class="chatboxWrapper">
+                                    <div class="chat__single">
+                                        <div class="chat__head">
+                                            <span class="messengerName">{{message.SENDER}} </span>
+                                            <span class="chat__date">
+                                            <span class="upperDate">({{message.CREATEDON |
+                                                date:'dd-MMM-yyyy'}})</span></span>&nbsp;
+                                            <span class="chat-time">{{message.CREATEDON | date:'mediumTime'}}</span>
+                                        </div>
+                                        <div class="chat__desc">{{message.MESSAGETEXT}}</div>
+                                        <div *ngIf="messageList.length==0" style="color: #777; font-size: 16px; font-weight: 600; text-align: center;">
+                                            <p class="text-center w-100">No Data Found</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="chat__single bgVendor" *ngIf="i%2==1">
+                                    <div class="chat__head">
+                                        <span class="messengerName">Buyer Name- {{message.SENDER}}</span>
+                                        <span class="chat__date">
+                                    <span class="chat-time">10:30AM</span>
+                                        <span class="upperDate">{{message.CREATEDON | date:'dd-MMM-yyyy'}}</span></span>
+                                    </div>
+                                    <div class="chat__desc">{{message.MESSAGETEXT}}</div>
+                                </div> -->
+                                    <!-- <div class="chat__single">
+                            <div class="chat__head">
+                                <span class="messengerName">Buyer Name - General Manager</span>
+                                <span class="chat__date"><span class="chat-time">10:30AM</span>
+                                <span>15/03/2021</span></span>
+                            </div>
+                            <div class="chat__desc">
+                                When will you complete the development
+                            </div>
+                        </div>
+                        <div class="chat__single bgVendor">
+                            <div class="chat__head">
+                                <span class="messengerName">Vendor Name</span>
+                                <span class="chat__date"><span class="chat-time">10:30AM</span>
+                                <span>15/03/2021</span></span>
+                            </div>
+                            <div class="chat__desc">started working on UI design</div>
+                        </div>
+                        <div class="chat__single">
+                            <div class="chat__head">
+                                <span class="messengerName">Buyer Name - General Manager</span>
+                                <span class="chat__date"><span class="chat-time">10:30AM</span>
+                                <span>15/03/2021</span></span>
+                            </div>
+                            <div class="chat__desc">
+                                When will you complete the development
+                            </div>
+                        </div>
+                        <div class="chat__single bgVendor">
+                            <div class="chat__head">
+                                <span class="messengerName">Vendor Name</span>
+                                <span class="chat__date"><span class="chat-time">10:30AM</span>
+                                <span>15/03/2021</span></span>
+                            </div>
+                            <div class="chat__desc">started working on UX design</div>
+                        </div> -->
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+::ng-deep .tooltip-feedback {
+    background-color: red !important;
+}
+
+::ng-deep .tooltip-feedback .arrow::before {
+    border-bottom-color: red !important;
+    /* Red */
+}
+
+::ng-deep .tooltip-feedback::before {
+    border-bottom-color: red !important;
+    /* Red */
+}

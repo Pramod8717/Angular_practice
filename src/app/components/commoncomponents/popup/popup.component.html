@@ -1,0 +1,49 @@
+<div id="ConfirmationpopUp">
+    <h5 class="modal-title confirmation-title" mat-dialog-title *ngIf="mydata.specific !='note'">Confirmation
+        <button mat-button class="close" (click)="ClosepopupMessage();onNoClick(false,null); btnDisabled=true;">&times;</button>
+    </h5>
+    <h5 class="modal-title confirmation-title" mat-dialog-title *ngIf="mydata.specific =='note'">Note
+        <button mat-button class="close" (click)="ClosepopupMessage();onNoClick(false,null); btnDisabled=true;">&times;</button>
+    </h5>
+
+    <div mat-dialog-content class="confirmation-para ">{{this.mydata.message}}</div>
+
+    <div mat-dialog-actions *ngIf="!(mydata.condition =='On Hold' || mydata.condition =='Rejected' ||  mydata.condition =='Approved' || mydata.condition == 'Pending' || mydata.condition =='Continue' || mydata.condition=='Confirmation' || mydata.condition=='error' ||  mydata.condition=='return' || mydata.condition=='note')">
+        <button mat-button mat-dialog-close class="btn btn-primary confirmationNo" (click)="onNoClick(false)">Ok</button>
+
+    </div>
+    <div mat-dialog-actions *ngIf="!(mydata.condition =='On Hold' || mydata.condition =='Rejected' ||  mydata.condition =='Approved' || mydata.condition == 'Pending' || mydata.condition =='Continue' || mydata.condition=='Confirmation' || mydata.condition=='error' || mydata.condition=='success' ||  mydata.condition=='return')">
+        <button mat-button mat-dialog-close class="btn btn-primary confirmationNo" (click)="ClosepopupMessage();onNoClick(false,null)">Close</button>
+
+    </div>
+
+    <div mat-dialog-actions *ngIf="!(mydata.condition =='On Hold' || mydata.condition =='Rejected' ||  mydata.condition =='Approved' || mydata.condition == 'Pending' || mydata.condition =='Continue' || mydata.condition=='Confirmation' || mydata.condition=='success' || mydata.condition=='return' || mydata.condition=='note')">
+        <button mat-button mat-dialog-close class="btn btn-primary confirmationNo" (click)="onNoClick(false)">Try Again</button>
+
+    </div>
+
+    <div mat-dialog-actions *ngIf="(mydata.condition =='On Hold' || mydata.condition =='Rejected' ||  mydata.condition =='Approved' || mydata.condition == 'Pending' || mydata.condition =='Continue' || mydata.condition=='Confirmation'|| mydata.condition=='return')">
+        <!-- <button mat-button mat-dialog-close class="btn btn-primary confirmationNo"  (click)="onNoClick()">Close</button> -->
+        <div class="button__wrapper">
+            <button class="btn btn-primary button-primary confirmationNo" [disabled]="btnDisabled" (click)="openTextarea(); btnDisabled=true;">Yes</button>
+            <button class="btn btn-primary button-primary confirmationNo"  [disabled]="btnDisabled" (click)="onNoClick(false); btnDisabled=true;">No</button>
+        </div>
+    </div>
+    <div class="confirmation_submit" id="confirmationNoAction" *ngIf="displayTextarea">
+        <div class="invoice-form p-0">
+            <div class="inv-form-inputs mb-mt mt-2" style="width: 100%;">
+                <div class="confirmation-formLabel">
+                    Remarks
+                </div>
+                <mat-form-field appearance="none">
+                    <textarea matInput placeholder="Type here..." style="width: 100%;" id="remarks" #messages (keyup)="Check(messages)"></textarea>
+                </mat-form-field>
+            </div>
+            <div id="submitButton" class="text-center w-100"> <button [disabled]="validate || messages.value ==''" class="btn btn-primary button-primary confirmationNo" (click)="onNoClick(true, messages.value)">
+                    <img src="./assets/img/arrow_icon_red.png" alt="arrow icon" class="activeImg arrowIcon" />
+                    <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon" class="disabledImg arrowIcon">
+                    Submit</button></div>
+
+        </div>
+    </div>
+</div>

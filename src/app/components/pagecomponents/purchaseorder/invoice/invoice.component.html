@@ -1,0 +1,467 @@
+<div class="main-content margin-top">
+    <div class="container dashboardpt">
+        <div class="inv-page-container">
+            <form [formGroup]="invoiceForm">
+                <div class="inv-page-wrapper container">
+                    <div class="inv-page-header">
+                        <img class="left-arrow" style="cursor: pointer;" src="./assets/img/arrow_icon_grey_prev.png" [routerLink]="['/purchaseOrdersList']" />
+                        <p class="invoice-number">PO No :{{ponumber}}</p>
+                    </div>
+
+                    <div class="invoice-form">
+
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="radioWrapper radioInline" (change)="checkInvoice($event)">
+                                <p>
+                                    <input type="radio" id="Invoice" value="Invoice" name="Invoice" checked="" />
+                                    <label for="Invoice">Invoice</label>
+                                </p>
+                                <p>
+                                    <input type="radio" id="Einvoice" value="Einvoice" name="Invoice" />
+                                    <label for="Einvoice">E-invoice</label>
+                                </p>
+
+                            </div>
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="add-file-input">
+                                <label for="input-file2" class="file-input" *ngIf="viewAttachmentName==null || viewAttachmentName==''">
+                                <img src="./assets/img/cloud-computing.png" style="cursor: pointer;" />
+                            </label>
+                                <input type="file" id="input-file2" class="d-none" accept="application/pdf" (change)="onFileSelectEvent($event,'invoice')">
+                                <p class="input-title">{{viewAttachmentName}}</p>
+                                <div *ngIf="viewAttachmentName!=null && viewAttachmentName!=''">
+                                    <i class="fa fa-close fileCrossIcon" aria-hidden="true" (click)="close()"></i>
+                                </div>
+                            </div>
+                            <!-- <p class="input-subtitle">Upload Other Supporting documents</p> -->
+                            <p class="input-subtitle">Upload PDF file (file size upto 4 MB)</p>
+                            <p class="input-subtitle" style="color: red;" *ngIf="invoice">
+                                Please send the physical invoice
+                            </p>
+                            <!-- <p class="input-subtitle" style="color: red;">
+                            You Need to send the physical Invoice
+                        </p> -->
+                        </div>
+                        <!-- <span *ngIf = "irndetail"> -->
+                        <div class="inv-form-inputs mb-mt " *ngIf="data !='poitem' && data != 'lineitem'">
+                            <mat-label>Order No.</mat-label>
+                            <div class="invInputWicon disabled">
+
+                                <mat-form-field appearance="none">
+                                    <mat-label>{{ordernumber}}</mat-label>
+                                    <input matInput value="" readonly />
+                                </mat-form-field>
+
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Line Item Text"
+                                    placement="left" showDelay="300"></span> -->
+                            </div>
+                        </div>
+                        <div class="inv-form-inputs mb-mt" *ngIf="data !='poitem'">
+                            <mat-label>Line Item Number</mat-label>
+                            <div class="invInputWicon  disabled">
+
+                                <mat-form-field appearance="none">
+                                    <mat-label>{{lineitemnumber}}</mat-label>
+                                    <input matInput value="" readonly />
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Line Item Number"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                        </div>
+
+
+                        <div class="inv-form-inputs mb-mt " *ngIf="data !='poitem' ">
+                            <mat-label>Line Item Text</mat-label>
+                            <div class="invInputWicon disabled">
+
+                                <mat-form-field appearance="none">
+                                    <mat-label>{{lineitemtext}}</mat-label>
+                                    <input matInput value="" readonly />
+                                </mat-form-field>
+
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Line Item Text"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt " *ngIf="data !='poitem' && data !='orderitem'">
+                            <mat-label>Total Quantity</mat-label>
+                            <div class="invInputWicon disabled">
+                                <mat-form-field appearance="none">
+                                    <mat-label>{{quantity}}</mat-label>
+                                    <input matInput value="" readonly />
+                                </mat-form-field>
+
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Line Item Text"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt " *ngIf="data !='lineitem'">
+                            <mat-label>Total Quantity</mat-label>
+                            <div class="invInputWicon disabled">
+
+                                <mat-form-field appearance="none">
+                                    <mat-label>{{totQuantity}}</mat-label>
+                                    <input matInput value="" readonly />
+                                </mat-form-field>
+
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Line Item Text"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                        </div>
+
+
+                        <div class="inv-form-inputs mb-mt " *ngIf="data !='poitem'">
+                            <mat-label>Balance Quantity</mat-label>
+                            <div class="invInputWicon disabled">
+
+                                <mat-form-field appearance="none">
+                                    <!-- <mat-label>{{balQuantity}}</mat-label> -->
+                                    <input matInput value="" readonly formControlName="BalanceQty" />
+                                </mat-form-field>
+
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Line Item Text"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt" *ngIf="data !='orderitem'">
+                            <div class="invInputWicon">
+                                <mat-label>Quantity </mat-label><sup class="imp">*</sup>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Quantity</mat-label>
+                                    <input matInput placeholder="Enter Quantity" id="quantityeAS" type="text" (keypress)="numberOnly($event);" (ngModelChange)="balanceQuantity()" maxlength="20" formControlName="Quantity" value="">
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Invoice Number"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                            <mat-error *ngIf="
+                        balQuantity1<0">
+                                {{errormessage}}</mat-error>
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt" *ngIf="data =='orderitem'">
+                            <mat-label>Quantity </mat-label>
+                            <div class="invInputWicon disabled">
+                                <mat-form-field appearance="none">
+                                    <mat-label>{{quantity}}</mat-label>
+                                    <input matInput placeholder="Enter Quantity" readonly type="text" (keypress)="numberOnly($event);" maxlength="20" formControlName="Quantity" value="">
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Invoice Number"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt " *ngIf="data !='poitem'">
+                            <mat-label>Rate Per Quantity</mat-label>
+                            <div class="invInputWicon disabled">
+
+                                <mat-form-field appearance="none">
+                                    <mat-label>{{rateperqty}}</mat-label>
+                                    <input matInput value="" readonly />
+                                </mat-form-field>
+
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Line Item Text"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                        </div>
+
+
+                        <div class="inv-form-inputs mb-mt" *ngIf="irndetail">
+                            <div class="invInputWicon">
+                                <mat-label>IRN No</mat-label><sup class="imp">*</sup>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter IRN No</mat-label>
+                                    <input matInput placeholder="IRN No" type="text" (keypress)="keyPressAlphanumeric($event)" maxlength="64" formControlName="irnNo" value="">
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="IRN No"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                            <mat-error *ngIf="hasError('irnNo', 'required') && invoiceForm.controls['irnNo'].touched">*IRN number is required
+                            </mat-error>
+                        </div>
+                        <div class="inv-form-inputs mb-mt" *ngIf="irndetail">
+                            <div class="invInputWicon">
+                                <mat-label>IRN Date</mat-label> <sup class="imp">*</sup>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Select IRN Date</mat-label>
+                                    <input matInput [matDatepicker]="picker" formControlName="irnDate" readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="IRN Date"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                            <mat-error *ngIf="hasError('irnDate', 'required') && invoiceForm.controls['irnDate'].touched">
+                                *IRN date is required</mat-error>
+                        </div>
+                        <!-- </span> -->
+                        <div class="inv-form-inputs mb-mt" *ngIf="invoicealreadypresent == true">
+                            <div class="invInputWicon">
+                                <mat-label>Invoice Number</mat-label>
+                                <sup class="imp">*</sup>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter Invoice Number</mat-label>
+                                    <input matInput placeholder="Enter Invoice Number" (keypress)="keyPressAlphanumeric($event)" type="text" maxlength="16" formControlName="invoiceNo" value="">
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Invoice Number"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                            <mat-error *ngIf="hasError('invoiceNo', 'required') && invoiceForm.controls['invoiceNo'].touched">
+                                *Invoice number is required
+                            </mat-error>
+                        </div>
+                        <div class="inv-form-inputs mb-mt" *ngIf="invoicealreadypresent == false">
+                            <div class="invInputWicon">
+                                <mat-label>Invoice Number</mat-label>
+                                <sup class="imp">*</sup>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Enter Invoice Number</mat-label>
+                                    <input matInput placeholder="Enter Invoice Number" (keypress)="keyPressAlphanumeric($event)" type="text"  maxlength="16" formControlName="invoiceNo" value="">
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Invoice Number"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                            <mat-error *ngIf="hasError('invoiceNo', 'required') && invoiceForm.controls['invoiceNo'].touched">
+                                *Invoice number is required
+                            </mat-error>
+                        </div>
+                        <div class="inv-form-inputs mb-mt" *ngIf="invoicealreadypresent == true">
+                            <div class="invInputWicon">
+                                <mat-label>Invoice Date</mat-label> <sup class="imp">*</sup>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Select Invoice Date</mat-label>
+                                    <input matInput [max]="maxdate" [min]="mindate" [matDatepicker]="picker" formControlName="invoiceDate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <mat-error *ngIf="hasError('invoiceDate', 'required') && invoiceForm.controls['invoiceDate'].touched">
+                                *Invoice date is required</mat-error>
+                        </div>
+                        <div class="inv-form-inputs mb-mt" *ngIf="invoicealreadypresent == false">
+                            <div class="invInputWicon">
+                                <mat-label>Invoice Date</mat-label> <sup class="imp">*</sup>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Select Invoice Date</mat-label>
+                                    <input matInput [max]="maxdate" [min]="mindate" [matDatepicker]="picker" formControlName="invoiceDate" readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <mat-error *ngIf="hasError('invoiceDate', 'required') && invoiceForm.controls['invoiceDate'].touched">
+                                *Invoice date is required</mat-error>
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Invoice Amount</mat-label>
+                                <mat-form-field appearance="none" [ngClass]="{'disabled': nonediatble}">
+                                    <mat-label>Enter Invoice Amount</mat-label>
+                                    <input matInput placeholder="Enter Invoice Amount" type="text" formControlName="invoiceamount" value="" (keyup)="totalingfunction($event,'')" OnlyNumber="true" [readonly]="nonediatble">
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Invoice Amount"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                            <!-- <mat-error *ngIf="hasError('invoiceNo', 'required') && invoiceForm.controls['invoiceNo'].touched">*Name is required
+                        </mat-error> -->
+                        </div>
+                        <!-- ------------------------commented on 18-10-2021 start ------------------------------------ -->
+                        <!-- <div class="inv-form-inputs mb-mt w-100">
+                        <div class="radioWrapper radioInline" (change)="checkIGST($event)">
+                            <p>
+                                <input type="radio" id="IGST" value="IGST" name="IGST" checked="" />
+                                <label for="IGST">IGST</label>
+                            </p>
+                            <p>
+                                <input type="radio" id="CGST/SGST" value="CGST/SGST" name="IGST" />
+                                <label for="CGST/SGST"> CGST/SGST</label>
+                            </p>
+                        </div>
+                    </div>
+                    
+
+                    <div class="inv-form-inputs mb-mt" *ngIf="IGST">
+                        <mat-label>IGST</mat-label>
+                        <select class="form-control form-select noDataBase heightandsize" aria-label="Default select example" formControlName="igstvalue" (change)="totalingfunction($event,'igst')">
+                            <mat-label>Enter IGST</mat-label>
+                            <option *ngFor="let igst of igstlist" [value]="igst?.id">{{igst?.value}}</option>
+                        </select>
+                        
+                    </div>
+                    
+                    <div class="inv-form-inputs mb-mt" *ngIf="!IGST">
+                        <div class="invInputWicon">
+                            <mat-form-field appearance="none">
+                                <mat-label>Enter CGST</mat-label>
+                                <input matInput placeholder="Enter CGST" type="text" formControlName="cgstvalue" value="" 
+                                (keyup)="totalingfunction($event,'cgst')" maxlength="3" OnlyNumber="true">
+                            </mat-form-field>
+                            <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="CGST" placement="left" showDelay="300"></span>
+                        </div>
+                        <mat-error *ngIf="bignumbercgst">* Percentage cannot be greater than 100.
+                        </mat-error>
+                    </div>
+
+                    <div class="inv-form-inputs mb-mt" *ngIf="!IGST">
+                        <div class="invInputWicon">
+                            <mat-form-field appearance="none">
+                                <mat-label>Enter SGST</mat-label>
+                                <input matInput placeholder="Enter SGST" type="text" formControlName="sgstvalue" value="" 
+                                (keyup)="totalingfunction($event,'sgst')" maxlength="3" OnlyNumber="true">
+                            </mat-form-field>
+                            <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="SGST" placement="left" showDelay="300"></span>
+                        </div>
+                        <mat-error *ngIf="bignumbersgst">* Percentage cannot be greater than 100.
+                        </mat-error>
+                    </div> -->
+                        <!-- ------------------------commented on 18-10-2021 end ------------------------------------  -->
+                        <div class="inv-form-inputs mb-mt" hidden>
+                            <div class="invInputWicon">
+                                <mat-label>Total Amount</mat-label>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Total Amount</mat-label>
+                                    <input matInput type="text" formControlName="totalamount" value="" readonly>
+
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Total Amount"
+                                placement="left" showDelay="300"></span> -->
+
+                            </div>
+                            <!-- <mat-error *ngIf="hasError('invoiceNo', 'required') && invoiceForm.controls['invoiceNo'].touched">*Name is required
+                        </mat-error> -->
+                        </div>
+
+                        <div class="inv-form-inputs mb-mt">
+                            <div class="invInputWicon">
+                                <mat-label>Description</mat-label> <sup class="imp">*</sup>
+                                <mat-form-field appearance="none">
+                                    <mat-label>Description</mat-label>
+                                    <!-- <input matInput placeholder="Enter Invoice Number" type="text" formControlName="invoiceNo" value=""> -->
+                                    <textarea matInput placeholder="Enter Description" formControlName="description" maxlength="3500" value=""></textarea>
+                                </mat-form-field>
+                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Description"
+                                placement="left" showDelay="300"></span> -->
+                            </div>
+                            <!-- <mat-error *ngIf="hasError('invoiceNo', 'required') && invoiceForm.controls['invoiceNo'].touched">*Name is required
+                        </mat-error> -->
+                        </div>
+                        <!-- <div class="inv-form-inputs mb-mt">
+                        <mat-form-field appearance="none">
+                            <mat-label>Select Payment Method</mat-label>
+                            <mat-select formControlName="paymentMethod">
+                                <mat-option *ngFor="let payment of [1,2,3,5]" [value]="payment">
+                                    {{payment}}
+                                </mat-option>
+                            </mat-select>
+                         </mat-form-field>
+                        <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Quantity" placement="left" showDelay="300"></span>
+                        <mat-error *ngIf="hasError('paymentMethod', 'required') && invoiceForm.controls['paymentMethod'].touched">
+                            *PaymentMethod is required</mat-error>
+                    </div>
+                    <div class="inv-form-inputs mb-mt">
+                        <mat-form-field appearance="none">
+                            <mat-label>Select Milestone</mat-label>
+                            <mat-select formControlName="mileStone">
+                                <mat-option *ngFor="let milestone of [1,2,3,5]" [value]="milestone">
+                                    {{milestone}}
+                                </mat-option>
+                            </mat-select>
+                         </mat-form-field>
+                        <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Quantity" placement="left" showDelay="300"></span>
+                        <mat-error *ngIf="hasError('mileStone', 'required') && invoiceForm.controls['mileStone'].touched">*Milestone is required</mat-error>
+                    </div>
+                    <div class="inv-form-inputs">
+                        <p class="input-title">Delivery Date : <span>20.10.2020</span></p>
+                    </div>
+                    <div class="inv-form-inputs">
+                        <p class="input-title">Net Total : <span>Rs. 20,000</span></p>
+                    </div>
+                    <div class="inv-form-inputs">
+                        <p class="input-title">Gross Total : <span>Rs. 22,000</span></p>
+                    </div>
+                    <div class="inv-form-inputs">
+                        <p class="input-title">Total Amount : <span>Rs. 25,000</span></p>
+                    </div> -->
+
+                        <!-- <div class="inv-form-inputs">
+                        <div class="add-file-input">
+                            <label for="input-file" class="file-input">
+                <img src="./assets/img/cloud-computing.png" />
+              </label>
+                            <input type="file" id="input-file" class="d-none">
+                            <p class="input-title">Attached testinvoice.pdf</p>
+                        </div>
+                        <p class="input-subtitle">Upload your E-invoice doc,pdf below 4mb</p>
+                    </div> -->
+
+                        <!-- <div class="inv-form-inputs">
+                        <mat-form-field appearance="none">
+                            <mat-label>Select Signed by</mat-label>
+                            <mat-select formControlName="signedBy">
+                                <mat-option *ngFor="let signed of [1,2,3,5]" [value]="signed">
+                                    {{signed}}
+                                </mat-option>
+                            </mat-select>
+                         </mat-form-field>
+                        <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Quantity" placement="left" showDelay="300"></span>
+                        <mat-error *ngIf="hasError('signedBy', 'required') && invoiceForm.controls['signedBy'].touched">*Signing Authority is required</mat-error>
+                    </div> -->
+                    </div>
+
+
+                    <div class="w-100 text-center">
+                        <button type="submit" class="btn button-primary" (click)="submitinvoicedetail()" [disabled]="invoiceForm.invalid || disable? true : null">
+                        <img _ngcontent-dnd-c329="" src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                            class="activeImg arrowIcon">
+                            <img ngcontent-dnd-c329="" src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon" class="disabledImg arrowIcon"> Submit
+                    </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <app-dialog-model></app-dialog-model>
+
+    <!-- Confirmation PopUP -->
+
+    <div id="popup2" class="overlay">
+        <div class="popup confirmationPopup">
+            <a class="close" (click)="closePopup($event)" href="#/purchaseOrdersList">&times;</a><br />
+            <div class="container">
+                <div class="confirmationpopup mb-2">
+                    <div class="confirmation-title" *ngIf="success">Confirmation</div>
+                    <div class="confirmation-title" *ngIf="error">Error</div>
+                    <p class="confirmation-para">
+                        {{successmessage}}
+                    </p>
+                    <div class="button__wrapper">
+                        <!-- <a class="btn btn-primary" (click)="sendConfirmation('Y','','POconfirmation');closePopup($event)">Yes</a>
+                    <a class="btn btn-primary confirmationNo" (click)="showSubmitBox($event)">No</a> -->
+                        <a class="btn btn-primary confirmationNo" *ngIf="success" (click)="closePopup($event)">OK</a>
+                        <a class="btn btn-primary confirmationNo" *ngIf="error" (click)="closePopup($event)">BACK</a>
+                    </div>
+                    <!-- <div class="confirmation_submit" *ngIf="confirmationNoAction">
+                    <div class="invoice-form p-0">
+                        <div class="inv-form-inputs mb-mt mt-2">
+                            <div class="confirmation-formLabel">
+                                Why you don't want to proceed with this PO
+                            </div>
+                            <mat-form-field appearance="none">
+                                <mat-label>Type here...</mat-label>
+                                <textarea matInput placeholder="Type here..." #message value="" (keyup)="Check(message)"></textarea>
+                            </mat-form-field>
+
+                        </div>
+                        <div class="text-center w-100"> <button [disabled]="validate" class="btn btn-primary confirmationNo" (click)="sendConfirmation('N',message.value,'POconfirmation'); message.value=' ';closePopup($event)">Submit</button></div>
+
+                    </div>
+                </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

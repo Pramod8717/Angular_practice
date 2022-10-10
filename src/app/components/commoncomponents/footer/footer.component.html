@@ -1,0 +1,77 @@
+<div class="rightsection" *ngIf="(isLoggedIn$ | async) && (innerportal != true)">
+    <div class="accorMain">
+        <div class="customerdit ">
+        </div>
+        <div class="accordi">
+            <a [routerLink]="['/purchaseOrdersList']">
+                <img src="./assets/img/po_icon_grey_circle.png" alt="feature" class="acoricon">
+                <div class="rightlisticon glyphicon glyphicon-exclamation-sign"></div>
+                <p>My PO</p>
+                <i class="downar glyphicon glyphicon-plus"></i>
+            </a>
+        </div>
+        <div class="accordi">
+            <a id="pro2" [routerLink]="['/submitInvoice']">
+                <img src="./assets/img/create_invoices_icon_grey_circle.png" alt="eligibility" class="acoricon">
+                <div class="rightlisticon glyphicon glyphicon-exclamation-sign"></div>
+                <p>Submit Invoices</p>
+                <i class="downar glyphicon glyphicon-plus"></i>
+            </a>
+        </div>
+        <!-- <div class="accordi">
+          <a href="#;" id="pro3">
+             <img src="./assets/img/my_invoices_grey_circle.png" alt="feature" class="acoricon">
+             <div class="rightlisticon glyphicon glyphicon-exclamation-sign"></div>
+             <p>My Invoices</p>
+             <i class="downar glyphicon glyphicon-plus"></i>
+          </a>
+       </div> -->
+        <div class="accordi">
+            <a [routerLink]="['/trackInvoiceList']">
+                <img src="./assets/img/track_payment_icon_grey.png" alt="feature" class="acoricon">
+                <div class="rightlisticon glyphicon glyphicon-exclamation-sign"></div>
+                <p>Track Invoices</p>
+                <i class="downar glyphicon glyphicon-plus"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="rightsection" *ngIf="(isLoggedIn$ | async) && (innerportal == true)">
+    <div class="accorMain">
+        <div class="customerdit ">
+        </div>
+        <div class="accordi">
+            <a [routerLink]="['/purchaseOrdersList']">
+                <img src="./assets/img/po_icon_grey_circle.png" alt="feature" class="acoricon">
+                <div class="rightlisticon glyphicon glyphicon-exclamation-sign"></div>
+                <p>My PO</p>
+                <i class="downar glyphicon glyphicon-plus"></i>
+            </a>
+        </div>
+        <div class="accordi">
+            <a id="pro2" [routerLink]="['/submitInvoice']">
+                <img src="./assets/img/create_invoices_icon_grey_circle.png" alt="eligibility" class="acoricon">
+                <div class="rightlisticon glyphicon glyphicon-exclamation-sign"></div>
+                <p>Submit Invoices</p>
+                <i class="downar glyphicon glyphicon-plus"></i>
+            </a>
+        </div>
+        <!-- <div class="accordi">
+          <a href="#;" id="pro3">
+             <img src="./assets/img/my_invoices_grey_circle.png" alt="feature" class="acoricon">
+             <div class="rightlisticon glyphicon glyphicon-exclamation-sign"></div>
+             <p>My Invoices</p>
+             <i class="downar glyphicon glyphicon-plus"></i>
+          </a>
+       </div> -->
+        <div class="accordi">
+            <a [routerLink]="['/trackInvoiceList']">
+                <img src="./assets/img/track_payment_icon_grey.png" alt="feature" class="acoricon">
+                <div class="rightlisticon glyphicon glyphicon-exclamation-sign"></div>
+                <p>Track Invoices</p>
+                <i class="downar glyphicon glyphicon-plus"></i>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+{
+  "productList": [
+    {
+      "productName": "Samsung",
+      "category": "Electronic",
+      "freshness": "Brand New",
+      "price": 123,
+      "comment": "Samsung",
+      "date": "2022-09-12T18:30:00.000Z",
+      "id": 1
+    },
+    {
+      "productName": "Apple",
+      "category": "Fruits",
+      "freshness": "Brand New",
+      "price": 500,
+      "comment": "Fresh Apple",
+      "date": "2022-09-08T18:30:00.000Z",
+      "id": 4
+    },
+    {
+      "productName": "Carrot",
+      "category": "Vegitables",
+      "freshness": "Second Hand",
+      "price": 100,
+      "comment": "Better to eat",
+      "date": "2022-09-08T18:30:00.000Z",
+      "id": 5
+    },
+    {
+      "productName": "PineApple",
+      "category": "Fruits",
+      "freshness": "Brand New",
+      "price": 300,
+      "comment": "Fresh",
+      "date": "2022-09-14T18:30:00.000Z",
+      "id": 6
+    },
+    {
+      "productName": "Tomato",
+      "category": "Vegitables",
+      "freshness": "Brand New",
+      "price": 600,
+      "comment": "Not Crushed",
+      "date": "2022-09-07T18:30:00.000Z",
+      "id": 7
+    },
+    {
+      "productName": "Redmi",
+      "category": "Electronic",
+      "freshness": "Brand New",
+      "price": 15000,
+      "comment": "Better Condition",
+      "date": "2022-09-08T18:30:00.000Z",
+      "id": 9
+    },
+    {
+      "productName": "beat",
+      "category": "Fruits",
+      "freshness": "Brand New",
+      "price": 60,
+      "comment": "good for health",
+      "date": "2022-09-11T18:30:00.000Z",
+      "id": 10
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

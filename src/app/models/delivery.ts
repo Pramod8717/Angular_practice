@@ -1,0 +1,61 @@
+export class Delivery{
+
+    
+	 bid:string ;
+     po_num:string;
+	 irnNumber:string ;
+     irnDate:string;
+	 invoiceNumber:string ;
+     invoiceDate:string;
+	 referenceNumber:string ;
+     grnnumber:string;
+	 lineItemNumber:string ;
+     orderNumber:string;
+	 quantity:string ;
+     uOM:string;
+	 contactPerson:string ;
+     contactPersonPhone:string;
+	 vendorID:string ;
+     company:string;
+	 plant:string ;
+     department:string;
+	 costCentre:string ;
+     category:string;
+	 businessPartnerText:string ;
+     profileID:string;
+	 invoiceDocumentPath:string ;
+     iGSTAmount:string;
+	 cGSTAmount:string ;
+     sgstAmount:string;
+	 totalAmount:string ;
+     description:string;
+	 status:string ;
+     invoiceamount:string;
+	 actualfilename:string ;
+     savedfilename:string;
+	 createdby:string;
+	 managerid:string ;
+	 buyerid:string;
+	 stage:string;
+	 balance_qty:any;
+	 rawinvno:string;
+	 modified_by:string;
+	 material:string;
+	 rateperquantity:string;
+	 multipleactualfilename : string;
+	 multiplesavedfilename : string;
+	 billofladingdate : string;
+	 ordervalue : any;
+	 remark:any;
+	 totalamtinctaxes:any;
+	 taxamount:any;
+	 storagelocation:any;
+	 lineitemtext:any;
+	 uniquereferencenumber:any;
+	 saplineitemnumber:any;
+	 servicenumber:any;
+	 beforesubmissioninvoicenumber: any;
+	 srcnnumber: any;
+	 dcnumber:any;
+
+}

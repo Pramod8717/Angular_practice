@@ -1,0 +1,1132 @@
+<div class="main-content margin-top">
+    <div class="container dashboardpt">
+        <div class="">
+            <div class="formWrapper">
+                <div class="">
+                    <div class="formWrapper__box">
+                        <div class="formWrapper__heading" *ngIf="TypeNo != 'part' && TypeNo != 'resubmit'">
+                            <!-- <div class="formWrapperHead_img" [routerLink]="['/purchaseOrdersList']"> -->
+                                <div class="formWrapperHead_img" [routerLink]="['/purchaseOrdersList']">
+                                <img src="./assets/img/arrow_icon_grey_prev.png" class="left-arrow">
+                            </div> PO No : {{ponumber}} - Full Invoice
+                            <div class="error" style="margin: auto;" *ngIf="totalBalQty==0"> {{errormessage}}</div>
+
+                        </div>
+
+                        <div class="formWrapper__heading" *ngIf="TypeNo == 'part'">
+                            <div class="formWrapperHead_img" (click)="backButtonForPart()">
+                                <img src="./assets/img/arrow_icon_grey_prev.png" class="left-arrow">
+                            </div> PO No : {{ponumber}} - Part Invoice
+                            <div class="error" style="margin: auto;" *ngIf="totalBalQty==0"> {{errormessage}}</div>
+                        </div>
+                        <div class="formWrapper__heading" *ngIf="TypeNo == 'resubmit'">
+                            <!-- <div class="formWrapperHead_img" [routerLink]="['/purchaseOrdersList']"> -->
+                                <div class="formWrapperHead_img" [routerLink]="['/purchaseOrdersList']">
+                                <img src="./assets/img/arrow_icon_grey_prev.png" class="left-arrow">
+                            </div> PO No : {{ponumber}} - Part Invoice
+                            <div class="error" style="margin: auto;" *ngIf="totalBalQty==0"> {{errormessage}}</div>
+                        </div>
+                        <!-- <div *ngIf = "nogrnpresnt == true"> -->
+
+                        <!-- formWrapper__content -->
+                        <!-- <form novalidate (ngSubmit)="f1.form.valid" #f1="ngForm" novalidate> -->
+                        <!-- <div *ngIf = "grnpresnt == false"> -->
+                        <div class="formWrapper__content">
+                            <div *ngIf="grninvoicepresent && TypeNo != 'resubmit'">
+                                <div class="container">
+                                    <div class="partInvWrapper">
+                                        <div class="table-responsive">
+                                            <table class="table customTableStripped tobeinvoicetable">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            <div style="width: 294px;">List of Confirmed Deliveries
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <div style="width: 200px;"> <button type="submit"
+                                                                    class="btn button-primary"
+                                                                    (click)="toinvoice(ponumber,'','special')"
+                                                                    [disabled]='checkedList.length ==0'>
+                                                                    <img _ngcontent-cpo-c320=""
+                                                                        src="./assets/img/arrow_icon_red.png"
+                                                                        alt="arrow icon" class="activeImg arrowIcon">
+                                                                    <img src="./assets/img/arrow_icon_light_grey.png"
+                                                                        alt="arrow icon" class="disabledImg arrowIcon">
+                                                                    to be invoiced
+                                                                </button></div>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <div style="width: 320px;"> <button type="submit"
+                                                                    class="btn button-primary"
+                                                                    (click)="toinvoice(ponumber,'','usual')"
+                                                                    [disabled]='checkedList.length !=0'>
+                                                                    <img _ngcontent-cpo-c320=""
+                                                                        src="./assets/img/arrow_icon_red.png"
+                                                                        alt="arrow icon" class="activeImg arrowIcon">
+
+                                                                    <img src="./assets/img/arrow_icon_light_grey.png"
+                                                                        alt="arrow icon" class="disabledImg arrowIcon">
+                                                                    invoice remaining quantity
+                                                                </button></div>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <!-- tr start  -->
+                                                    <tr class="tobeInvoiceRow"
+                                                        *ngFor="let subordinate of tobeinvoicelist; let i = index">
+                                                        <td class="preventClick">
+                                                            <div style="width: 294px;">
+                                                                <a class="card-title">
+                                                                    {{subordinate.DCNUMBER}}
+                                                                    <!-- | {{subordinate.INVOICEDATE | date:'dd-MMM-yyyy'}}  -->
+
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+
+                                                            <div class="text-center" style="width: 200px;">
+                                                                <div class="customCheckbox">
+                                                                    <input type="checkbox" id="acceptcheck{{i}}"
+                                                                        name="acceptcheck"
+                                                                        value="{{subordinate.DCNUMBER}}"
+                                                                        (change)="onCheckboxChange(subordinate.DCNUMBER,$event)">
+                                                                    <label for="acceptcheck{{i}}">
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="">
+                                                                &nbsp;
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+
+                                                </tbody>
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+
+                                                        </th>
+                                                        <th scope="col">
+                                                            <div>
+                                                                <button type="submit" class="btn button-primary"
+                                                                    (click)="toinvoice(ponumber,'','special')"
+                                                                    [disabled]='checkedList.length ==0'>
+                                                                    <img _ngcontent-cpo-c320=""
+                                                                        src="./assets/img/arrow_icon_red.png"
+                                                                        alt="arrow icon" class="activeImg arrowIcon">
+                                                                    <img src="./assets/img/arrow_icon_light_grey.png"
+                                                                        alt="arrow icon" class="disabledImg arrowIcon">
+                                                                    to be invoiced
+                                                                </button>
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <div>
+                                                                <button type="submit" class="btn button-primary"
+                                                                    (click)="toinvoice(ponumber,'','usual')"
+                                                                    [disabled]='checkedList.length !=0'>
+                                                                    <img _ngcontent-cpo-c320=""
+                                                                        src="./assets/img/arrow_icon_red.png"
+                                                                        alt="arrow icon" class="activeImg arrowIcon">
+                                                                    <img src="./assets/img/arrow_icon_light_grey.png"
+                                                                        alt="arrow icon" class="disabledImg arrowIcon">
+                                                                    invoice remaining quantity
+                                                                </button>
+                                                            </div>
+                                                        </th>
+
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="grninvoicepresent == false ||TypeNo == 'resubmit'">
+                                <form [formGroup]="invoiceForm">
+
+
+
+                                    <div class="invoice-form submissionForm" style="padding-left: 0px; padding-right: 0px; padding-top: 0;
+                            padding-bottom: 0;">
+                                        <div class="inv-form-inputs mb-mt">
+                                            <div class="radioWrapper radioInline" *ngIf="irnNumber == null"
+                                                (change)="checkInvoice($event)">
+                                                <p>
+                                                    <input type="radio" id="cpinvoice" value="Invoice" name="itrfield"
+                                                        checked="" />
+                                                    <label for="cpinvoice" class="inv-wrapper active">Invoice</label>
+                                                </p>
+                                                <p>
+                                                    <input type="radio" id="cpEinvoice" value="Einvoice"
+                                                        name="itrfield" />
+                                                    <label for="cpEinvoice" class="inv-wrapper">E-Invoice</label>
+                                                </p>
+                                            </div>
+                                            <div class="radioWrapper radioInline" *ngIf="irnNumber != null"
+                                                (change)="checkInvoice($event)">
+                                                <p>
+                                                    <input type="radio" id="cpinvoice" value="Invoice"
+                                                        name="itrfield" />
+                                                    <label for="cpinvoice" class="inv-wrapper">Invoice</label>
+                                                </p>
+                                                <p>
+                                                    <input type="radio" id="cpEinvoice" value="Einvoice" name="itrfield"
+                                                        checked="" />
+                                                    <label for="cpEinvoice" class="inv-wrapper active">E-Invoice</label>
+                                                </p>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="inv-form-inputs mb-mt">
+                                            <div class="add-file-input" *ngIf="fileupload != 'norefileupload'">
+                                                <label for="input-file2" class="file-input">
+                                                    <img src="./assets/img/cloud-computing.png"
+                                                        style="cursor: pointer;" />Upload Invoice <sup
+                                                        class="imp">*</sup>
+                                                        <span style="margin-left: 5px;" class = "InvStatus__date">(Filename can have spaces but no special characters)</span>
+                                                </label>
+                                                <input type="file" id="input-file2" class="d-none"
+                                                    accept="application/pdf" formControlName="attachments"
+                                                    (change)="onFileSelectEvent($event,'invoice')"  onclick="value = null">
+
+                                            </div>
+                                            <!-- <p class="input-subtitle">Upload Other Supporting documents</p> -->
+                                            <p class="input-subtitle">Upload PDF file (file size upto 4 MB)</p>
+                                            <div class="uploadedFiles">
+                                                <div class="uploadedFiles__name">{{viewAttachmentName}}</div>
+                                                <div *ngIf="viewAttachmentName!=null && viewAttachmentName!=''"
+                                                    class="fileCrossIcon">
+                                                    <i class="fa fa-close fileCrossIcon" aria-hidden="true"
+                                                        (click)="close()"></i>
+                                                </div>
+                                            </div>
+                                            <p class="input-subtitle" style="color: red;" *ngIf="invoice">
+                                                Please send the physical invoice as per process
+                                            </p>
+
+                                        </div>
+                                        <div class="inv-form-inputs mb-mt" *ngIf="irndetail || irnNumber!=null">
+                                            <div class="invInputWicon" *ngIf="freshinvoice==true || irnNumber!=null">
+                                                <mat-label>IRN No</mat-label><sup class="imp">*</sup>
+                                                <mat-form-field appearance="none">
+                                                    <mat-label>Enter IRN No</mat-label>
+                                                    <input matInput placeholder="IRN No" type="text"
+                                                        (keypress)="keyPressAlphanumeric($event)" maxlength="64"
+                                                        formControlName="irnNo" value="">
+
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="invInputWicon" *ngIf="freshinvoice==false && irnNumber==null">
+                                                <mat-label>IRN No</mat-label><sup class="imp">*</sup>
+                                                <mat-form-field appearance="none" style="background-color: #e9ecef;">
+                                                    <mat-label>Enter IRN No</mat-label>
+                                                    <input matInput placeholder="IRN No" type="text"
+                                                        (keypress)="keyPressAlphanumeric($event)" maxlength="64"
+                                                        formControlName="irnNo" value="" readonly>
+                                                </mat-form-field>
+                                            </div>
+
+                                        </div>
+                                        <div class="inv-form-inputs mb-mt" *ngIf="irndetail || irnNumber!=null">
+                                            <div class="invInputWicon" *ngIf="freshinvoice==true || irnNumber!=null">
+                                                <mat-label>IRN Date</mat-label><sup class="imp">*</sup>
+                                                <mat-form-field appearance="none">
+                                                    <mat-label>Select IRN Date</mat-label>
+                                                    <input matInput [matDatepicker]="picker" formControlName="irnDate"
+                                                        readonly>
+                                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="invInputWicon" *ngIf="freshinvoice==false && irnNumber==null">
+                                                <mat-label>IRN Date</mat-label><sup class="imp">*</sup>
+                                                <mat-form-field appearance="none" style="background-color: #e9ecef;">
+                                                    <mat-label>Select IRN Date</mat-label>
+
+                                                    <input matInput [matDatepicker]="picker" formControlName="irnDate"
+                                                        readonly>
+
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="inv-form-inputs">
+                                            <div class="invInputWicon" *ngIf="freshinvoice==true && grnnumber == null">
+                                                <mat-label>Invoice Number</mat-label><sup class="imp">*</sup>
+                                                <mat-form-field appearance="none">
+                                                    <mat-label>Enter Invoice Number</mat-label>
+                                                    <input matInput placeholder="Enter Invoice Number"
+                                                        (keypress)="keyPressAlphanumeric($event)" type="text"
+                                                        maxlength="16" formControlName="invoiceNo" value="">
+
+
+                                                </mat-form-field>
+
+                                            </div>
+                                            <div class="invInputWicon" *ngIf="freshinvoice==false || grnnumber != null">
+                                                <mat-label>Invoice Number</mat-label><sup class="imp">*</sup>
+                                                <mat-form-field appearance="none" style="background-color: #e9ecef;">
+                                                    <mat-label>Enter Invoice Number</mat-label>
+
+                                                    <input matInput placeholder="Enter Invoice Number"
+                                                        (keypress)="keyPressAlphanumeric($event)" type="text"
+                                                        maxlength="16" formControlName="invoiceNo" value="" readonly>
+                                                </mat-form-field>
+
+                                            </div>
+                                        </div>
+
+                                        <!-- <div *ngIf="freshinvoice==true"> -->
+                                        <div class="inv-form-inputs">
+
+                                            <div>
+                                                <mat-label for="">Bill Of Lading Date </mat-label>
+                                                <!-- <sup class="imp">*</sup> -->
+
+                                                <div class="invInputWicon" *ngIf="freshinvoice==true">
+                                                    <mat-form-field appearance="none">
+                                                        <mat-label>Bill Of Lading Date </mat-label>
+                                                        <input matInput [max]="maxdate" [min]="mindate"
+                                                            [matDatepicker]="billofladingdate"
+                                                            formControlName="billofladingdate" readonly />
+                                                        <mat-datepicker-toggle matSuffix [for]="billofladingdate">
+                                                        </mat-datepicker-toggle>
+                                                        <mat-datepicker #billofladingdate></mat-datepicker>
+
+
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="invInputWicon" *ngIf="freshinvoice==false">
+                                                    <mat-form-field appearance="none"
+                                                        style="background-color: #e9ecef;">
+                                                        <mat-label>Bill Of Lading Date </mat-label>
+
+
+                                                        <input matInput [max]="maxdate" [min]="mindate"
+                                                            [matDatepicker]="billofladingdate"
+                                                            formControlName="billofladingdate" readonly />
+
+
+
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- </div> -->
+
+                                    </div>
+
+
+                                    <div class="sectionBorder">
+                                        <div class="invoice-form " style="padding-left: 0px; padding-right: 0px; padding-top: 0;
+                                padding-bottom: 0;">
+
+
+
+                                            <!-- <div class="inv-form-inputs" >
+                                            <div class="invInputWicon">
+                                                <mat-label>Invoice Number</mat-label><sup class="imp">*</sup>
+                                                <mat-form-field appearance="none">
+                                                    <mat-label>Enter Invoice Number</mat-label>
+                                                    <input matInput placeholder="Enter Invoice Number"
+                                                        (keypress)="keyPressAlphanumeric($event)" type="text"
+                                                        maxlength="16" formControlName="invoiceNo" value="">
+                                                </mat-form-field>
+                                                
+                                            </div>
+                                        </div> -->
+
+
+
+                                            <div class="inv-form-inputs">
+
+                                                <div>
+                                                    <mat-label for="">Invoice Date </mat-label><sup class="imp">*</sup>
+
+                                                    <span>
+                                                        <div class="invInputWicon"
+                                                            *ngIf="freshinvoice==false || grnnumber != null">
+                                                            <mat-form-field appearance="none"
+                                                                style="background-color: #e9ecef;">
+                                                                <mat-label>Invoice Date </mat-label>
+                                                                <span *ngIf="freshinvoice==false || grnnumber != null">
+                                                                    <input matInput [matDatepicker]="InvoiceDate"
+                                                                        formControlName="invoiceDate" readonly />
+                                                                </span>
+                                                            </mat-form-field>
+
+                                                        </div>
+                                                        <!-- <span>{{errormessage}}</span> -->
+                                                        <div class="invInputWicon"
+                                                            *ngIf="freshinvoice==true && grnnumber == null">
+                                                            <mat-form-field appearance="none">
+                                                                <mat-label>Invoice Date </mat-label>
+                                                                <input matInput [max]="maxdate" [min]="mindate"
+                                                                    [matDatepicker]="InvoiceDate"
+                                                                    formControlName="invoiceDate" readonly />
+                                                                <mat-datepicker-toggle matSuffix [for]="InvoiceDate">
+                                                                </mat-datepicker-toggle>
+                                                                <mat-datepicker #InvoiceDate></mat-datepicker>
+
+
+                                                            </mat-form-field>
+
+                                                        </div>
+                                                        <!-- <span>{{errormessage}}</span> -->
+                                                    </span>
+                                                    <!-- </div> -->
+                                                </div>
+
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                    <!-- Mataccordian -->
+                                    <mat-accordion>
+
+                                        <mat-expansion-panel (opened)="panelOpenState = true"
+                                            (closed)="panelOpenState = false" [expanded]="true" hideToggle>
+
+                                            <mat-expansion-panel-header class="mataccordian">
+                                                <mat-panel-title>
+                                                    <h3 class="mb-0 font-weight-bold">Items List</h3>
+                                                </mat-panel-title>
+                                                <mat-panel-description>
+                                                    <mat-icon *ngIf="!panelOpenState">add</mat-icon>
+                                                    <mat-icon *ngIf="panelOpenState">remove</mat-icon>
+                                                </mat-panel-description>
+
+                                            </mat-expansion-panel-header>
+                                            <div class="grey-box">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col" *ngIf="grntobeinvoicelist.length!= 0">DC
+                                                                    Number</th>
+                                                                                <th scope="col">Items</th>
+                                                                <th scope="col"
+                                                                    *ngIf="part || (full && grntobeinvoicelist.length!= 0)">
+                                                                    Bal Qty/ PO Quantity</th>
+                                                                <th scope="col">Quantity</th>
+                                                                <th scope="col">
+                                                                    <div class="text-right"> Amount(INR)</div>
+                                                                </th>
+                                                                <th scope="col"></th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody *ngFor="let poitem of uniquelineitems; let i=index"
+                                                            style=" border-top: 1px solid #c2c4c6; border-bottom: 1px solid #000;">
+                                                            <tr>
+                                                                <td style=" border-top: 1px solid #c2c4c6;"
+                                                                    *ngIf="grntobeinvoicelist.length!= 0">
+                                                                    {{poitem.DCNUMBER}}
+                                                                </td>
+                                                                <td style=" border-top: 1px solid #c2c4c6;"
+                                                                    *ngIf="tobeinvoiced">
+                                                                    {{poitem.TOINVOICELINEITEMNUMBER}} -
+                                                                    {{poitem.TOINVOICELINEITEMTEXT}}
+                                                                </td>
+                                                                <td style=" border-top: 1px solid #c2c4c6;"
+                                                                    *ngIf="tobeinvoiced == false">
+                                                                    {{poitem.LINEITEMNUMBER}} - {{poitem.LINEITEMTEXT}}
+                                                                </td>
+
+                                                                <td style=" border-top: 1px solid #c2c4c6;"
+                                                                    *ngIf="part || (full && grntobeinvoicelist.length!= 0)">
+                                                                    {{poitem.BALANCE_QTY | number:'1.3-3'}}/{{poitem.QUANTITY
+                                                                    | number:'1.3-3'}}
+
+                                                                    <!-- <input type="text" (keypress)="numberOnly($event,i,j)" (input)="checkBalanceQty($event, poitem.BALANCE_QTY,i,j)" id="DeliveryQtyId{{i}}{{j}}" /> -->
+                                                                </td>
+
+
+                                                                <td style=" border-top: 1px solid #c2c4c6;"
+                                                                    *ngIf="part"><input type="text"
+                                                                        class="readonlyQuantity" placeholder="0"
+                                                                        value="0"
+                                                                        style="width:60px; border: 1px solid #dce1e4;"
+                                                                        maxlength="10" id="inputQty{{i}}"
+                                                                        formControlName="orderValue{{i}}"
+                                                                        (input)="checkBalanceQty($event, poitem.BALANCE_QTY,i) ; calculate(i,poitem.RATEPERQTY);calculateTax()"
+                                                                        [readOnly]="poitem.FORECLOSESTATUSCHECK == 'X'"
+                                                                        valThreeDecimal>
+
+                                                                    <!-- <input type="text" (keypress)="numberOnly($event,i,j)" (input)="checkBalanceQty($event, poitem.BALANCE_QTY,i,j)" id="DeliveryQtyId{{i}}{{j}}" /> -->
+                                                                    <p class="exceededMsg" id="exceeded{{i}}"
+                                                                        style="display: none;">
+                                                                        Delivery Quantity exceeded.
+                                                                    </p>
+                                                                </td>
+
+                                                                <td style=" border-top: 1px solid #c2c4c6;"
+                                                                    *ngIf="full && grntobeinvoicelist.length != 0">
+                                                                    {{poitem.GRNQTY | number:'1.3-3'}}
+                                                                </td>
+                                                                <td style=" border-top: 1px solid #c2c4c6;"
+                                                                    *ngIf="full && grntobeinvoicelist.length == 0">
+                                                                    {{poitem.BALANCE_QTY | number:'1.3-3'}}
+                                                                </td>
+                                                                <td style=" border-top: 1px solid #c2c4c6;"
+                                                                    *ngIf="full">
+                                                                    <div class="text-right">
+                                                                        {{poitem.TOTALAMOUNT | currency}}
+                                                                    </div>
+                                                                </td>
+                                                                <td style=" border-top: 1px solid #c2c4c6;"
+                                                                    *ngIf="part">
+                                                                    <div class="text-right">
+                                                                        <input formControlName="calRealtime{{i}}"
+                                                                            [value]="invoiceForm.get('calRealtime'+i).value | currency : 'symbol' : '1.2-2' "
+                                                                            placeholder="0" style="width: 100px; background: transparent;
+                                                            border: none; text-align: right" readonly>
+                                                                    </div>
+                                                                </td>
+                                                                <td style=" border-top: 1px solid #c2c4c6;"
+                                                                    *ngIf="part">
+                                                                    <div class="">
+                                                                        <div class="commentDiv text-center">
+                                                                            <div class="commentIcon"
+                                                                                *ngIf="poitem.FORECLOSESTATUSCHECK == 'X'">
+                                                                                <span class="text-left"
+                                                                                    style="cursor: pointer;"
+                                                                                    tooltip="Foreclosed" placement="top"
+                                                                                    showDelay="300">
+                                                                                    <img src="./assets/img/foreclosed.png"
+                                                                                        style="max-width: 30px; cursor: pointer;" />
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td style=" border-top: 1px solid #c2c4c6;"
+                                                                    *ngIf="full">
+
+                                                                </td>
+
+                                                                <!-- {{calculatedAmount}} -->
+                                                            </tr>
+                                                            <!--      <tr>
+                                                <td>20 Consultancy Charges</td>
+                                                <td><input type="number" value="3" width="50">/10</td>
+                                                <td>20,500</td>
+    
+                                            </tr>
+                                             <tr>
+                                                <td>30 Consultancy Charges</td>
+                                                <td><input type="number" value="2" width="50">/10</td>
+                                                <td>10,000</td>
+    
+                                            </tr>-->
+                                                        </tbody>
+                                                        <tbody style="border-top: 1px solid #000;">
+                                                            <tr class="total">
+                                                                <th></th>
+                                                                <th
+                                                                    *ngIf="part ||(full && grntobeinvoicelist.length!= 0)">
+                                                                </th>
+                                                                <th *ngIf="grntobeinvoicelist.length!= 0">
+                                                                </th>
+                                                                <th scope="row">Total Quantity</th>
+                                                                <th scope="row">
+                                                                    <div class="text-right">Total Amount (Excl Taxes)
+                                                                    </div>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td *ngIf="part || grntobeinvoicelist.length != 0"></td>
+                                                                <td *ngIf="grntobeinvoicelist.length != 0"></td>
+                                                                <td *ngIf="full">{{totalBalQty | number:'1.3-3'}}</td>
+
+                                                                <td *ngIf="part">
+                                                                    <!-- <input type="text" placeholder="0" formControlName="totalOrderQty" style="width: 80px; background: transparent;text-align: right;
+                                                            border: none;" readonly> -->
+                                                                    <span>{{inputBalanceQuantity | number:'1.3-3'}}</span>
+                                                                    <!-- /{{totalBalQty}} -->
+                                                                </td>
+
+                                                                <td *ngIf="part">
+                                                                    <div class="text-right">
+                                                                        {{overallAmount | currency:'INR' : 'symbol' : '1.2-2' }}
+                                                                    </div>
+                                                                </td>
+                                                                <td *ngIf="full">
+                                                                    <div class="text-right">
+                                                                        {{overallAmount | currency:'INR' : 'symbol' : '1.2-2' }}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+
+
+                                    <!-- Basicaccordion -->
+                                    <!-- <div class="Basicaccordion v1">
+                                Div for multiple deliveries 
+                                <div *ngIf="part">
+                                    <div class="Basicaccordion-container" *ngFor="let poitem of uniquelineitems; let i=index">
+                                        <p class="Basicaccordion-btn">
+                                            Part {{poitem.LINEITEMNUMBER}} - {{poitem.LINEITEMTEXT}}<span class="Accordionbtnclick" (click)="initAccNested($event, option, poitem.LINEITEMNUMBER,poitem.PO_NUMBER)"></span>
+                                        </p>
+                                        <div class="Basicaccordion-panel">
+                                            <div class="panelrowWrapper">
+                                                <div class="panel-row">
+                                                    <div class="panel-col">
+                                                        <div class="panel-col-item">
+                                                            Total Qty : <span>{{poitem.QUANTITY}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-col">
+                                                        <div class="panel-col-item">
+                                                            Per UOM :
+                                                            <span>1</span><span>{{poitem.UNITOFMEASURE}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-row">
+                                                    <div class="panel-col">
+
+                                                        <div class="panel-col-item">
+                                                            Balance Qty : <span>{{poitem.BALANCE_QTY}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-col">
+                                                        <div class="panel-col-item">
+                                                            Rate ({{poitem.CURRENCY}}) :
+                                                            <span>{{poitem.RATEPERQTY}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="panel-row">
+
+                                                    <div class="panel-col">
+                                                        <div class="panel-col-item">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="showSingleDelivery">
+
+
+                                                    <div class="panel-row">
+                                                        <div class="panel-col">
+                                                            <div class="panel-col-item">
+                                                                
+                                                                Delivery Challan : <span>{{poitem.DC}}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel-col">
+                                                            <div class="panel-col-item">
+                                                                Delivery Date : <span> {{poitem.DcDate}} </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-row">
+                                                        <div class="panel-col">
+                                                            <div class="panel-col-item">
+                                                                <div class="">
+                                                                    <mat-label for="quantity">Quantity
+                                                                    </mat-label>
+                                                                   
+                                                                    <input type="text" class="form-control matMargin" readonly name="Quantity{{i}}" id="Quantity{{i}}" value="{{poitem.DQty}}" maxlength="6" (input)="calculateItemAmount(i,poitem.DQty,poitem.RATEPERQTY,poitem.CURRENCY)" (keypress)="numberOnly($event)" (ngModelChange)="balanceQuantity(i)"
+                                                                        aria-describedby="quantity">
+                                                                    <mat-error class="input-subtitle" id="quantityErrMsg{{i}}" *ngIf="showerror == true">
+                                                                        {{errormessage}}Error is here
+                                                                    </mat-error>
+                                                                   
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel-col">
+                                                            <div class="panel-col-item">
+                                                                <div class="">
+                                                                    <mat-label for="amount">Amount ({{poitem.CURRENCY }})
+                                                                    </mat-label>
+                                                                    <input type="text" readonly class="form-control matMargin" value="{{poitem.AMOUNT}}" id="itemAmount{{i}}" aria-describedby="amount">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="showSingleSubmit">
+                                                    <div *ngFor="let orderItem of orderlineitems; let j=index">
+                                                        <div class="panel-row">
+                                                            <div class="panel-col">
+
+                                                                <div class="panel-col-item">
+                                                                
+                                                                    Delivery Challan : <span>{{orderItem.DC}}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel-col">
+                                                                <div class="panel-col-item">
+                                                                    Delivery Date :
+                                                                    <span>{{orderItem.DcDate}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel-row">
+                                                            <div class="panel-col">
+                                                                <div class="panel-col-item">
+                                                                    <div class="">
+                                                                        <mat-label for="quantity">Quantity
+                                                                        </mat-label>
+                                                    
+                                                                        <input type="text" class="form-control matMargin" readonly name="Quantity{{i}}" id="Quantity{{i}}" value="{{orderItem.DQty}}" maxlength="6" (input)="calculateItemAmount(i,poitem.DQty,poitem.RATEPERQTY,poitem.CURRENCY)" (keypress)="numberOnly($event)"
+                                                                            (ngModelChange)="balanceQuantity(i)" aria-describedby="quantity">
+                                                                        <mat-error class="input-subtitle" id="quantityErrMsg{{i}}" *ngIf="showerror == true">
+                                                                            {{errormessage}}Error is here
+                                                                        </mat-error>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel-col">
+                                                                <div class="panel-col-item">
+                                                                    <div class="">
+                                                                        <mat-label for="amount">Amount ({{poitem.CURRENCY}})
+                                                                        </mat-label>
+                                                                        <input type="text" readonly class="form-control matMargin" value="{{orderItem.AMOUNT}}" id="itemAmount{{i}}" aria-describedby="amount">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="full">
+                                    <div class="Basicaccordion-container" *ngFor="let poitem of uniquelineitems; let i=index">
+                                        <p class="Basicaccordion-btn">
+                                            Full {{poitem.LINEITEMNUMBER}} - {{poitem.LINEITEMTEXT}}<span class="Accordionbtnclick" (click)="initAccNested($event, option, poitem.LINEITEMNUMBER,poitem.PO_NUMBER)"></span>
+                                        </p>
+                                        <div class="Basicaccordion-panel">
+                                            <div class="panelrowWrapper">
+                                                <div class="panel-row">
+                                                    <div class="panel-col">
+                                                        <div class="panel-col-item">
+                                                            Total Qty : <span>{{poitem.QUANTITY}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-col">
+                                                        <div class="panel-col-item">
+                                                            Per UOM :
+                                                            <span>1</span><span>{{poitem.UNITOFMEASURE}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel-row">
+                                                    <div class="panel-col">
+
+                                                        <div class="panel-col-item">
+                                                            Balance Qty : <span>{{poitem.BALANCE_QTY}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-col">
+                                                        <div class="panel-col-item">
+                                                            Rate ({{poitem.CURRENCY}}) :
+                                                            <span>{{poitem.RATEPERQTY}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="panel-row">
+
+                                                    <div class="panel-col">
+                                                        <div class="panel-col-item">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div *ngFor="let orderItem of orderlineitems; let j=index">
+                                                    <div *ngIf=" poitem.LINEITEMNUMBER ==  orderItem.LINEITEMNUMBER">
+                                                        <div class="panel-row">
+                                                            <div class="panel-col">
+
+                                                                <div class="panel-col-item">
+
+                                                                    Delivery Challan : <span>{{orderItem.DC}}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel-col">
+                                                                <div class="panel-col-item">
+                                                                    Delivery Date :
+                                                                    <span>{{orderItem.DcDate}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel-row">
+                                                            <div class="panel-col">
+                                                                <div class="panel-col-item">
+                                                                    <div class="">
+
+                                                                        <mat-label>Quantity</mat-label>
+                                                                        <input type="text" class="form-control matMargin" readonly name="Quantity{{i}}" id="Quantity{{i}}" value="{{orderItem.QUANTITY}}" maxlength="6" (input)="calculateItemAmount(i,poitem.DQty,poitem.RATEPERQTY,poitem.CURRENCY)" (keypress)="numberOnly($event)"
+                                                                            (ngModelChange)="balanceQuantity(i)" aria-describedby="quantity">
+                                                                        <mat-error class="input-subtitle" id="quantityErrMsg{{i}}" *ngIf="showerror == true">
+                                                                            {{errormessage}}Error is here
+                                                                        </mat-error>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel-col">
+                                                                <div class="panel-col-item">
+                                                                    <div class="">
+
+                                                                        <input type="text" readonly class="form-control matMargin" value="{{orderItem.AMOUNT}}" id="itemAmount{{i}}" aria-describedby="amount">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                 </div> -->
+                                    <!-- <div class="Basicaccordion-container">
+                        <p class="Basicaccordion-btn">COLORMAN YELLOW 1000 KG PACK <span></span></p>
+                        <div class="Basicaccordion-panel">
+                        <div class="panelrowWrapper">
+                            <div class="panel-row">
+                            <div class="panel-col">
+                                <div class="panel-col-item">
+                                Item : <span>00010</span>
+                                </div>
+                            </div>
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                Material Code/HSN SAC Code :: <span>YINKCOLM000CX /321920</span>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="panel-row">
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                Per: <span>1</span>
+                            </div>
+                            </div>
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                UOM : <span>KG</span>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="panel-row">
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                
+                            </div>
+                            </div>
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                Rate in INR : <span>159.50</span>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="panel-row">
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                Order Qty : <span>3,000.00</span>
+                            </div>
+                            </div>
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                Value in INR : <span>478,500.00</span>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="panel-row">
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                    <div class="">
+                                        <label for="quantity">Quantity <span class="requiredAst">*</span></label>
+                                        <input type="text" class="form-control" id="quantity" aria-describedby="quantity" placeholder="Enter Quantity">
+                                    </div>
+                            </div>
+                            </div>
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                <div class="">
+                                    <label for="amount">Amount <span class="requiredAst">*</span></label>
+                                    <input type="text" class="form-control" id="amount" aria-describedby="amount" placeholder="Enter Amount">
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                        
+                        </div>
+                    </div> -->
+                                    <!-- <div class="Basicaccordion-container">
+                        <p class="Basicaccordion-btn">COLORMAN CYAN 1000 KG PACK <span></span></p>
+                        <div class="Basicaccordion-panel">
+                        <div class="panelrowWrapper">
+                            <div class="panel-row">
+                            <div class="panel-col">
+                                <div class="panel-col-item">
+                                Item : <span>00010</span>
+                                </div>
+                            </div>
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                Material Code/HSN SAC Code :: <span>YINKCOLM000CX /321920</span>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="panel-row">
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                Per: <span>1</span>
+                            </div>
+                            </div>
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                UOM : <span>KG</span>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="panel-row">
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                
+                            </div>
+                            </div>
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                Rate in INR : <span>159.50</span>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="panel-row">
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                Order Qty : <span>3,000.00</span>
+                            </div>
+                            </div>
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                Value in INR : <span>478,500.00</span>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="panel-row">
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                    <div class="">
+                                        <label for="quantity">Quantity<sup class="imp">*</sup></label>
+                                        <input type="text" class="form-control" id="quantity" aria-describedby="quantity" placeholder="Enter Quantity">
+                                    </div>
+                            </div>
+                            </div>
+                            <div class="panel-col">
+                            <div class="panel-col-item">
+                                <div class="">
+                                    <label for="amount">Amount<sup class="imp">*</sup></label>
+                                    <input type="text" class="form-control" id="amount" aria-describedby="amount" placeholder="Enter Amount">
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                        
+                        </div>
+                    </div> -->
+                                    <!-- </div>  -->
+
+                                    <div class="invoice-form " style="padding-left: 0px; padding-right: 0px;">
+                                        <div class="inv-form-inputs mb-mt">
+                                            <div class="invInputWicon mb-3">
+                                                <mat-label>Description</mat-label>
+                                                <sup class="imp">*</sup>
+                                                <!-- <mat-label style="font-size: 10px;">(Max {{descripionlength}} characters allowed)</mat-label> -->
+                                                <mat-form-field appearance="none">
+                                                    <mat-label>Description</mat-label>
+                                                    <!-- <input matInput placeholder="Enter Invoice Number" type="text" formControlName="invoiceNo" value=""> -->
+                                                    <textarea matInput placeholder="Enter Description"
+                                                        formControlName="description" maxlength="160"
+                                                        value="" (input)="checklength('description')"></textarea>
+                                                </mat-form-field>
+                                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Description"
+                                            placement="left" showDelay="300"></span> -->
+                                            </div>
+
+                                            <!-- <mat-error *ngIf="hasError('invoiceNo', 'required') && invoiceForm.controls['invoiceNo'].touched">*Name is required
+                                    </mat-error> -->
+                                        </div>
+                                        <div class="inv-form-inputs mb-mt">
+                                            <div class="invInputWicon mb-3">
+                                                <mat-label>Total Amount (Incl Taxes)</mat-label>
+                                                <sup class="imp">*</sup>
+                                                <mat-form-field appearance="none">
+                                                    <mat-label>Total Amount</mat-label>
+                                                    <input matInput type="text" id="total"
+                                                        formControlName="TotalinctaxAmount" (blur)="calculateTax()"
+                                                        valDecimal>
+                                                    <!-- formControlName="TotalItemAmount" -->
+                                                    <!-- [value]="invoiceForm.get('TotalinctaxAmount').value | currency:'INR'" -->
+                                                </mat-form-field>
+                                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Total Amount"
+                                            placement="left" showDelay="300"></span> -->
+
+                                            </div>
+                                            <div class="invInputWicon">
+
+                                                <mat-label>Tax Amount</mat-label>
+                                                <sup class="imp">*</sup>
+                                                <!-- <input type="checkbox" (click)="checked()"> editing: {{editing}} -->
+
+
+                                                <!-- style="background-color: #e9ecef;" -->
+                                                <mat-form-field appearance="none">
+                                                    <mat-label>Tax Amount</mat-label>
+                                                    <!-- <div *ngIf="!editing">
+                                                <input matInput type="text" formControlName="taxAmount" id="taxAmount" [value]="invoiceForm.get('taxAmount').value | currency" readonly>
+                                            </div> -->
+                                                    <!-- <div *ngIf="editing"> -->
+                                                    <input matInput type="text" formControlName="taxAmount"
+                                                        id="taxAmount" valDecimal readonly>
+                                                    <!-- (blur)="calculateAmount()"  use only if required by client-->
+
+                                                    <!-- [value]="invoiceForm.get('taxAmount').value | currency:'INR'" -->
+                                                    <!-- </div> -->
+                                                    <!-- formControlName="TotalItemAmount" -->
+                                                </mat-form-field>
+                                                <!-- <mat-error *ngIf="negativeFlag"> Tax amount can't be negative.
+                                                </mat-error> -->
+                                                <mat-error *ngIf="negativeFlag"> Please verify as the Invoice amount entered is lower than the value of goods / services without tax
+                                                </mat-error>
+                                                <!-- Please verify as the Invoice amount entered is lower than the value of goods / services without tax -->
+                                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Total Amount"
+                                            placement="left" showDelay="300"></span> -->
+
+                                            </div>
+
+                                            <!-- <mat-error *ngIf="hasError('invoiceNo', 'required') && invoiceForm.controls['invoiceNo'].touched">*Name is required
+                                    </mat-error> -->
+                                        </div>
+                                        <!-- <div class="inv-form-inputs">
+                                    <mat-form-field appearance="none">
+                                        <mat-label for="cptotalamt">Total Amount <sup class="imp">*</sup></mat-label>
+                                        <input matInput type="text" readonly class="form-control" id="cptotalamt"
+                                            formControlName="TotalItemAmount" aria-describedby="cptotalamt"
+                                            placeholder="Total Amount">
+                                    </mat-form-field>
+                                </div> -->
+                                        <div class="inv-form-inputs mb-mt">
+                                            <div class=" FileUploadIconWrap" style="width: 100%;">
+                                                <div class="add-file-input pdfFileListing">
+                                                    <!-- <label for="input-file3" class="file-input" *ngIf="viewAttachmentNames==null || viewAttachmentNames==''"> -->
+                                                    <label for="input-file3" class="file-input" style="display: flex;flex-wrap: wrap;align-items: center;">
+                                                        <img src="./assets/img/cloud-computing.png"
+                                                            style="cursor: pointer; " /> Supporting Docs<span style="margin-left: 5px;" class = "InvStatus__date">(Filename can have spaces but no special characters)</span>
+                                                    </label>
+
+                                                    <input type="file" id="input-file3" class="d-none"
+                                                        multiple="multiple" (change)="onFileChanged($event)"
+                                                        onclick="value = null">
+
+
+                                                </div>
+                                                <ul class="listFiles">
+                                                    <!-- <div *ngIf="viewAttachmentName!=null && viewAttachmentName!=''">
+                                                        <i class="fa fa-close fileCrossIcon" aria-hidden="true" (click)="close()"></i>
+                                                    </div> -->
+                                                    <li *ngFor="let selected of ArrayOfSelectedFilename;let i=index"
+                                                        class="fileUploadSingle">
+                                                        {{selected}} <i class="fa fa-close fileCrossIcon fileCrossIcon"
+                                                            aria-hidden="true" (click)="removeitem(i)"></i>
+                                                    </li>
+
+                                                    <!-- <i class="fa fa-close fileCrossIcon"  (click)="removeSelectedFile(i)"></i> -->
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                        <div class="inv-form-inputs mb-mt">
+                                            <div class="invInputWicon">
+                                                <mat-label>Remarks</mat-label>
+                                                <sup class="imp">*</sup>
+                                                <!-- <mat-label style="font-size: 10px;">(Max {{remarklength}} characters allowed)</mat-label> -->
+                                                <mat-form-field appearance="none">
+                                                    <mat-label>Remarks</mat-label>
+                                                    <!-- <input matInput placeholder="Enter Invoice Number" type="text" formControlName="invoiceNo" value=""> -->
+                                                    <textarea matInput placeholder="Enter Remark"
+                                                        formControlName="remarks" maxlength="160" value="" (input)="checklength('remark')"></textarea>
+                                                </mat-form-field>
+                                                <!-- <span class="fa fa-info-circle inputInfoIcon" tooltip-class="" tooltip="Description"
+                                            placement="left" showDelay="300"></span> -->
+                                            </div>
+                                            <!-- <mat-error *ngIf="hasError('invoiceNo', 'required') && invoiceForm.controls['invoiceNo'].touched">*Name is required
+                                    </mat-error> -->
+                                        </div>
+                                    </div>
+
+                                    <div class="buttonWrapper mt-4">
+                                        <div class="row">
+                                            <div class="col-lg-12 text-center">
+                                                <!-- || checkinputbalance() -->
+                                                <button type="submit" class="btn button-primary"
+                                                    (click)="submitinvoice()"
+                                                    [disabled]="invoiceForm.invalid || disable? true : null || overallAmount == 0">
+                                                    <img src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                                        class="activeImg arrowIcon">
+                                                    <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                                        class="disabledImg arrowIcon">
+                                                    Submit Invoice
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+
+                            </div>
+
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <app-dialog-model></app-dialog-model> -->

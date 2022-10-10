@@ -1,0 +1,836 @@
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" /> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script> -->
+
+<div class="main-content margin-top">
+    <div class="container dashboardpt">
+        <div class="container">
+            <div class="form-wizard">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-form-wizard-list">
+                            <div class="card-body form-wizard-list">
+                                <div class="form-wizard-header">
+                                    <ul class="list-unstyled form-wizard-steps clearfix">
+                                        <li class="active" data-id="step1">
+                                            <span class="pointer" (click)="Data('general')">
+											<img src="./assets/img/general_data_icon_grey.png" />
+										</span>
+                                            <p class="text">General</p>
+                                        </li>
+                                        <li data-id="step2">
+                                            <span class="pointer" (click)="Data('banking')"><img src="./assets/img/bank_data_icon_grey.png" /></span>
+                                            <p class="text">Banking</p>
+                                        </li>
+                                        <li data-id="step3">
+                                            <span class="pointer" (click)="Data('business')"><img src="./assets/img/business_data_icon_grey.png" /></span>
+                                            <p class="text">Business</p>
+                                        </li>
+
+                                        <li data-id="step4">
+                                            <span class="pointer" (click)="Data('organization')"><img src="./assets/img/organization_data_grey_icon.png" /></span>
+                                            <p class="text">Organization</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card" id="jumptoWizard">
+                            <div class="card-body pd-0">
+                                <form [formGroup]="profileData">
+
+                                    <!--General Data Start-->
+                                    <fieldset class="wizard-fieldset show" id="step1">
+                                        <!-- <form [formGroup]="profileData"> -->
+                                        <h5 class="wizardsec-title">Personal Information</h5>
+                                        <div class="filedpd">
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Purchase Group</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" formControlName="purchGroup" disabled>
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Plant Name</label>
+                                                    <input type="text" class="form-control wizard-required" id="Plantcode" formControlName="plantCode" disabled>
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <label>Title</label>
+                                                            <input type="text" class="form-control wizard-required" id="Infotech" disabled formControlName="title" style="padding: 15px 10px;">
+                                                            <div class="wizard-form-error"></div>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <label>Vendor Name (Line 1) </label>
+                                                            <input type="text" class="form-control wizard-required" id="Infotech" disabled formControlName="vendorName1">
+                                                            <div class="wizard-form-error"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Vendor Name (Line 2)</label>
+                                                    <input type="text" class="form-control wizard-required" id="Plantcode" formControlName="vendorName2" disabled>
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Street (Line 1)</label>
+                                                    <textarea name="user-message" id="user-message" class="form-control wizard-required" cols="2" rows="1" disabled formControlName="streetLine1"></textarea>
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Street (Line 2)</label>
+                                                    <textarea name="user-message" id="user-message" class="form-control wizard-required" cols="2" rows="1" disabled formControlName="streetLine2"></textarea>
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Street (Line 3)</label>
+                                                    <textarea name="user-message" id="user-message" class="form-control wizard-required" cols="2" rows="1" disabled formControlName="streetLine3"></textarea>
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Street (Line 4)</label>
+                                                    <textarea name="user-message" id="user-message" class="form-control wizard-required" cols="2" rows="1" disabled formControlName="streetLine4"></textarea>
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Postal Code </label>
+                                                    <input type="text" class="form-control wizard-required" id="Infotech" disabled formControlName="postalCode">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>City</label>
+                                                    <input type="text" class="form-control" id="Plantcode" name="city" formControlName="city" disabled>
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Country</label>
+                                                    <input type="text" class="form-control wizard-required" id="Infotech" disabled formControlName="countryKey">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Region</label>
+                                                    <input type="text" class="form-control wizard-required " id="Plantcode" disabled formControlName="region">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Telephone No.</label>
+                                                    <input type="text" class="form-control wizard-required" id="Infotech" disabled formControlName="telephoneNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Mobile No.</label>
+                                                    <input type="text" class="form-control wizard-required" id="Plantcode" formControlName="mobileNo" disabled>
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Fax No.</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="faxNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Email ID</label>
+                                                    <input type="text" class="form-control wizard-required" id="Plantcode" disabled formControlName="vendorEmail">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group clearfix text-center mt-20">
+                                                <!-- <a href="javascript:;" class="form-wizard-next-btn button-primary" (click)="scrollToTop()" data-id="step2">
+                                                <span class="material-icons">
+													east
+												</span> Next</a> -->
+                                                <a href="javascript:;" class="form-wizard-next-btn btn button-primary" style="padding-top: 5px; padding-bottom: 5px;" (click)="scrollToTop()" data-id="step2">
+
+                                                    <img src="./assets/img/arrow_icon_red.png" class="arrowIcon"> Next</a>
+                                            </div>
+                                        </div>
+                                        <!-- </form>	 -->
+                                    </fieldset>
+                                </form>
+                                <!--General Data End-->
+                                <!--Banking Data Start-->
+                                <form [formGroup]="bankingData">
+                                    <fieldset class="wizard-fieldset " id="step2">
+                                        <h5 class="wizardsec-title">Banking Data</h5>
+                                        <div class="filedpd">
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Bank Name</label>
+                                                    <input type="text" class="form-control wizard-required" id="Infotech" disabled formControlName="bankName">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Branch</label>
+                                                    <input type="text" class="form-control wizard-required" id="Plantcode" disabled formControlName="branch">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Bank Account No.</label>
+                                                    <input type="text" class="form-control wizard-required" id="Infotech" disabled formControlName="bankAccountNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Swift Code</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" disabled formControlName="swiftCode">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>IFSC No.</label>
+                                                    <input type="text" class="form-control wizard-required" id="Infotech" disabled formControlName="ifscNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>PF Registration No.</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="pfRegisterationNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>ESIC Registration No.</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="ESICRegisterationNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>VAT Registration</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="VATRegisterationNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>PAN </label>
+                                                    <input type="text" class="form-control wizard-required" id="Infotech" disabled formControlName="panNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Service Tax Regn No.</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" disabled formControlName="serviceTaxRegisterationNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>CST No./CST Date</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="CSTNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>LST No./LST Date</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" disabled formControlName="LSTNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>GST Registration No.</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="GSTRegisterationNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Tax Classification</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" disabled formControlName="taxClassification">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>TDS Exemption No.</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="TDSExcemptionNo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Exemption %</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" disabled formControlName="excemptionPercentage">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="row">
+											<div class="form-group col-md-6">
+												<label>TDS Exemption No</label>
+												<input type="text" class="form-control wizard-required" id="Infotech"
+													disabled placeholder="66667777" formControlName="TDSExcemptionNo2">
+												<div class="wizard-form-error"></div>
+											</div>
+											<div class="form-group col-md-6">
+												<label>Exemption %</label>
+												<input type="text" class="form-control wizard-required" id="Plantcode"
+													placeholder="89.89%" disabled
+													formControlName="excemptionPercentage2">
+												<div class="wizard-form-error"></div>
+											</div>
+										</div> -->
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Exempt From Date</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="excemptFrom">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Exempt To Date</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" disabled formControlName="excemptTo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>MSME Status</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="MSMEStatus">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>MSME No.</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" disabled formControlName="MSMENo">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label class="control-label">File Upload</label>
+                                                <input type="file" class="filestyle" data-icon="false">
+                                            </div>
+                                        </div> -->
+                                            <div class="form-group clearfix text-center mt-20">
+                                                <!-- <a href="javascript:;" class="form-wizard-previous-btn " data-id="step1"> <span class="material-icons">west</span> Previous</a>
+                                            <a href="javascript:;" class="form-wizard-next-btn " (click)="scrollToTop()" data-id="step3"> <span class="material-icons">east</span> Next</a> -->
+
+                                                <a href="javascript:;" class="form-wizard-next-btn btn button-primary" style="padding-top: 5px; padding-bottom: 5px;" (click)="scrollToTop()" data-id="step1">
+                                                    <img src="./assets/img/arrow_icon_red_prev.png" class="arrowIcon"> Previous</a>
+                                                <a href="javascript:;" class="form-wizard-next-btn btn button-primary" style="padding-top: 5px; padding-bottom: 5px;" (click)="scrollToTop()" data-id="step3">
+                                                    <img src="./assets/img/arrow_icon_red.png" class="arrowIcon"> Next</a>
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                                <!--Banking Data End-->
+
+                                <!--Business Data Start-->
+                                <form [formGroup]="businessData">
+                                    <fieldset class="wizard-fieldset" id="step3">
+                                        <h5 class="wizardsec-title"> Business Data</h5>
+                                        <div class="filedpd">
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Type Of Business</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="businessType">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Type of Industry</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" disabled formControlName="industryType">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Promoters</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="promoters">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <!-- <div class="form-group col-md-6">
+                                                <label>Top 5 Clients</label>
+                                                <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" placeholder="CLient 1 Client 2" disabled formControlName="top5Clients">
+                                                <div class="wizard-form-error"></div>
+                                            </div> -->
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Turnover (₹ in Lakhs)</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled placeholder="5. Lkhs" formControlName="turnOver">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Client References </label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="clientRef">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Compliance Category</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="complianceCategory">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Constitution of Business</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" disabled formControlName="constitutionBus">
+                                                    <div class="wizard-form-error"></div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label">File Upload</label>
+                                                    <input type="file" class="filestyle" data-icon="false">
+                                                </div>
+                                            </div> -->
+
+                                            <!-- <div class="form-group clearfix text-center ">
+                                            <a href="javascript:;" class="form-wizard-previous-btn " data-id="step2"> <span class="material-icons">west</span> Previous</a>
+                                            <a href="javascript:;" class="form-wizard-next-btn " (click)="scrollToTop()" data-id="step4"> <span class="material-icons">east</span> Next</a>
+                                        </div> -->
+
+                                            <div class="form-group clearfix text-center mt-20">
+
+                                                <a href="javascript:;" class="form-wizard-next-btn btn button-primary" style="padding-top: 5px; padding-bottom: 5px;" (click)="scrollToTop()" data-id="step2">
+
+                                                    <img src="./assets/img/arrow_icon_red_prev.png" class="arrowIcon"> Previous</a>
+
+                                                <a href="javascript:;" class="form-wizard-next-btn btn button-primary" style="padding-top: 5px; padding-bottom: 5px;" (click)="scrollToTop()" data-id="step4">
+
+                                                    <img src="./assets/img/arrow_icon_red.png" class="arrowIcon"> Next</a>
+
+                                            </div>
+
+                                        </div>
+                                    </fieldset>
+                                </form>
+                                <!--Business Data End-->
+
+
+                                <!--Organization Data Start-->
+                                <form [formGroup]="organizationData">
+                                    <fieldset class="wizard-fieldset" id="step4">
+                                        <h5 class="wizardsec-title wizardHead__wrapper">
+                                            <div class="wizard-fieldset-text">
+                                                Organization Data
+                                            </div>
+                                        </h5>
+                                        <div class="filedpd">
+                                            <div class="row">
+                                                <!-- <div class="form-group col-md-6">
+                                                <label>Top 5 Clients</label>
+                                                <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" placeholder="CLient 1 Client 2" formControlName="top5Clients">
+                                                <div class="wizard-form-error"></div>
+                                            </div> -->
+                                                <!-- <div class="form-group col-md-6">
+                                                <label>Company Name (Legal Name) </label>
+                                                <input type="text" class="form-control wizard-required" id="Infotech" placeholder="Clover infotech" formControlName="companyName">
+                                                <div class="wizard-form-error">
+                                                    * Please enter Company Name!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['companyName'].hasError('required')
+												&& organizationData.controls['companyName'].touched"></div>
+                                            </div> -->
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Parent Company (if any)</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" (keypress)="textOnly($event)" formControlName="parentCompany" maxlength="100">
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Parent Company!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['parentCompany'].hasError('required')
+												&& organizationData.controls['parentCompany'].touched"></div> -->
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Global Head Office (City,Country) </label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" (keypress)="textOnlywithcomma($event)" formControlName="globalHeadOffice" maxlength="100">
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Global Head Office (City,Country)!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['globalHeadOffice'].hasError('required')
+												&& organizationData.controls['globalHeadOffice'].touched"></div> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="form-group inv-form-inputs col-md-6">
+                                                    <label>India Head Office (City,Country) </label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" (keypress)="textOnlywithcomma($event)" formControlName="IndiaHeadOffice" maxlength="100">
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter India Head Office (City,Country)!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['IndiaHeadOffice'].hasError('required')
+												&& organizationData.controls['IndiaHeadOffice'].touched"></div> -->
+                                                </div>
+
+                                                <div class="form-group inv-form-inputs col-md-6">
+                                                    <label>Upload Product Portfolio</label>
+                                                    <div>
+                                                        <div class="add-file-input">
+                                                            <label for="input-file2" class="file-input">
+                                                                <img src="./assets/img/cloud-computing.png" style="cursor: pointer;" />
+                                                            </label>
+                                                            <input *ngIf="viewAttachmentName != null || viewAttachmentName != '' " type="file" id="input-file2" class="d-none" formControlName="UploadPortfolio" (change)="onFileSelectEvent($event)">
+                                                            <p class="input-title">{{viewAttachmentName}}</p>
+                                                            <div *ngIf="viewAttachmentName!=null && viewAttachmentName!=''">
+                                                                <i class="fa fa-close fileCrossIcon" aria-hidden="true" (click)="close()"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter India Head Office (City,Country)!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['IndiaHeadOffice'].hasError('required')
+												&& organizationData.controls['IndiaHeadOffice'].touched"></div> -->
+                                                </div>
+
+
+                                                <!-- <div class="inv-form-inputs mb-mt">
+                                                    <div class="add-file-input">
+                                                    <label>Upload Product Portfolio </label>
+                                                    <label for="input-file2" class="file-input">
+                                                        <img src="./assets/img/cloud-computing.png" style="cursor: pointer;" />
+                                                    </label>
+                                                        <input type="file" id="input-file2" class="d-none"  (change)="onFileSelectEvent($event)">
+                                                        <p class="input-title">{{viewAttachmentName}}</p>
+                                                        <div *ngIf="viewAttachmentName!=null && viewAttachmentName!=''">
+                                                            <i class="fa fa-close fileCrossIcon" aria-hidden="true" (click)="close()"></i>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+
+                                            <div class="row">
+                                                <!-- <div class="form-group col-md-6">
+                                                <label>Upload Product Portfolio </label>
+                                                <input type="file" class="form-control wizard-required" id="Infotech" formControlName="UploadPortfolio" (change)="onFileSelectEvent($event)">
+                                                <div class="wizard-form-error">
+                                                    * Please Upload a Product Portfolio!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['UploadPortfolio'].hasError('required')
+												&& organizationData.controls['UploadPortfolio'].touched"></div>
+                                            </div> -->
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Website (URL) </label>
+                                                    <input type="url" class="form-control wizard-required noDataBase" id="Plantcode" formControlName="website" maxlength="100">
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Website URL!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['website'].hasError('required')
+												&& organizationData.controls['website'].touched"></div> -->
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Manufacturing Sites (City,Country) </label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" (keypress)="textOnlywithcomma($event)" formControlName="manufacturingSite" maxlength="100">
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Manufacturing Sites (City,Country)!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['manufacturingSite'].hasError('required')
+												&& organizationData.controls['manufacturingSite'].touched"></div> -->
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Mfg.Capacity </label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" (keypress)="numberOnly($event)" formControlName="mfgCapacity" maxlength="8">
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Mfg.Capacity!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['mfgCapacity'].hasError('required')
+												&& organizationData.controls['mfgCapacity'].touched"></div> -->
+                                                </div>
+                                                <div class="form-group col-md-6 ">
+                                                    <label>Year of Establishment </label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="YOE" (keypress)="numberOnly($event)" formControlName="yearofEshtablihsment" maxlength="4">
+                                                    <!-- <select class="form-control form-select noDataBase" aria-label="Default select example" formControlName="yearofEshtablihsment">
+													<option selected>2019</option>
+													<option value="1">2019</option>
+													<option value="2">2019</option>
+													<option value="3">2019</option>
+												</select> -->
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Year of Establishment!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['yearofEshtablihsment'].hasError('required')
+												&& organizationData.controls['yearofEshtablihsment'].touched" style="color: red;"> * Please enter Year of Establishment!!</div> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Brief Description of Company </label>
+                                                    <textarea name="user-message" id="user-message" cols="2" rows="1" class="form-control wizard-required noDataBase" formControlName="companyDescription" maxlength="100"></textarea>
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Brief Description of Company!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['companyDescription'].hasError('required')
+												&& organizationData.controls['companyDescription'].touched"></div> -->
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>B&C Category </label>
+                                                    <select class="form-control form-select noDataBase" aria-label="Default select example" formControlName="BnC_Category">
+													<option selected>B&C Category</option>
+													<option value="1">B&C Category</option>
+													<option value="2">>B&C Category</option>
+													<option value="3">>B&C Category</option>
+												</select>
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter B&C Category!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['BnC_Category'].hasError('required')
+												&& organizationData.controls['BnC_Category'].touched" style="color: red;"> * Please enter B&C Category!!</div> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Material Service Provider </label>
+                                                    <select class="form-control form-select noDataBase" aria-label="Default select example" formControlName="Material_Service_Provider">
+													<option selected>TATA</option>
+													<option value="1">BCCL</option>
+													<option value="2">CLOVER</option>
+													<option value="3">TOI</option>
+												</select>
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Material Service Provider!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['Material_Service_Provider'].hasError('required')
+												&& organizationData.controls['Material_Service_Provider'].touched" style="color: red;">* Please enter Material Service Provider!!</div> -->
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Revenue LY (&#8377; in Cr) </label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" formControlName="revenueLY" maxlength="10" valDecimal>
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Last Year Revenue Details!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['revenueLY'].hasError('required')
+												&& organizationData.controls['revenueLY'].touched"></div> -->
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+
+                                                <div class="form-group col-md-6">
+                                                    <label>PAT LY (&#8377; in Cr) </label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" formControlName="PATLY" maxlength="10" valDecimal>
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Valid Details!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['PATLY'].hasError('required')
+												&& organizationData.controls['PATLY'].touched"></div> -->
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label> LY Spend (&#8377; in Cr) </label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" formControlName="LYSpend" maxlength="10" valDecimal>
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Last Year Spend!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['LYSpend'].hasError('required')
+												&& organizationData.controls['LYSpend'].touched"></div> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="form-group col-md-6">
+                                                    <label>No. of Employees </label>
+                                                    <select class="form-control form-select noDataBase" aria-label="Default select example" formControlName="EmployeeSize">
+													<option *ngFor="let emp of EmployeeSizeList" [value]="emp">{{emp}}</option>
+													<!-- <option value="1">101-1000</option>
+													<option value="2">1001-10001</option>
+													<option value="3">10000+</option> -->
+												</select>
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter No of Employees!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['EmployeeSize'].hasError('required')
+												&& organizationData.controls['EmployeeSize'].touched" style="color: red;">* Please enter No of Employees!!</div> -->
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Associated with BCCL  since Year</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="association" formControlName="BCCLAssociation" maxlength="4" (keypress)="numberOnly($event)">
+                                                    <!-- <select class="form-control form-select noDataBase" aria-label="Default select example" formControlName="BCCLAssociation">
+													<option selected>2010</option>
+													<option value="1">2011</option>
+													<option value="2">2012</option>
+													<option value="3">2014</option>
+												</select> -->
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Valid Details!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['BCCLAssociation'].hasError('required')
+												&& organizationData.controls['BCCLAssociation'].touched" style="color: red;">* Please enter Valid Details!!</div> -->
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label>BCCL Annual Spend (₹ in Lakhs)</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="annualSpend" placeholder="1000000" formControlName="BCCLannualSpend" maxlength="10" valDecimal>
+                                                    <!-- <select class="form-control form-select noDataBase" aria-label="Default select example" formControlName="BCCLannualSpend">
+													<option selected>10 </option>
+													<option value="1">20 </option>
+													<option value="2">30</option>
+													<option value="3">40</option>
+												</select> -->
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter BCCL Annual Spend!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['BCCLannualSpend'].hasError('required')
+												&& organizationData.controls['BCCLannualSpend'].touched" style="color: red;">* Please enter BCCL Annual Spend!!</div> -->
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Group Co./BCCL Function Served </label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="annualSpend" formControlName="groupCO" maxlength="10" (keypress)="numberOnly($event)">
+                                                    <!-- <select class="form-control form-select noDataBase" aria-label="Default select example" formControlName="groupCO">
+													<option selected>2010</option>
+													<option value="1">2011</option>
+													<option value="2">2012</option>
+													<option value="3">2013</option>
+												</select> -->
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Valid Details!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['groupCO'].hasError('required')
+												&& organizationData.controls['groupCO'].touched" style="color: red;"> * Please enter Valid Details!!</div> -->
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Market Update </label>
+                                                    <textarea name="user-message" id="user-message" cols="2" rows="1" class="form-control wizard-required noDataBase" formControlName="marketUpdate" maxlength="100"></textarea>
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Market Update!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['marketUpdate'].hasError('required')
+												&& organizationData.controls['marketUpdate'].touched"></div> -->
+                                                </div>
+
+                                                <div class="form-group col-md-6">
+                                                    <label>Top 5 Clients</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Plantcode" (keypress)="textOnlywithcomma($event)" formControlName="top5Clients" maxlength="100">
+                                                    <!-- <div class="wizard-form-error"></div> -->
+                                                </div>
+                                            </div>
+                                            <!--L1 Leadership-->
+                                            <h1 class="h1head">L1 Leadership </h1>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Name </label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" (keypress)="textOnly($event)" formControlName="NameL1" maxlength="50">
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter a Name!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['UploadPortfolio'].hasError('required')
+												&& organizationData.controls['UploadPortfolio'].touched"></div> -->
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Email ID </label>
+                                                    <input type="email" class="form-control wizard-required noDataBase" id="Plantcode" formControlName="emailIDL1" maxlength="50">
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Email ID!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['emailIDL1'].hasError('required')
+												&& organizationData.controls['emailIDL1'].touched"></div> -->
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Contact No.</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" (keypress)="numberOnly($event)" formControlName="contactNoL1" maxlength="10">
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Contact Number!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['contactNoL1'].hasError('required')
+												&& organizationData.controls['contactNoL1'].touched"></div> -->
+                                                </div>
+
+                                            </div>
+
+
+                                            <!--L2 Leadership-->
+                                            <h1 class="h1head">L2 Leadership
+                                            </h1>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Name  </label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" (keypress)="textOnly($event)" formControlName="nameL2" maxlength="50">
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter a Name!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['nameL2'].hasError('required')
+												&& organizationData.controls['nameL2'].touched"></div>-->
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Email ID</label>
+                                                    <input type="email" class="form-control wizard-required noDataBase" id="Plantcode" formControlName="emailIDL2" maxlength="50">
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Email ID!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['emailIDL2'].hasError('required')
+												&& organizationData.controls['emailIDL2'].touched"></div> -->
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group col-md-6">
+                                                    <label>Contact No.</label>
+                                                    <input type="text" class="form-control wizard-required noDataBase" id="Infotech" (keypress)="numberOnly($event)" formControlName="contactNoL2" maxlength="10">
+                                                    <!-- <div class="wizard-form-error">
+                                                    * Please enter Contact Number!!
+                                                </div>
+                                                <div *ngIf="organizationData.controls['contactNoL2'].hasError('required')
+												&& organizationData.controls['contactNoL2'].touched"></div> -->
+                                                </div>
+
+                                            </div>
+
+                                            <!-- <div class="form-group clearfix text-center ">
+
+                                            <a href="javascript:;" class="form-wizard-previous-btn" data-id="step3"> <span class="material-icons"> west </span> Previous</a>
+
+                                            <a href="javascript:;" class="form-wizard-submit" (click)="onSave()" *ngIf="!organizationData.STATUS">
+                                                <span class="material-icons">
+                                                    east
+                                                    </span>Submit </a>
+
+                                        </div> -->
+
+                                            <div class="form-group clearfix text-center mt-20">
+
+                                                <a href="javascript:;" class="form-wizard-next-btn btn button-primary" style="padding-top: 5px; padding-bottom: 5px;" (click)="scrollToTop()" data-id="step3">
+
+                                                    <img src="./assets/img/arrow_icon_red_prev.png" class="arrowIcon"> Previous</a>
+
+                                                <a href="javascript:;" class="form-wizard-next-btn btn button-primary" style="padding-top: 5px; padding-bottom: 5px;" (click)="onSave()">
+                                                    <!-- *ngIf="!organizationData.STATUS" -->
+
+                                                    <img src="./assets/img/arrow_icon_red.png" class="arrowIcon "> Submit</a>
+
+                                            </div>
+
+                                        </div>
+                                    </fieldset>
+
+                                    <!--Profile Data End-->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-dialog-model></app-dialog-model>

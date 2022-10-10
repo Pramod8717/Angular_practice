@@ -1,0 +1,27 @@
+.confirmation-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.confirmation-para {
+    font-size: 16px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+.confirmationNo:focus {
+    outline: none;
+    font-size: 21px;
+    border-radius: 50px;
+    border: 2px solid #cc0000 !important;
+    padding: 3.3px 13px 3.3px 8px;
+    font-weight: 700 !important;
+    color: #cc0000;
+    background: transparent;
+    text-transform: lowercase;
+    letter-spacing: -0.04em;
+}
+.confirmationNo{
+    text-transform: lowercase;
+    font-weight: 700 !important;
+}

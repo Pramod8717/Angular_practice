@@ -1,0 +1,149 @@
+.step-app .step-steps {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  border-radius: 3px 3px 0 0;
+  overflow: hidden;
+}
+.step-app .step-steps li {
+  position: relative;
+  list-style: none;
+  flex: 1;
+  cursor: pointer;
+  display: block;
+  padding: 10px;
+  color: #333;
+  /* background-color: #e5e5e5; */
+  text-decoration: none;
+  /* border-right: 1px solid #fff; */
+}
+/* .step-app .step-steps li:hover {
+  background-color: #ddd;
+} */
+.step-app .step-steps li:last-child a {
+  border: none;
+}
+.step-app .step-steps li.active {
+  /* background-color: #32c5d2; */
+  /* color: #7a7a7a; */
+}
+.step-app .step-steps li.error {
+  background-color: #e7505a;
+  color: #fff;
+}
+/* .step-app .step-steps li.done {
+  background-color: #3cb371;
+  color: #fff;
+} */
+.step-app .step-steps li .number {
+  background: #fff;
+  padding: 0 8px;
+  display: inline-block;
+  text-align: center;
+  margin-right: 15px;
+  border-radius: 3px;
+  color: #333;
+}
+.step-app .step-content {
+  border: 1px solid #e5e5e5;
+  padding: 10px;
+  border-top: 0;
+}
+.step-app .step-content .step-tab-panel {
+  display: none;
+}
+.step-app .step-content .step-tab-panel.active {
+  display: block;
+}
+.step-app .step-footer {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.step-app .step-footer .step-btn {
+  padding: 4px 16px;
+  color: #333;
+  text-decoration: none;
+  background: #e5e5e5;
+  border-radius: 3px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.step-app .step-content {
+  padding: 0;
+  border: 0;
+}
+.stepsForm__data {
+  padding: 30px 40px;
+}
+.step-footer {
+  padding: 0 40px 30px;
+}
+
+/* steps page specific css*/
+.step-app .step-steps li {
+  text-align: center;
+  padding: 0;
+}
+
+.steps__img {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #666666;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.step-app .step-steps li.active .steps__img {
+  border-color: #cc0000;
+}
+.step-app .step-steps li.active .text {
+  color: #cc0000;
+}
+.steps__img img {
+  max-width: 100%;
+}
+
+/* box steps line start */
+.box-steps {
+  display: flex;
+  align-items: center;
+}
+.box-tag {
+  flex-grow: 1;
+  min-width: 20px;
+  height: 4px;
+  background-color: #efeded;
+}
+.step-steps li:first-child .box-tag-left {
+  background-color: white;
+}
+.step-steps li:last-child .box-tag-right {
+  background-color: white;
+}
+/* box steps line end */
+@media (max-width: 767px) {
+  .steps__img {
+    width: 50px;
+    height: 50px;
+    padding: 8px;
+  }
+  .step-steps li .text {
+    font-size: 14px;
+  }
+}
+@media (max-width: 375px) {
+  .steps__img {
+    width: 45px;
+    height: 45px;
+    padding: 8px;
+  }
+  .step-steps li .text {
+    font-size: 11px;
+  }
+}

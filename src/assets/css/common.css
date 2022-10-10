@@ -1,0 +1,30 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap");
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #8c9292 #f5f5f5;
+} */
+
+/* Works on Chrome, Edge, and Safari */
+/* *::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #8c9292;
+  border-radius: 20px;
+  border: 3px solid #f5f5f5;
+}
+
+.table thead th {
+  vertical-align: top;
+} */

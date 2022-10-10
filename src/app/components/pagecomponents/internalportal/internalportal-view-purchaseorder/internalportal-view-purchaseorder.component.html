@@ -1,0 +1,406 @@
+<!-- formWrapper Track PO  -->
+<div class="main-content margin-top">
+    <div class="container internalpt">
+        <div class="inv-page-container">
+            <div class="inv-page-wrapper container">
+
+                <div class="inv-page-header">
+                    <img class="left-arrow" src="./assets/img/arrow_icon_grey_prev.png" [routerLink]="['/internalTrackPO']" />
+                    <p class="invoice-number"> PO No : {{poNumber}}</p>
+                </div>
+
+                <!-- formWrapper__content -->
+                <div class="formWrapper__content">
+                    <div class="sectionBorder">
+                        <div class="invoice-form ">
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Date : <span>{{Date | date:'dd-MMM-yyyy'}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="Status=='S'">
+                                <p class="input-title">Status : <span>Shipped</span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="Status=='A'">
+                                <p class="input-title">Status : <span>Accepted</span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="Status=='P'">
+                                <p class="input-title">Status : <span>Work In Progress</span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="Status=='C'">
+                                <p class="input-title">Status : <span>Completed</span></p>
+                            </div>
+                            <div class="inv-form-inputs" *ngIf="Status!='C'|| Status!='P' || Status!='A' || Status!='S'">
+                                <p class="input-title">Status : <span>No Data Found</span></p>
+                            </div>
+
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Amount: <span>Rs. {{Amount| number:'1.2-2'}}</span></p>
+                            </div>
+                            <div class="inv-form-inputs">
+                                <p class="input-title">Message : <span>{{message}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Basicaccordion -->
+                    <div class="Basicaccordion v1">
+                        <div class="Basicaccordion-container">
+                            <!-- <p class="Basicaccordion-btn">{{poitem.LINEITEMNUMBER}} - {{poitem.LINEITEMTEXT}} -->
+                            <!-- <p> -->
+                            <div class="table-responsive Basicaccordion-btn">
+                                <table class="table customTableStripped bgTable">
+                                    <thead>
+                                        <tr style="border-bottom: 2px solid #333333;">
+                                            <th scope="col" class="text-left" style="font-weight: bold;">
+                                                Line Item</th>
+                                            <th scope="col" class="text-left" style="font-weight: bold;">
+                                                Material Code </th>
+                                            <th scope="col" class="text-right columnWidth" style="font-weight: bold;">Order Qty</th>
+                                            <th scope="col" class="text-right columnWidth" style="font-weight: bold;">Balance Qty</th>
+                                            <!-- <th scope="col" class="text-center"
+                                                style="width: 450px; font-weight: bold;">PER</th> -->
+                                            <th scope="col" class="text-left" style="font-weight: bold;">UOM</th>
+                                            <th scope="col" class="text-right" style="padding-left: 0px; font-weight: bold;">Rate</th>
+                                            <th scope="col" class="text-right" style="padding-left: 0px;
+                                        font-weight: bold;
+                                    ">Amount</th>
+                                            <!-- <th scope="col" class="text-center" style="width: 200px; padding-left: 0px;
+                                         padding-right: 25px;font-weight: bold;
+                                     " *ngIf="poData.STATUS !='N'">Action </th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let poitem of uniquelineitems; let j=index">
+
+                                        <!-- tr start  -->
+                                        <tr class="customtbl-accordion-head-inner" id="lineitem{{i}}{{j}}" [attr.data-accordion]="'poaccInner'+j">
+                                            <td class="preventClick">
+                                                <div class="fixedPOnumber" class="text-left">
+                                                    {{poitem.LINEITEMNUMBER}}
+
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <div class="text-left">
+                                                    {{poitem.LINEITEMTEXT}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-right">
+                                                    {{poitem.QUANTITY}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-right">
+                                                    {{poitem.BALANCE_QTY}}
+                                                </div>
+                                            </td>
+
+                                            <!-- <td>
+                                            <div class="text-center">
+                                                1
+                                            </div>
+                                        </td> -->
+                                            <td>
+                                                <div class="text-left">
+                                                    {{poitem.UNITOFMEASURE}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-right">
+                                                    {{poitem.RATEPERQTY | number:'1.2-2'}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="text-right">
+                                                    {{Number(poitem.RATEPERQTY ) * Number(poitem.QUANTITY) | number:'1.2-2'}}
+                                                </div>
+                                            </td>
+
+
+
+                                            <!-- <span class="plusminusArrow fa fa-plus" style="margin-right: 25px;" (click)="openAccordioninnerTab($event,i,j);openAccordionNestedTab($event,poitem.LINEITEMNUMBER,poData.PO_NUMBER)"></span> -->
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+                            <!-- </p> -->
+                            <!-- </p> -->
+
+
+                        </div>
+                        <!-- <div class="Basicaccordion-container">
+                        <p class="Basicaccordion-btn" (click)="initAccNested($event, option)">4000 Laptop <span></span></p>
+                        <div class="Basicaccordion-panel">
+                            <div class="panelrowWrapper">
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Delivery Details : <span>ORD98765432</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Dispatch Date : <span>01/09/2020</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Quantity: <span>1000</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Remark : <span>Order Dispatch Done</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panelrowWrapper">
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Delivery Details : <span>ORD98765432</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Dispatch Date : <span>01/09/2020</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Quantity: <span>1000</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Remark : <span>Order Dispatch Done</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panelrowWrapper">
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Delivery Details : <span>ORD98765432</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Dispatch Date : <span>01/09/2020</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Quantity: <span>1000</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Remark : <span>Order Dispatch Done</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Basicaccordion-container">
+                        <p class="Basicaccordion-btn" (click)="initAccNested($event, option)">1000 Software <span></span></p>
+                        <div class="Basicaccordion-panel">
+                            <div class="panelrowWrapper">
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Delivery Details : <span>ORD98765432</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Dispatch Date : <span>01/09/2020</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Quantity: <span>1000</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Remark : <span>Order Dispatch Done</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panelrowWrapper">
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Delivery Details : <span>ORD98765432</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Dispatch Date : <span>01/09/2020</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Quantity: <span>1000</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Remark : <span>Order Dispatch Done</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panelrowWrapper">
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Delivery Details : <span>ORD98765432</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Dispatch Date : <span>01/09/2020</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Quantity: <span>1000</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Remark : <span>Order Dispatch Done</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Basicaccordion-container">
+                        <p class="Basicaccordion-btn" (click)="initAccNested($event, option)">2000 External Hard Disk <span></span></p>
+                        <div class="Basicaccordion-panel">
+                            <div class="panelrowWrapper">
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Delivery Details : <span>ORD98765432</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Dispatch Date : <span>01/09/2020</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Quantity: <span>1000</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Remark : <span>Order Dispatch Done</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panelrowWrapper">
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Delivery Details : <span>ORD98765432</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Dispatch Date : <span>01/09/2020</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Quantity: <span>1000</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Remark : <span>Order Dispatch Done</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panelrowWrapper">
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Delivery Details : <span>ORD98765432</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Dispatch Date : <span>01/09/2020</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-row">
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Quantity: <span>1000</span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-col">
+                                        <div class="panel-col-item">
+                                            Remark : <span>Order Dispatch Done</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    </div>
+
+                    <div class="buttonWrapper mt-4">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <button type="submit" class="btn button-primary" [routerLink]="['/internalTrackPO']" routerLinkActive="router-link-active">
+                                <img src="./assets/img/arrow_icon_red.png" alt="arrow icon" class="arrowIcon">
+                                View All PO's
+                            </button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+.rightsection {
+    display: none;
+}
+
+@media screen and (min-width: 318px) and (max-width: 767px) {
+    .rightsection {
+        display: block;
+        width: 100%;
+        float: left;
+        padding-left: 30px;
+    }
+    .accorMain {
+        position: fixed;
+        background: #fafafa;
+        bottom: 0;
+        top: auto;
+        z-index: 10;
+        width: 100%;
+        left: 0;
+        padding: 0 0;
+        height: 56px;
+        box-shadow: 3px 0 5px #aaa;
+        white-space: nowrap;
+        float: left;
+    }
+    .customerdit {
+        display: none;
+        float: right;
+        width: 100%;
+        bottom: 10px;
+        position: relative;
+        right: 0;
+        z-index: 0;
+        margin-top: 0;
+    }
+    .accordi {
+        width: 33.33%;
+        margin-bottom: 0;
+        text-align: center;
+        padding: 7px 0;
+        float: left;
+        border-top: 0;
+    }
+    .accordi a {
+        padding: 0 10px;
+        float: left;
+        width: 100%;
+        margin-bottom: 0;
+    }
+    .accordi a .acoricon {
+        display: block;
+        margin: auto;
+        float: none;
+        width: 30px;
+    }
+    .rightlisticon {
+        float: left;
+        font-size: 21px;
+        color: #55565a;
+        margin-right: 10px;
+        margin-top: 0;
+    }
+    .accordi a p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 20px;
+        font-size: 9px;
+        padding: 0;
+        color: #777;
+        float: left;
+        width: 100%;
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+}
+

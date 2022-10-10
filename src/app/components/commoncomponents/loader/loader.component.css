@@ -1,0 +1,26 @@
+.progress-loader {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.5);
+    color: red;
+}
+
+.mat-progress-spinner {
+    top: 45%;
+    position: absolute !important;
+    left: 50%;
+    right: initial;
+    transform: translateX(-50%);
+    z-index: 999999;
+}
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #0093d7
+}

@@ -1,0 +1,285 @@
+<div class="main-content margin-top">
+    <div class="container" [ngClass]="{'internalpt': vendorPortal != true, 'dashboardpt': vendorPortal == true}">
+        <div class="inv-page-container">
+            <div class="formWrapper">
+                <div class="container">
+                    <div class="formWrapper__box">
+                        <div class="formWrapper__heading">
+                            <div class="formWrapperHead_img" *ngIf="pageName == 'trackInvoice'" [routerLink]="['/trackInvoiceList']">
+                                <img src="./assets/img/arrow_icon_grey_prev.png" class="left-arrow">
+                            </div>
+                            <div class="formWrapperHead_img" *ngIf="pageName == 'ApproveInvoice'" [routerLink]="['/internaltrackInvoiceList']">
+                                <img src="./assets/img/arrow_icon_grey_prev.png" class="left-arrow">
+                            </div>
+                            <div class="formWrapperHead_img" *ngIf="pageName == 'ViewInvoice'" [routerLink]="['/internalinvoicelist']">
+                                <img src="./assets/img/arrow_icon_grey_prev.png" class="left-arrow">
+                            </div>
+                            {{invoiceNumber}} : <span *ngIf="vendorPortal == true">&ensp;Credit Note</span><span *ngIf="vendorPortal != true">&ensp;Short Quantity</span>
+                        </div>
+                        <!--CreateCreditNote-->
+                        <form [formGroup]="creditNoteList" *ngIf="vendorPortal == true && creditNoteNo == null">
+                            <div class="formWrapper__content">
+                                <div class="invoice-form" style="padding-left: 0px; padding-right: 0px; padding-top: 0;">
+                                    <div class="inv-form-inputs mb-mt">
+                                        <div class="invInputWicon">
+                                            <mat-label>Base Value</mat-label><sup class="imp">*</sup>
+                                            <mat-form-field appearance="none">
+                                                <mat-label>Enter Base Value</mat-label>
+                                                <input matInput placeholder="Base Value" type="text" id="amount" (input)="exceededAmount()" formControlName="amount" value="" valDecimal>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="inv-form-inputs mb-mt">
+                                        <div class="invInputWicon">
+                                            <mat-label>Tax Value</mat-label><sup class="imp">*</sup>
+                                            <mat-form-field appearance="none">
+                                                <mat-label>Enter Tax Value</mat-label>
+                                                <input matInput placeholder="Tax Value" type="text" id="tax" formControlName="tax" valDecimal readonly>
+                                                <!-- [value]="creditNoteList.get('tax').value | currency : 'symbol' : '1.2-2' " -->
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="inv-form-inputs mb-mt">
+                                        <div class="invInputWicon">
+                                            <mat-label>Total Amount</mat-label><sup class="imp">*</sup>
+                                            <mat-form-field appearance="none">
+                                                <mat-label>Enter Total Amount</mat-label>
+                                                <input matInput placeholder="Total Amount" type="text" id="total" (input)="exceededAmount();calculateTax()" formControlName="totalamt" valDecimal value="">
+                                            </mat-form-field>
+                                            <p class="exceededMsg" *ngIf="exceeded ">
+                                                Total Amount Should be greater than Base Value
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="inv-form-inputs mb-mt">
+                                        <div class="add-file-input">
+                                            <label for="input-file2" class="file-input" style="display: flex;flex-wrap: wrap;align-items: center;">
+                                                <img src="./assets/img/cloud-computing.png"
+                                                    style="cursor: pointer;" />Upload Credit Note<sup
+                                                    class="imp">*</sup><span style="margin-left: 5px;" class = "InvStatus__date">(Filename can have spaces but no special characters)</span>
+                                            </label>
+                                            <input type="file" id="input-file2" class="d-none" accept="application/pdf" onclick="value = null"  formControlName="attachments" (change)="onFileSelectEvent($event,'invoice')">
+                                        </div>
+                                        <div class="uploadedFiles" style="margin-top: 10px;">
+                                            <div class="uploadedFiles__name">{{viewAttachmentName}}</div>
+                                            <div *ngIf="viewAttachmentName!=null && viewAttachmentName!=''" class="fileCrossIcon">
+                                                <i class="fa fa-close fileCrossIcon" aria-hidden="true" (click)="close()"></i>
+                                            </div>
+                                        </div>
+                                        <p class="input-subtitle">Upload files (file upto 2MB)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--CreditAdviceAccordion-->
+
+                            <!--EndCreditAdviceAccordion-->
+
+                            <div class="formWrapper__content">
+                                <div class="buttonWrapper">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            <button type="submit" class="btn button-primary" [disabled]="creditNoteList.invalid || exceeded" (click)="createCreditNote()">
+                                                <img src="./assets/img/arrow_icon_red.png" alt="arrow icon"
+                                                    class="activeImg arrowIcon">
+                                                <img src="./assets/img/arrow_icon_light_grey.png" alt="arrow icon"
+                                                    class="disabledImg arrowIcon">
+                                                Submit Credit Note
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                        <form [formGroup]="creditNoteDetails" *ngIf="creditNoteNo != null">
+                            <div class="formWrapper__content">
+                                <div class="invoice-form" style="padding-left: 0px; padding-right: 0px; padding-top: 0;">
+                                    <div class="inv-form-inputs mb-mt">
+                                        <div class="invInputWicon">
+                                            <mat-label>Base Value</mat-label><sup class="imp">*</sup>
+                                            <mat-form-field appearance="none">
+                                                <input matInput placeholder="Base Value" type="text" formControlName="amount" value="" valDecimal readonly>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="inv-form-inputs mb-mt">
+                                        <div class="invInputWicon">
+                                            <mat-label>Tax Value</mat-label><sup class="imp">*</sup>
+                                            <mat-form-field appearance="none">
+                                                <mat-label>Enter Tax Value</mat-label>
+                                                <input matInput placeholder="Tax Value" type="text" formControlName="tax" value="" valDecimal readonly>
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="inv-form-inputs mb-mt">
+                                        <div class="invInputWicon">
+                                            <mat-label>Total Amount</mat-label><sup class="imp">*</sup>
+                                            <mat-form-field appearance="none">
+                                                <mat-label>Enter Total Amount</mat-label>
+                                                <input matInput placeholder="Total Amount" type="text" formControlName="totalamt" value="" valDecimal readonly>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="inv-form-inputs mb-mt">
+                                        <div class="invInputWicon">
+                                            <div class="text-left fixedPOnumber" style="cursor: pointer">
+                                                <span><mat-label>Credit Note:
+                                                        <img src="./assets/img/pdf_icon03.png" alt="pdf image" (click)="download()" />
+                                                        <a class="linkTable" style="cursor: pointer;" (click)="download()"></a></mat-label></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--CreditAdviceAccordion -->
+                        </form>
+                        <div class="formWrapper__content" *ngIf="vendorPortal == true">
+                            <mat-accordion>
+
+                                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" [expanded]="true" hideToggle>
+                                    <mat-expansion-panel-header class="mataccordian">
+                                        <mat-panel-title>
+                                            <h3 class="mb-0 font-weight-bold">Short Quantity Items List</h3>
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            <mat-icon *ngIf="!panelOpenState">add</mat-icon>
+                                            <mat-icon *ngIf="panelOpenState">remove</mat-icon>
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                    <div class="grey-box">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="total">
+                                                    <th scope="col">Item</th>
+                                                    <th scope="col">Item Description</th>
+                                                    <th scope="col">Invoiced Qty</th>
+                                                    <th scope="col">Accepted Qty</th>
+                                                    <th scope="col">Short Qty</th>
+                                                    <th scope="col">Rate Per Qty</th>
+                                                    <th scope="col">Short Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody *ngFor="let creditAdviceItem of creditAdviceList; let i=index" style=" border-top: 1px solid #c2c4c6;   border-bottom: 1px solid #000;">
+                                                <tr>
+                                                    <td style=" border-top: 1px solid #c2c4c6;">
+                                                        {{creditAdviceItem.LINEITEMNUMBER}}</td>
+                                                    <td style=" border-top: 1px solid #c2c4c6;">
+                                                        {{creditAdviceItem.LINEITEMTEXT}}</td>
+                                                    <td style=" border-top: 1px solid #c2c4c6;">
+                                                        {{creditAdviceItem.LINEITEMTOTALQUANTITY | number :'1.3-3'}}</td>
+                                                    <td style=" border-top: 1px solid #c2c4c6;">
+                                                        {{creditAdviceItem.ACCEPTEDQTY | number :'1.3-3'}}</td>
+                                                    <td style=" border-top: 1px solid #c2c4c6;">
+                                                        {{creditAdviceItem.SHORTQTY | number :'1.3-3'}}</td>
+                                                    <td style=" border-top: 1px solid #c2c4c6;">
+                                                        {{creditAdviceItem.RATEPERQTY | currency : 'INR'}}</td>
+                                                    <td style=" border-top: 1px solid #c2c4c6;">
+                                                        {{creditAdviceItem.SHORTAMOUNT | currency : 'INR'}}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody style="border-top: 1px solid #000;">
+                                                <tr class="total">
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th scope="row">
+                                                        Total Amount
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>{{totalAmount | currency:'INR'}}</td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </mat-expansion-panel>
+                            </mat-accordion>
+                        </div>
+                        <div class="formWrapper__content" *ngIf="vendorPortal != true">
+
+                            <mat-panel-title>
+                                <h3 class="mb-0 font-weight-bold">Short Quantity Items List</h3><br>
+                            </mat-panel-title>
+
+                            <div class="grey-box">
+                                <table class="table">
+                                    <thead>
+                                        <tr class="total">
+                                            <th scope="col">Item</th>
+                                            <th scope="col">Item Description</th>
+                                            <th scope="col">Invoiced Qty</th>
+                                            <th scope="col">Accepted Qty</th>
+                                            <th scope="col">Short Qty</th>
+                                            <th scope="col">Rate Per Qty</th>
+                                            <th scope="col">Short Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let creditAdviceItem of creditAdviceList; let i=index" style=" border-top: 1px solid #c2c4c6;   border-bottom: 1px solid #000;">
+                                        <tr>
+                                            <td style=" border-top: 1px solid #c2c4c6;">
+                                                {{creditAdviceItem.LINEITEMNUMBER}}</td>
+                                            <td style=" border-top: 1px solid #c2c4c6;">
+                                                {{creditAdviceItem.LINEITEMTEXT}}</td>
+                                            <td style=" border-top: 1px solid #c2c4c6;">
+                                                {{creditAdviceItem.LINEITEMTOTALQUANTITY | number :'1.3-3'}}</td>
+                                            <td style=" border-top: 1px solid #c2c4c6;">
+                                                {{creditAdviceItem.ACCEPTEDQTY | number :'1.3-3'}}</td>
+                                            <td style=" border-top: 1px solid #c2c4c6;">
+                                                {{creditAdviceItem.SHORTQTY | number :'1.3-3'}}</td>
+                                            <td style=" border-top: 1px solid #c2c4c6;">
+                                                {{creditAdviceItem.RATEPERQTY |currency : 'INR' }}</td>
+                                            <td style=" border-top: 1px solid #c2c4c6;">
+                                                {{creditAdviceItem.SHORTAMOUNT | currency : 'INR'}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody style="border-top: 1px solid #000;">
+                                        <tr class="total">
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th scope="col">
+                                                Total Amount
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{totalAmount | currency:'INR'}}</td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-dialog-model></app-dialog-model>

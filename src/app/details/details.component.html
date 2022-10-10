@@ -1,0 +1,48 @@
+<div class="main-content margin-top">
+    <div class="container dashboardpt">
+<!-- <button (click)="onBack()" ><i class="fa fa-angle-double-left"> BACK</i></button> -->
+
+
+    <div class="inv-page-wrapper container">
+        <div class="inv-page-header">
+            <!-- <img class="left-arrow" style="cursor: pointer;" [routerLink]="['/internalinvoicelist']" src="./assets/img/arrow_icon_grey_prev.png" /> -->
+            <img class="left-arrow" style="cursor: pointer;" (click)="onBack()" src="./assets/img/arrow_icon_grey_prev.png" />
+            <p class="invoice-number">Purchase Orders Details</p>
+        </div>
+
+
+        
+        <div class="approvalWrapper">
+            <div class="approval__header">
+                <p class="approval__title">Details</p>
+                <div class="approvalIcon" (click)="openapproval('2')">
+                    <span class="fa fa-minus" alt="download image" id="closeArrow2"></span>
+                    <span class="fa fa-plus" alt="refresh image" id="openArrow2" style="display: none;"></span>
+                </div>
+            </div>
+            <div class="approval__box" id="approvalBox2">
+                <div class="invoice-form">
+                 
+                    <div class="inv-form-inputs">
+                        <p class="input-title">Po Number : <span>{{ponumber}}</span></p>
+            
+                    </div>
+                    <div class="inv-form-inputs">
+                        <p class="input-title">Po Date :  <span>{{date}}</span></p>
+            
+                    </div>
+                    <div class="inv-form-inputs">
+                        <p class="input-title">Po Amount : <span>{{amount}}</span></p>
+            
+                    </div>
+                  
+                    </div>
+                   
+                    </div>
+            </div>
+            </div>
+    </div>
+</div>
+
+
+
